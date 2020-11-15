@@ -7,18 +7,21 @@ const waitTime = (time: number = 2000) => {
     }, time);
   });
 };
-const ResponseTemplate = (data:any) => ({
-  statusCode:'0',
-  statusMessage:'成功',
-  data,
-});
+const ResponseTemplate = async (req:Request,res:Response,data:any) => {
+  await waitTime(2000);
+  return res.json({
+    statusCode:'0',
+    statusMessage:'成功',
+    data,
+  });
+};
 export default {
   // 登陆
-  'POST /api/account/login': ResponseTemplate({
+  'POST /api/account/login': async (req:Request,res:Response) => ResponseTemplate(req,res,{
     token:'0x1x2x3x4x5x6x7x8x9',
   }),
   // 退出登陆
-  'POST /api/account/logout': ResponseTemplate(null),
+  'POST /api/account/logout': async (req:Request,res:Response) => ResponseTemplate(req,res,null),
 
 
 

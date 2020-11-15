@@ -85,13 +85,19 @@ if (pwa) {
 }
 
 
+
+
+
+
+
+
 /**
  *  配置文件
  */
 const config = {
-  'localhost:8000': 'http://localhost:8080/communityplat',
-  'www.momiolo.com': 'http://119.45.119.55:8099/communityplat',
-  'www.momiolo.com:8000': 'http://119.45.119.55:8099/communityplat',
+  'localhost:8000': 'http://localhost:8080/momioloBase',
+  'www.momiolo.com': 'http://119.45.119.55:8099/momioloBase',
+  'www.momiolo.com:8000': 'http://119.45.119.55:8099/momioloBase',
 };
 window['host'] = {
   url: config[window.location.host],

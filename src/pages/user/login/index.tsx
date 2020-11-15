@@ -19,7 +19,8 @@ const LoginMessage: React.FC<{
 }> = ({ content }) => (
   <Alert
     style={{
-      marginBottom: 24,
+      marginTop: -12,
+      marginBottom: 12,
     }}
     message={content}
     type="error"
@@ -38,7 +39,7 @@ const Login: React.FC<LoginProps> = (props) => {
       callback:({ statusCode }:any) => {
         if(statusCode !== '0'){
           setStatus('loginError');
-          setTimeout(() => setStatus('success'),30000);
+          setTimeout(() => setStatus('success'),3000);
         }
       }
     });
@@ -65,6 +66,9 @@ const Login: React.FC<LoginProps> = (props) => {
             placeholder="请输入登录密码"
           />
         </Form.Item>
+        {status === 'loginError' && !loading && (
+            <LoginMessage content='账户或密码错误'/>
+        )}
         <Form.Item>
           <Button
             size="large"
@@ -77,9 +81,6 @@ const Login: React.FC<LoginProps> = (props) => {
           </Button>
         </Form.Item>
       </Form>
-      {status === 'loginError' && !loading && (
-        <LoginMessage content='账户或密码错误'/>
-      )}
       <div>
         <Checkbox disabled>
           自动登录
