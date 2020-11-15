@@ -9,6 +9,7 @@ import { Link, connect, history } from 'umi';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import DefaultFooter from '../components/DefaultFooter';
 import AuthorityFilter from './AuthorityFilter';
+import { isLogin, storageClear } from '@/utils/utils';
 import logo from '../assets/logo.svg';
 
 
@@ -21,17 +22,22 @@ const BasicLayout: React.FC<any> = (props) => {
   const [menuData,setMenuData] = useState([]);
   const [loading,setLoading] = useState(false);
   useEffect(() => {
-    dispatch({
-      type: 'login/findCurrentInfo',
-    });
-    setLoading(true);
-    dispatch({
-      type: 'login/findCurrentMenu',
-      callback:(res:any) => {
-        setMenuData(res.data);
-        setLoading(false);
-      }
-    });
+    if(isLogin()){
+      dispatch({
+        type: 'login/findCurrentInfo',
+      });
+      setLoading(true);
+      dispatch({
+        type: 'login/findCurrentMenu',
+        callback:(res:any) => {
+          setMenuData(res.data);
+          setLoading(false);
+        }
+      });
+    } else {
+      storageClear();
+      history.replace('/user/login');
+    }
   }, []);
   const handleMenuCollapse = useCallback(() => {
     dispatch({

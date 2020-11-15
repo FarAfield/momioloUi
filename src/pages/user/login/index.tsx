@@ -37,7 +37,7 @@ const Login: React.FC<LoginProps> = (props) => {
       type: 'login/login',
       payload: { ...values },
       callback:({ statusCode }:any) => {
-        if(statusCode !== '0'){
+        if(statusCode && statusCode !== '0'){
           setStatus('loginError');
           setTimeout(() => setStatus('success'),3000);
         }
