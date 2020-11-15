@@ -1,9 +1,6 @@
 // https://umijs.org/config/
 import { defineConfig } from 'umi';
 import defaultSettings from './defaultSettings';
-import proxy from './proxy';
-
-const { REACT_APP_ENV } = process.env;
 
 export default defineConfig({
   hash: true,
@@ -12,17 +9,12 @@ export default defineConfig({
     hmr: true,
   },
   history: {
-    type: 'browser',
+    type: 'hash',
   },
   locale: {
-    // default zh-CN
     default: 'zh-CN',
     antd: true,
-    // default true, when it is true, will use `navigator.language` overwrite default
     baseNavigator: true,
-  },
-  dynamicImport: {
-    loading: '@/components/PageLoading/index',
   },
   targets: {
     ie: 11,
@@ -33,10 +25,9 @@ export default defineConfig({
   },
   title: false,
   ignoreMomentLocale: true,
-  proxy: proxy[REACT_APP_ENV || 'dev'],
+  publicPath:'/',
   manifest: {
     basePath: '/',
   },
-  exportStatic: {},
   esbuild: {},
 });

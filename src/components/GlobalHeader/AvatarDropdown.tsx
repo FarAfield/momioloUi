@@ -8,7 +8,7 @@ import styles from './index.less';
 const AvatarDropdown = (props:any) => {
   const { currentUser, dispatch } = props;
   const menuHeaderDropdown = useMemo(() =>(
-      <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
+      <Menu className={styles.menu} selectedKeys={[]} onClick={e => onMenuClick(e)}>
         <Menu.Item key="center">
           <UserOutlined />
           个人中心

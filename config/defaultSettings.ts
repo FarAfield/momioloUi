@@ -7,9 +7,8 @@ const proSettings = {
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: 'Ant Design Pro',
+  title: 'Momiolo',
   pwa: false,
   iconfontUrl: '',
 };
-
 export default proSettings;
