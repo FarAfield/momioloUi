@@ -3,90 +3,44 @@
  * You can view component api by:
  * https://github.com/ant-design/ant-design-pro-layout
  */
-import ProLayout, {
-  MenuDataItem,
-  BasicLayoutProps as ProLayoutProps,
-  Settings,
-  DefaultFooter,
-} from '@ant-design/pro-layout';
-import React, { useEffect, useRef } from 'react';
-import { Link, connect, Dispatch, history } from 'umi';
-import { GithubOutlined } from '@ant-design/icons';
+import ProLayout from '@ant-design/pro-layout';
+import React, { useState,useEffect, useCallback } from 'react';
+import { Link, connect, history } from 'umi';
 import RightContent from '@/components/GlobalHeader/RightContent';
+import DefaultFooter from '../components/DefaultFooter';
 import AuthorityFilter from './AuthorityFilter';
 import logo from '../assets/logo.svg';
 
 
-export interface BasicLayoutProps extends ProLayoutProps {
-  breadcrumbNameMap: {
-    [path: string]: MenuDataItem;
-  };
-  route: ProLayoutProps['route'] & {
-    authority: string[];
-  };
-  settings: Settings;
-  dispatch: Dispatch;
-}
-
-const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] => menuList;
-const defaultFooterDom = (
-  <DefaultFooter
-    copyright={`${new Date().getFullYear()} 蚂蚁集团体验技术部出品`}
-    links={[
-      {
-        key: 'Ant Design Pro',
-        title: 'Ant Design Pro',
-        href: 'https://pro.ant.design',
-        blankTarget: true,
-      },
-      {
-        key: 'github',
-        title: <GithubOutlined />,
-        href: 'https://github.com/ant-design/ant-design-pro',
-        blankTarget: true,
-      },
-      {
-        key: 'Ant Design',
-        title: 'Ant Design',
-        href: 'https://ant.design',
-        blankTarget: true,
-      },
-    ]}
-  />
-);
-
-const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
+const BasicLayout: React.FC<any> = (props) => {
   const {
     dispatch,
     children,
     settings,
-    location = {
-      pathname: '/',
-    },
   } = props;
-
-  const menuDataRef = useRef<MenuDataItem[]>([]);
+  const [menuData,setMenuData] = useState([]);
+  const [loading,setLoading] = useState(false);
   useEffect(() => {
-    if (dispatch) {
-      dispatch({
-        type: 'user/fetchCurrent',
-      });
-    }
+    dispatch({
+      type: 'login/findCurrentInfo',
+    });
+    setLoading(true);
+    dispatch({
+      type: 'login/findCurrentMenu',
+      callback:(res:any) => {
+        setMenuData(res.data);
+        setLoading(false);
+      }
+    });
   }, []);
-  /**
-   * init variables
-   */
-  const handleMenuCollapse = () => {
+  const handleMenuCollapse = useCallback(() => {
     dispatch({
       type: 'global/changeCollapsed',
     });
-  };
-
+  },[]);
   return (
     <ProLayout
       logo={logo}
-      {...props}
-      {...settings}
       onCollapse={handleMenuCollapse}
       onMenuHeaderClick={() => history.push('/')}
       menuItemRender={(menuItemProps, defaultDom) => {
@@ -110,13 +64,12 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
           <span>{route.breadcrumbName}</span>
         );
       }}
-      footerRender={() => defaultFooterDom}
-      menuDataRender={menuDataRender}
+      footerRender={() => <DefaultFooter/>}
+      menuDataRender={() => menuData}
       rightContentRender={() => <RightContent />}
-      postMenuData={(menuData) => {
-        menuDataRef.current = menuData || [];
-        return menuData || [];
-      }}
+      menu={{ loading }}
+      {...props}
+      {...settings}
     >
       <AuthorityFilter>
         {children}
@@ -124,7 +77,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
     </ProLayout>
   );
 };
-export default connect(({ global }:any) => ({
+export default connect(({ global,login }:any) => ({
   collapsed: global.collapsed,
   settings:global.defaultSetting,
 }))(BasicLayout);

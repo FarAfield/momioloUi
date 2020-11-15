@@ -1,11 +1,11 @@
-import { postData } from '@/services/base';
+import {getData, postData} from '@/services/base';
 import { Reducer, Effect,history } from 'umi';
 import { message } from 'antd';
-import { setToken, storageClear } from '../utils/utils';
+import { setToken, storageClear } from '@/utils/utils';
 
 export interface StateType {
   currentUser:object,
-  menuData:object,
+  menuData:Array<any>,
 }
 export interface LoginModelType {
   namespace: string;
@@ -13,6 +13,8 @@ export interface LoginModelType {
   effects: {
     login: Effect;
     logout: Effect;
+    findCurrentInfo:Effect,
+    findCurrentMenu:Effect,
   };
   reducers: {
     update: Reducer<StateType>;
@@ -23,7 +25,7 @@ const LoginModel: LoginModelType = {
   namespace: 'login',
   state: {
     currentUser: {},
-    menuData:{},
+    menuData:[],
   },
   effects: {
     *login({ payload,callback }, { call }) {
@@ -41,6 +43,25 @@ const LoginModel: LoginModelType = {
         message.success('🎉 🎉 🎉  退出登录成功！');
         storageClear();
         history.replace('/user/login');
+      }
+    },
+    *findCurrentInfo(_,{ call, put }){
+      const response = yield call(getData,{ url:'/account/findCurrentInfo'});
+      if(isSuccess(response)){
+        yield put({
+          type: 'update',
+          payload: { currentUser:response.data },
+        });
+      }
+    },
+    *findCurrentMenu({ callback },{ call, put }){
+      const response = yield call(getData,{ url:'/account/findCurrentMenu'});
+      if(isSuccess(response)){
+        yield put({
+          type: 'update',
+          payload: { menuData:response.data },
+        });
+        if(callback) callback(response)
       }
     },
   },

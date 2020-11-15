@@ -54,8 +54,8 @@ request.interceptors.request.use((url:string, options:any) => {
   const token = getToken();
   return (
       {
-        url: `${window['host']['url']}${url}`,
-        // url:`http://${window.location.host}${url}`,
+        // url: `${window['host']['url']}${url}`,
+        url:`http://${window.location.host}${url}`,
         options: {
           ...options,
           headers: token ? { Authorization: `${token}` } : {},

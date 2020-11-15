@@ -22,7 +22,28 @@ export default {
   }),
   // 退出登陆
   'POST /api/account/logout': async (req:Request,res:Response) => ResponseTemplate(req,res,null),
-
+  // 获取登陆用户信息
+  'GET /api/account/findCurrentInfo': async (req:Request,res:Response) => ResponseTemplate(req,res,{
+    accountSid:'1111',
+    accountName:'sys',
+    userName:'管理员',
+    userAvatar:'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2710977765,358906402&fm=26&gp=0.jpg',
+    permissions:[],
+  }),
+  // 获取登陆的菜单信息
+  'GET /api/account/findCurrentMenu': async (req:Request,res:Response) => ResponseTemplate(req,res,[
+    {
+      "path": "/",
+      "name": "首页",
+      "icon": "",
+      "children": [
+        {
+          "path": "/welcome",
+          "name": "欢迎页"
+        },
+      ]
+    }
+  ]),
 
 
 

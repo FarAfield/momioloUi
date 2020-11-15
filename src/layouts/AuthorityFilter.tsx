@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const AuthorityFilter = ({ children }) => {
+const AuthorityFilter = ({ children }:any) => {
   return <>
     {children}
     </>

@@ -1,52 +1,28 @@
+import React, { useState,useRef } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
-import { AutoComplete, Input } from 'antd';
-import useMergeValue from 'use-merge-value';
-import { AutoCompleteProps } from 'antd/es/auto-complete';
-import React, { useRef } from 'react';
-
+import { Input } from 'antd';
 import classNames from 'classnames';
 import styles from './index.less';
 
 export interface HeaderSearchProps {
-  onSearch?: (value?: string) => void;
-  onChange?: (value?: string) => void;
-  onVisibleChange?: (b: boolean) => void;
   className?: string;
   placeholder?: string;
-  options: AutoCompleteProps['options'];
-  defaultOpen?: boolean;
-  open?: boolean;
   defaultValue?: string;
-  value?: string;
+  onSearch?: (value?: string) => void;
 }
-
 const HeaderSearch: React.FC<HeaderSearchProps> = (props) => {
   const {
     className,
-    defaultValue,
-    onVisibleChange,
     placeholder,
-    open,
-    defaultOpen,
-    ...restProps
+    defaultValue,
+    onSearch
   } = props;
-
   const inputRef = useRef<Input | null>(null);
-
-  const [value, setValue] = useMergeValue<string | undefined>(defaultValue, {
-    value: props.value,
-    onChange: props.onChange,
-  });
-
-  const [searchMode, setSearchMode] = useMergeValue(defaultOpen || false, {
-    value: props.open,
-    onChange: onVisibleChange,
-  });
-
+  const [value,setValue] = useState(defaultValue);
+  const [searchMode, setSearchMode] = useState(false);
   const inputClass = classNames(styles.input, {
     [styles.show]: searchMode,
   });
-
   return (
     <div
       className={classNames(className, styles.headerSearch)}
@@ -56,50 +32,26 @@ const HeaderSearch: React.FC<HeaderSearchProps> = (props) => {
           inputRef.current.focus();
         }
       }}
-      onTransitionEnd={({ propertyName }) => {
-        if (propertyName === 'width' && !searchMode) {
-          if (onVisibleChange) {
-            onVisibleChange(searchMode);
-          }
-        }
-      }}
     >
-      <SearchOutlined
-        key="Icon"
-        style={{
-          cursor: 'pointer',
-        }}
-      />
-      <AutoComplete
-        key="AutoComplete"
-        className={inputClass}
-        value={value}
-        style={{
-          height: 28,
-          marginTop: -6,
-        }}
-        options={restProps.options}
-        onChange={setValue}
-      >
+      <SearchOutlined key="Icon" style={{ cursor: 'pointer' }}/>
+      <div className={inputClass}>
         <Input
           ref={inputRef}
-          defaultValue={defaultValue}
+          value={value}
+          onChange={e => setValue(e.target.value)}
           aria-label={placeholder}
           placeholder={placeholder}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              if (restProps.onSearch) {
-                restProps.onSearch(value);
+              if (onSearch) {
+                  onSearch(value);
               }
             }
           }}
-          onBlur={() => {
-            setSearchMode(false);
-          }}
+          onBlur={() => setSearchMode(false)}
         />
-      </AutoComplete>
+      </div>
     </div>
   );
 };
-
 export default HeaderSearch;

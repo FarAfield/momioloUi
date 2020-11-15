@@ -29,7 +29,7 @@ const GlobalModel: GlobalModelType = {
   },
   effects: {
     *changeCollapsed(_,{ put, select }){
-      const collapsed = select(({ global }:any) => global.collapsed);
+      const collapsed = yield select(({ global }:any) => global.collapsed);
       yield put({
         type: 'update',
         payload: { collapsed:!collapsed },
@@ -37,7 +37,7 @@ const GlobalModel: GlobalModelType = {
     },
     *changeSetting({ payload },{ put, select }){
       const { colorWeak, contentWidth } = payload;
-      const defaultSetting = select(({ global }:any) => global.defaultSetting);
+      const defaultSetting = yield select(({ global }:any) => global.defaultSetting);
       if (defaultSetting.contentWidth !== contentWidth && window.dispatchEvent) {
         window.dispatchEvent(new Event('resize'));
       }
