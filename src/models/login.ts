@@ -1,6 +1,7 @@
 import { postData } from '@/services/base';
 import { Reducer, Effect,history } from 'umi';
 import { message } from 'antd';
+import { setToken, storageClear } from '../utils/utils';
 
 export interface StateType {
   currentUser:object,
@@ -25,23 +26,21 @@ const LoginModel: LoginModelType = {
     menuData:{},
   },
   effects: {
-    *login(_, { call, put }) {
-      const payload = {};
-      const response = yield call(postData, payload);
+    *login({ payload,callback }, { call }) {
+      const response = yield call(postData, Object.assign(payload,{ url:'/account/login' }));
       if(isSuccess(response)){
         message.success('🎉 🎉 🎉  登录成功！');
-        history.push('/');
-        yield put({
-          type: 'update',
-          payload: { currentUser:response.data },
-        });
+        setToken(response.data.token);
+        history.replace('/');
       }
+      if(callback) callback(response);
     },
     *logout(_, { call }) {
-      const payload = {};
-      const response = yield call(postData,payload);
+      const response = yield call(postData,{ url:'/account/logout'});
       if(isSuccess(response)){
         message.success('🎉 🎉 🎉  退出登录成功！');
+        storageClear();
+        history.replace('/user/login');
       }
     },
   },
