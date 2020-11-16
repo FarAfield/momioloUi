@@ -80,6 +80,16 @@ const BasicLayout: React.FC<any> = (props) => {
       <AuthorityFilter>
         {children}
       </AuthorityFilter>
+      {/*<SettingDrawer*/}
+        {/*settings={settings}*/}
+        {/*onSettingChange={config => {*/}
+          {/*dispatch({*/}
+            {/*type:'global/changeSetting',*/}
+            {/*payload:{...config}*/}
+          {/*})*/}
+        {/*}}*/}
+        {/*hideHintAlert*/}
+      {/*/>*/}
     </ProLayout>
   );
 };
