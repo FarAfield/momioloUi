@@ -10,7 +10,7 @@ import RightContent from '@/components/GlobalHeader/RightContent';
 import DefaultFooter from '../components/DefaultFooter';
 import AuthorityFilter from './AuthorityFilter';
 import { isLogin, storageClear } from '@/utils/utils';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo-white.svg';
 
 
 const BasicLayout: React.FC<any> = (props) => {

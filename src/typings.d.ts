@@ -11,7 +11,3 @@ declare module '*.gif';
 declare module '*.bmp';
 declare module '*.tiff';
 declare module 'omit.js';
-
-
-
-declare const REACT_APP_ENV: 'test' | 'dev' | 'pre' | false;
