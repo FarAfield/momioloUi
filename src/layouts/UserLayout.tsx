@@ -1,22 +1,18 @@
 import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { Link,useIntl } from 'umi';
+import { Link } from 'umi';
 import DefaultFooter from '../components/DefaultFooter';
 import logo from '../assets/logo.svg';
 import styles from './UserLayout.less';
+import { loginDescription } from '@/utils/constant';
 
 
 const UserLayout: React.FC<{ children: any }> = ({ children }) => {
-  const intl = useIntl();
-  const formatMessage = (id:string,defaultMessage:undefined | string = undefined) => intl.formatMessage({
-    id,
-    defaultMessage,
-  });
   return (
     <HelmetProvider>
       <Helmet>
-        <title>{formatMessage('momiolo-login')}</title>
-        <meta name="description" content={formatMessage('momiolo-login')} />
+        <title>{'登录-momiolo'}</title>
+        <meta name="description" content={'momiolo'} />
       </Helmet>
       <div className={styles.container}>
         <div className={styles.content}>
@@ -24,11 +20,11 @@ const UserLayout: React.FC<{ children: any }> = ({ children }) => {
             <div className={styles.header}>
               <Link to="/">
                 <img alt="logo" className={styles.logo} src={logo} />
-                <span className={styles.title}>{formatMessage('momiolo-title')}</span>
+                <span className={styles.title}>Momiolo</span>
               </Link>
             </div>
             <div className={styles.desc}>
-              <span>{formatMessage('momiolo-subTitle')}</span>
+              <span>{loginDescription}</span>
             </div>
           </div>
           {children}
