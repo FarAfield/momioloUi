@@ -1,28 +1,14 @@
 import React from 'react';
-import { GithubOutlined } from '@ant-design/icons';
 import { DefaultFooter } from '@ant-design/pro-layout';
+import { copyRight, copyRightConfig } from '@/utils/constant';
+const links = copyRightConfig.map((item,index) =>{
+  item['key'] = index;
+  item['blankTarget'] = true;
+  return item;
+});
 export default () => (
     <DefaultFooter
-      copyright={`${new Date().getFullYear()} momiolo版权所有`}
-      links={[
-        {
-          key: 'Ant Design Pro',
-          title: 'Ant Design Pro',
-          href: 'https://pro.ant.design',
-          blankTarget: true,
-        },
-        {
-          key: 'github',
-          title: <GithubOutlined />,
-          href: 'https://github.com/ant-design/ant-design-pro',
-          blankTarget: true,
-        },
-        {
-          key: 'Ant Design',
-          title: 'Ant Design',
-          href: 'https://ant.design',
-          blankTarget: true,
-        },
-      ]}
+      copyright={`${new Date().getFullYear()} ${copyRight}`}
+      links={links}
     />
 );

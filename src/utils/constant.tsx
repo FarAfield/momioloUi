@@ -1,3 +1,6 @@
+import React from 'react';
+import { GithubOutlined } from '@ant-design/icons';
+
 /**
  *  系统常量配置
  */
@@ -14,3 +17,12 @@ export const ThemeConfig = [
 ];
 // 登录页描述语
 export const loginDescription = 'Momiolo 是西湖区最具影响力的 Web 设计规范';
+// 版权配置
+export const copyRightConfig = [
+  { title:'ant design',href:'' },
+  { title: <GithubOutlined/>,href:'' },
+  { title:'bai du',href:'' },
+];
+// 版权信息
+export const copyRight = '';
+
