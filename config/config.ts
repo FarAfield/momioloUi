@@ -31,10 +31,10 @@ export default defineConfig({
   },
   esbuild: {},
   proxy: {
-    '/api/': {
-      target: 'http://localhost:8000',
+    '/base': {
+      target: 'http://localhost:8080/base',
       changeOrigin: true,
-      pathRewrite: { '^': '' },
+      pathRewrite: { '/base': '' },
     },
   },
 });

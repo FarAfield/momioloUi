@@ -19,7 +19,7 @@ const BasicLayout: React.FC<any> = (props) => {
     children,
     settings,
   } = props;
-  const [menuData,setMenuData] = useState([]);
+  const [menuData,setMenuData] = useState<Array<any>>([]);
   const [loading,setLoading] = useState(false);
   useEffect(() => {
     if(isLogin()){
@@ -29,8 +29,8 @@ const BasicLayout: React.FC<any> = (props) => {
       setLoading(true);
       dispatch({
         type: 'login/findCurrentMenu',
-        callback:(res:any) => {
-          setMenuData(res.data);
+        callback:(menuData:Array<any>) => {
+          setMenuData(menuData);
           setLoading(false);
         }
       });

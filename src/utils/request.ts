@@ -5,6 +5,7 @@
 import { extend } from 'umi-request';
 import { message } from 'antd';
 import { getToken,storageClear } from '@/utils/utils';
+import { requestConfig } from './constant';
 import { history } from 'umi';
 
 const codeMessage = {
@@ -48,7 +49,7 @@ const request = extend({
   errorHandler, // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
   useCache:true, // 是否使用缓存
-  prefix:'/api'
+  prefix:'/base'
 });
 request.interceptors.request.use((url:string, options:any) => {
   const token = getToken();
@@ -67,14 +68,14 @@ request.interceptors.response.use(async (response) => {
   if(response.status === 200){
     const data = await response.clone().json();
     if(data && data.statusCode) {
-      if(data.statusCode === "9002"){
+      if(data.statusCode === requestConfig['TOKEN_INVALID_ERROR']){
         const maxCountMessage = message;
         maxCountMessage.config({ maxCount: 1 });
         maxCountMessage.error("登陆已失效，请重新登陆");
         storageClear();
-        history.replace("/user/login");
-      } else if(data.statusCode === "9003"){
-        history.replace("/Exception/Exception403")
+        history.replace('/user/login');
+      } else if(data.statusCode === requestConfig['UNAUTHORIZED_ERROR']){
+        history.replace('/Exception/Exception403')
       } else if(data.statusCode !== "0"){
         message.error(data.statusMessage)
       }

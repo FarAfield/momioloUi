@@ -31,7 +31,7 @@ export default {
     permissions:[],
   }),
   // 获取登陆的菜单信息
-  'GET /api/account/findCurrentMenu': async (req:Request,res:Response) => ResponseTemplate(req,res,[
+  'GET /api/resource/findCurrentMenu': async (req:Request,res:Response) => ResponseTemplate(req,res,[
     {
       "path": "/",
       "name": "首页",

@@ -25,4 +25,9 @@ export const copyRightConfig = [
 ];
 // 版权信息
 export const copyRight = '';
+// 请求状态码配置
+export const requestConfig = {
+  TOKEN_INVALID_ERROR:'10002',
+  UNAUTHORIZED_ERROR:'10003'
+};
 

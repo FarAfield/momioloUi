@@ -6,6 +6,7 @@ import { setToken, storageClear } from '@/utils/utils';
 export interface StateType {
   currentUser:object,
   menuData:Array<any>,
+  permissions:Array<string>,
 }
 export interface LoginModelType {
   namespace: string;
@@ -21,11 +22,26 @@ export interface LoginModelType {
   };
 }
 const isSuccess = (response:any) => response.statusCode === '0';
+const transferPath = (menuData:Array<any>,parentPath:string = '') => {
+  return menuData.map((item:any) => {
+    if(item.resourceType === 1){
+      const path = `${parentPath}/${item.resourceCode}`;
+      item.path = path;
+      item.name = `${item.resourceName}`;
+      item.icon = `${item.resourceIcon}`;
+      if(item.children && item.children.length){
+        item.children = transferPath(item.children,path)
+      }
+    }
+    return item;
+  });
+};
 const LoginModel: LoginModelType = {
   namespace: 'login',
   state: {
     currentUser: {},
     menuData:[],
+    permissions:[],
   },
   effects: {
     *login({ payload,callback }, { call }) {
@@ -55,13 +71,14 @@ const LoginModel: LoginModelType = {
       }
     },
     *findCurrentMenu({ callback },{ call, put }){
-      const response = yield call(getData,{ url:'/account/findCurrentMenu'});
+      const response = yield call(getData,{ url:'/resource/findCurrentMenu'});
       if(isSuccess(response)){
+        const menuData = transferPath(response.data.children || []);
         yield put({
           type: 'update',
-          payload: { menuData:response.data },
+          payload: { menuData },
         });
-        if(callback) callback(response)
+        if(callback) callback(menuData)
       }
     },
   },

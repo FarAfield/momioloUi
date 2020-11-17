@@ -8,6 +8,7 @@ import {
 import { Alert, Space, Form, Checkbox, Input, Button } from 'antd';
 import React, { useState } from 'react';
 import { connect, Dispatch, Link } from 'umi';
+import md5 from 'md5';
 import styles from './index.less';
 
 interface LoginProps {
@@ -31,11 +32,11 @@ const Login: React.FC<LoginProps> = (props) => {
   const { loading } = props;
   // success  loginError  captchaError
   const [status, setStatus] = useState('success');
-  const onFinish = (values:object) => {
+  const onFinish = ({ accountName,accountPassword }:{ accountName:string,accountPassword:string}) => {
     const { dispatch } = props;
     dispatch({
       type: 'login/login',
-      payload: { ...values },
+      payload: { accountName, accountPassword:md5(accountPassword)},
       callback:({ statusCode }:any) => {
         if(statusCode && statusCode !== '0'){
           setStatus('loginError');
