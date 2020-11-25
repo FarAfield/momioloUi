@@ -33,17 +33,16 @@ maxCountMessage.config({ maxCount: 1 });
  */
 const errorHandler = (error: { response: Response }): Response => {
   const { response } = error;
-  if(!error){
-    maxCountMessage.error('您的网络发生异常，无法连接服务器');
-  } else if(!response){
+  if(!response){
     maxCountMessage.error('请求超时');
+    throw error;
   } else if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
     console.log(`请求状态:${status}  请求路径${url}`);
     maxCountMessage.error(errorText);
   }
-  return response || {};
+  return response;
 };
 
 /**

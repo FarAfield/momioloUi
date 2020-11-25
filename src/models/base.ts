@@ -1,5 +1,6 @@
 import { getData,postData,postParams,postList,putData,putParams,putList,remove } from '@/services/base';
 import { Reducer,Effect } from 'umi';
+import { message } from 'antd';
 interface BaseModelState {
   pageUrl: string | undefined;
   pageData: {
@@ -32,6 +33,7 @@ interface BaseModelType {
   };
 }
 const isSuccess = (response:any) => response.statusCode === '0';
+const errorMessage = (response:any) => message.error(response.statusMessage);
 const BaseModel: BaseModelType  = {
   namespace: "base",
   state: {
@@ -65,6 +67,11 @@ const BaseModel: BaseModelType  = {
         };
         yield put({ type: 'update', payload: { pageData }});
         if(callback) callback(response);
+      } else {
+        // 如果出错了则不清空数据，继续沿用之前数据
+        const pageData = yield select(({ base }:any) => base.pageData);
+        yield put({ type: 'update', payload: { pageData }});
+        errorMessage(response);
       }
     },
     /**
@@ -89,6 +96,11 @@ const BaseModel: BaseModelType  = {
         };
         yield put({ type: 'update', payload: { pageData }});
         if(callback) callback(response);
+      } else {
+        // 如果出错了则不清空数据，继续沿用之前数据
+        const pageData = yield select(({ base }:any) => base.pageData);
+        yield put({ type: 'update', payload: { pageData }});
+        errorMessage(response);
       }
     },
     /**
@@ -99,6 +111,8 @@ const BaseModel: BaseModelType  = {
       if(isSuccess(response)){
         yield put({ type: 'update', payload: { data : response }});
         if(callback) callback(response);
+      } else {
+        errorMessage(response);
       }
     },
     /**
@@ -109,6 +123,8 @@ const BaseModel: BaseModelType  = {
       if(isSuccess(response)){
         yield put({ type: 'update', payload: { data : response }});
         if(callback) callback(response);
+      } else {
+        errorMessage(response);
       }
     },
     /**
@@ -119,6 +135,8 @@ const BaseModel: BaseModelType  = {
       if(isSuccess(response)){
         yield put({ type: 'update', payload: { data : response }});
         if(callback) callback(response);
+      } else {
+        errorMessage(response);
       }
     },
     /**
@@ -129,6 +147,8 @@ const BaseModel: BaseModelType  = {
       if(isSuccess(response)){
         yield put({ type: 'update', payload: { data : response }});
         if(callback) callback(response);
+      } else {
+        errorMessage(response);
       }
     },
     /**
@@ -139,6 +159,8 @@ const BaseModel: BaseModelType  = {
       if(isSuccess(response)){
         yield put({ type: 'update', payload: { data : response }});
         if(callback) callback(response);
+      } else {
+        errorMessage(response);
       }
     },
     /**
@@ -149,6 +171,8 @@ const BaseModel: BaseModelType  = {
       if(isSuccess(response)){
         yield put({ type: 'update', payload: { data : response }});
         if(callback) callback(response);
+      } else {
+        errorMessage(response);
       }
     },
     /**
@@ -159,6 +183,8 @@ const BaseModel: BaseModelType  = {
       if(isSuccess(response)){
         yield put({ type: 'update', payload: { data : response }});
         if(callback) callback(response);
+      } else {
+        errorMessage(response);
       }
     },
     /**
@@ -169,6 +195,8 @@ const BaseModel: BaseModelType  = {
       if(isSuccess(response)){
         yield put({ type: 'update', payload: { data : response }});
         if(callback) callback(response);
+      } else {
+        errorMessage(response);
       }
     },
 

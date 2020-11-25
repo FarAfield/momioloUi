@@ -16,7 +16,7 @@ interface LoginProps {
   loading?: boolean;
 }
 const LoginMessage: React.FC<{
-  content: string;
+  content: string | undefined;
 }> = ({ content }) => (
   <Alert
     style={{
@@ -30,17 +30,16 @@ const LoginMessage: React.FC<{
 );
 const Login: React.FC<LoginProps> = (props) => {
   const { loading } = props;
-  // success  loginError  captchaError
-  const [status, setStatus] = useState('success');
+  const [message, setMessage] = useState(undefined);
   const onFinish = ({ accountName,accountPassword }:{ accountName:string,accountPassword:string}) => {
     const { dispatch } = props;
     dispatch({
       type: 'login/login',
       payload: { accountName, accountPassword:md5(accountPassword)},
-      callback:({ statusCode }:any) => {
+      callback:({ statusCode, statusMessage }:any) => {
         if(statusCode && statusCode !== '0'){
-          setStatus('loginError');
-          setTimeout(() => setStatus('success'),3000);
+          setMessage(statusMessage);
+          setTimeout(() => setMessage(undefined),3000);
         }
       }
     });
@@ -67,8 +66,8 @@ const Login: React.FC<LoginProps> = (props) => {
             placeholder="请输入登录密码"
           />
         </Form.Item>
-        {status === 'loginError' && !loading && (
-            <LoginMessage content='账户或密码错误'/>
+        {message && !loading && (
+            <LoginMessage content={message}/>
         )}
         <Form.Item>
           <Button
