@@ -180,5 +180,5 @@ const Resource = (props:any) => {
   )
 };
 export default connect(({ loading }:any) => ({
-  loading:loading.effects['/resource/findMenuTree']
+  loading:loading.effects['base/getData']
 }))(Resource)

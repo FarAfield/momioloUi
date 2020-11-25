@@ -73,11 +73,13 @@ request.interceptors.response.use(async (response) => {
     const res = await response.clone().json();
     if(res && res.statusCode) {
       if(res.statusCode === requestConfig['TOKEN_INVALID_ERROR']){
-        maxCountMessage.error("登陆已失效，请重新登陆");
+        maxCountMessage.error('TOKEN_INVALID_ERROR');
         storageClear();
         history.replace('/user/login');
+        throw new Error('登陆已失效，请重新登陆');
       } else if(res.statusCode === requestConfig['UNAUTHORIZED_ERROR']){
-        history.replace('/Exception/Exception403')
+        history.replace('/Exception/Exception403');
+        throw new Error('UNAUTHORIZED_ERROR');
       } else if(res.statusCode !== "0"){
         console.log(res.statusMessage)
       }

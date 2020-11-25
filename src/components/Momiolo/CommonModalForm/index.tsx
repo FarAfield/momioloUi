@@ -64,7 +64,7 @@ const CommonModalForm = (props:any) => {
          onCancel();
       },
     });
-  },[]);
+  },[formData]);
   const onCancel = useCallback(() => {
     handleCancel();
     form.resetFields();

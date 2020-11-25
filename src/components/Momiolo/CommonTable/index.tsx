@@ -6,7 +6,7 @@ const CommonTable = (props:any) => {
   const { fetchParams:{ type, url, extraArgs }, formValues, tableProps, dispatch } = props;
   const onChange = useCallback( (pagination, filters, sorter,extra) => {
     const params = {
-      page: pagination.current,
+      current: pagination.current,
       size: pagination.pageSize,
       ...formValues,
       ...filters,
