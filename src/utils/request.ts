@@ -26,6 +26,8 @@ const codeMessage = {
   504: '网关超时。',
 };
 
+const maxCountMessage = message;
+maxCountMessage.config({ maxCount: 1 });
 /**
  * 异常处理程序
  */
@@ -35,9 +37,9 @@ const errorHandler = (error: { response: Response }): Response => {
     const errorText = codeMessage[response.status] || response.statusText;
     // const { status, url } = response;
     // todo
-    message.error(errorText);
+    maxCountMessage.error(errorText);
   } else if (!response) {
-    message.error('您的网络发生异常，无法连接服务器');
+    maxCountMessage.error('您的网络发生异常，无法连接服务器');
   }
   return response;
 };
@@ -48,14 +50,14 @@ const errorHandler = (error: { response: Response }): Response => {
 const request = extend({
   errorHandler, // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
-  useCache:true, // 是否使用缓存
+  useCache:false, // 是否使用缓存
   prefix:'/base'
 });
 request.interceptors.request.use((url:string, options:any) => {
   const token = getToken();
   return (
       {
-        url:`${url}`,
+        url,
         options: {
           ...options,
           headers: token ? { Authorization: `${token}` } : {},
@@ -69,15 +71,13 @@ request.interceptors.response.use(async (response) => {
     const data = await response.clone().json();
     if(data && data.statusCode) {
       if(data.statusCode === requestConfig['TOKEN_INVALID_ERROR']){
-        const maxCountMessage = message;
-        maxCountMessage.config({ maxCount: 1 });
         maxCountMessage.error("登陆已失效，请重新登陆");
         storageClear();
         history.replace('/user/login');
       } else if(data.statusCode === requestConfig['UNAUTHORIZED_ERROR']){
         history.replace('/Exception/Exception403')
       } else if(data.statusCode !== "0"){
-        message.error(data.statusMessage)
+        //message.error(data.statusMessage)
       }
     }
   }
