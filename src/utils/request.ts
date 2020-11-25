@@ -33,15 +33,17 @@ maxCountMessage.config({ maxCount: 1 });
  */
 const errorHandler = (error: { response: Response }): Response => {
   const { response } = error;
-  if (response && response.status) {
-    const errorText = codeMessage[response.status] || response.statusText;
-    // const { status, url } = response;
-    // todo
-    maxCountMessage.error(errorText);
-  } else if (!response) {
+  if(!error){
     maxCountMessage.error('您的网络发生异常，无法连接服务器');
+  } else if(!response){
+    maxCountMessage.error('请求超时');
+  } else if (response && response.status) {
+    const errorText = codeMessage[response.status] || response.statusText;
+    const { status, url } = response;
+    console.log(`请求状态:${status}  请求路径${url}`);
+    maxCountMessage.error(errorText);
   }
-  return response;
+  return response || {};
 };
 
 /**
@@ -51,7 +53,8 @@ const request = extend({
   errorHandler, // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
   useCache:false, // 是否使用缓存
-  prefix:'/base'
+  prefix:'/base',
+  timeout:30000, // 30s
 });
 request.interceptors.request.use((url:string, options:any) => {
   const token = getToken();
@@ -68,16 +71,16 @@ request.interceptors.request.use((url:string, options:any) => {
 });
 request.interceptors.response.use(async (response) => {
   if(response.status === 200){
-    const data = await response.clone().json();
-    if(data && data.statusCode) {
-      if(data.statusCode === requestConfig['TOKEN_INVALID_ERROR']){
+    const res = await response.clone().json();
+    if(res && res.statusCode) {
+      if(res.statusCode === requestConfig['TOKEN_INVALID_ERROR']){
         maxCountMessage.error("登陆已失效，请重新登陆");
         storageClear();
         history.replace('/user/login');
-      } else if(data.statusCode === requestConfig['UNAUTHORIZED_ERROR']){
+      } else if(res.statusCode === requestConfig['UNAUTHORIZED_ERROR']){
         history.replace('/Exception/Exception403')
-      } else if(data.statusCode !== "0"){
-        //message.error(data.statusMessage)
+      } else if(res.statusCode !== "0"){
+        console.log(res.statusMessage)
       }
     }
   }

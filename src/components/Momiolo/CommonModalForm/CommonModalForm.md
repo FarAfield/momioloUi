@@ -22,6 +22,7 @@
 [*]  title:"xxx"
      rules:[],
      readOnly:['false','false'] // 分别对应新增/编辑是否禁用
+     hide:false, // 是否隐藏
      maxLength: 20 // 当类型为input和textArea时与rules双重限制输入
      {...rest}  // 其他可以接受的属性
    }]
