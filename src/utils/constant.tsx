@@ -19,9 +19,9 @@ export const ThemeConfig = [
 export const loginDescription = 'Momiolo 是西湖区最具影响力的 Web 设计规范';
 // 版权配置
 export const copyRightConfig = [
-  { title:'ant design',href:'' },
-  { title: <GithubOutlined/>,href:'' },
-  { title:'bai du',href:'' },
+  { title:'react',href:'https://react.docschina.org/docs/getting-started.html' },
+  { title: <GithubOutlined/>,href:'https://github.com/FarAfield' },
+  { title:'vue',href:'https://cn.vuejs.org/v2/guide/' },
 ];
 // 版权信息
 export const copyRight = '';

@@ -1,7 +1,7 @@
 import React,{ useMemo, useCallback } from 'react';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
-import { connect } from 'umi';
+import { connect,history } from 'umi';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 
@@ -36,6 +36,7 @@ const AvatarDropdown = (props:any) => {
         return;
       }
       case 'settings':{
+        history.push('/user/setting');
         return;
       }
       case 'logout': {
