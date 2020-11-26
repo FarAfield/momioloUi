@@ -41,7 +41,7 @@ const CommonModalForm = (props:any) => {
       const fields = mapPropsToFields ? mapPropsToFields({...initialValues,...formData}) : ({...initialValues,...formData});
       form.setFieldsValue({...fields});
     }
-  },[initialValues,formData,visible]);
+  },[visible]);
   const onFinish = useCallback((fieldsValue) => {
     // 自定义数据处理
     const values = handleFieldsValue ? handleFieldsValue(fieldsValue) : fieldsValue;
@@ -64,7 +64,7 @@ const CommonModalForm = (props:any) => {
          onCancel();
       },
     });
-  },[formData]);
+  },[visible]);
   const onCancel = useCallback(() => {
     handleCancel();
     form.resetFields();
@@ -165,6 +165,6 @@ CommonModalForm.defaultProps={
   messageInfo:['新增成功','编辑成功'],
 };
 export default connect(({ loading }:any) => ({
-  loading:loading.effects['base/postObj']
+  loading:loading.effects['base/postData']
 }))(CommonModalForm)
 

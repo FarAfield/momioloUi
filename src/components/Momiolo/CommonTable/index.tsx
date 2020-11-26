@@ -16,7 +16,7 @@ const CommonTable = (props:any) => {
       type,
       payload: { url, ...params },
     });
-  },[]);
+  },[props]);
   return (
       <Table
         onChange={onChange}

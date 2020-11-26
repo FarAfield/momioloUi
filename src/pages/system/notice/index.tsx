@@ -4,13 +4,21 @@ import { message,Button } from 'antd';
 import CommonTable from '../../../components/Momiolo/CommonTable';
 import CommonAuth from '../../../components/Momiolo/CommonAuth';
 import CommonModalForm from '../../../components/Momiolo/CommonModalForm';
+import CommonSearchForm from '../../../components/Momiolo/CommonSearchForm';
 import PageCard from '../../../components/PageCard';
+import { getValueByKey } from '@/utils/support';
 
 
+const TYPE = [
+  { value:'1', label:'类型一'},
+  { value:'2', label:'类型二'},
+  { value:'3', label:'类型三'},
+];
 const Notice = (props:any) => {
   const { dispatch,loading, pageData:{ list, pagination } } = props;
   const [visible,setVisible] = useState(false);
   const [formData,setFormData] = useState({});
+  const [formValues,setFormValues] = useState({});
   useEffect(() => {
     handleSearch();
   },[]);
@@ -30,28 +38,38 @@ const Notice = (props:any) => {
       }
     })
   },[]);
+  const searchItems = [
+    {
+      key:"title",
+      title:"公告标题",
+      type:"input",
+    },
+    {
+      key:"type",
+      title:"公告类型",
+      type:"select",
+      selectOptions:TYPE,
+    }
+  ];
   const formItems = [
     {
       key:'title',
       title:'公告标题',
       type:'input',
-      rules:[{ required:true }],
+      rules:[{ required:true, message:'请输入公告标题' }],
     },
     {
       key:'type',
       title:'公告类型',
       type:'select',
-      rules:[{ required:true }],
-      selectOptions:[
-        { value:'1', label:'类型一'},
-        { value:'2', label:'类型二'},
-        { value:'3', label:'类型三'},
-      ],
+      rules:[{ required:true, message:'请选择公告类型' }],
+      selectOptions:TYPE,
     },
     {
       key:'content',
       title:'公告内容',
       type:'textArea',
+      rules:[{ max:500, message:'最大字符数500' }],
     },
   ];
   const columns = [
@@ -64,21 +82,23 @@ const Notice = (props:any) => {
       title: '公告类型',
       dataIndex: 'type',
       width: '10%',
+      render: (text:any) => getValueByKey(TYPE,['value','label'],text),
     },
     {
       title: '公告内容',
       dataIndex: 'content',
-      width: '45%',
+      width:'30%',
+      ellipsis:true,
     },
     {
       title: '创建时间',
       dataIndex: 'createDate',
-      width: '10%',
+      width:'15%',
     },
     {
       title: '更新时间',
       dataIndex: 'updateDate',
-      width: '10%',
+      width:'15%',
     },
     {
       title: '操作',
@@ -124,12 +144,20 @@ const Notice = (props:any) => {
   };
   return (
       <PageCard>
+        <CommonSearchForm
+          searchItems={searchItems}
+          fetchParams={{ type:'base/getPage',url: '/notice/findByPage'}}
+          saveFormValues={(v:any) => setFormValues({ ...formValues,...v})}
+          handleFormReset={() => setFormValues({})}
+        />
         <div style={{ display:'flex',marginBottom:12}}>
           <Button type='primary' onClick={() => setVisible(true)}>
             新增
           </Button>
         </div>
         <CommonTable
+           fetchParams={{ type:'base/getPage',url: '/notice/findByPage'}}
+           formValues={formValues}
            tableProps={tableProps}
         />
         <CommonModalForm

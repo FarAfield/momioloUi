@@ -64,7 +64,7 @@ const CommonSearchForm = (props:any) => {
   const searchAndReset = useMemo(() => {
     // 计算offset
     const offset = 16 - (searchItems.length % 3) * 8;
-    return <Col span={8} offset={offset}>
+    return <Col key={'searchAndReset'} span={8} offset={offset}>
       <div className={styles.searchAndReset}>
         <Button type="primary" htmlType="submit">
           查询
@@ -83,7 +83,7 @@ const CommonSearchForm = (props:any) => {
           const { type, key, title, rules, ...rest } = item;
           const placeholder = `请输入${typeof title === 'string' ? title : ''}`;
           return (
-              <Col span={8}>
+              <Col key={key} span={8}>
                 <FormItem name={key} label={title} rules={rules}>
                   <Input placeholder={placeholder} allowClear {...rest} />
                 </FormItem>
@@ -94,7 +94,7 @@ const CommonSearchForm = (props:any) => {
           const { type, key, title, rules, style, ...rest } = item;
           const placeholder = `请输入${typeof title === 'string' ? title : ''}`;
           return (
-              <Col span={8}>
+              <Col key={key} span={8}>
                 <FormItem name={key} label={title} rules={rules}>
                   <InputNumber placeholder={placeholder} allowClear {...rest} style={{ width:'100%', ...style }}/>
                 </FormItem>
@@ -104,7 +104,7 @@ const CommonSearchForm = (props:any) => {
         case 'select': {
           const { type, key, title, rules,selectOptions = [], keyValue = ['value', 'label'], onSelectChange, ...rest } = item;
           return (
-              <Col span={8}>
+              <Col key={key} span={8}>
                 <FormItem name={key} label={title} rules={rules}>
                   <Select
                     allowClear
@@ -126,7 +126,7 @@ const CommonSearchForm = (props:any) => {
         case 'dataPicker': {
           const { type, key, title, rules, showTime = false,format = 'YYYY-MM-DD', ...rest } = item;
           return (
-              <Col span={8}>
+              <Col key={key} span={8}>
                 <FormItem name={key} label={title} rules={rules}>
                   <DatePicker
                     allowClear
@@ -145,7 +145,7 @@ const CommonSearchForm = (props:any) => {
         case 'rangePicker': {
           const { type, key, title, rules, showTime = false, format = 'YYYY-MM-DD HH:mm:ss',span = 10, ...rest } = item;
           return (
-              <Col span={span}>
+              <Col key={key} span={span}>
                 <FormItem name={key} label={title} rules={rules}>
                   <RangePicker
                     allowClear
