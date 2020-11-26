@@ -35,7 +35,8 @@ const errorHandler = (error: { response: Response }): Response => {
   const { response } = error;
   if(!response){
     maxCountMessage.error('请求超时');
-    throw error;
+    // @ts-ignore
+    return { status:408, statusText:'请求超时'};
   } else if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
@@ -68,18 +69,17 @@ request.interceptors.request.use((url:string, options:any) => {
       }
   );
 });
+// 非200状态的返回以及异常均由errorHandle处理
 request.interceptors.response.use(async (response) => {
   if(response.status === 200){
     const res = await response.clone().json();
     if(res && res.statusCode) {
       if(res.statusCode === requestConfig['TOKEN_INVALID_ERROR']){
-        maxCountMessage.error('TOKEN_INVALID_ERROR');
+        maxCountMessage.error("登陆已失效，请重新登陆");
         storageClear();
         history.replace('/user/login');
-        throw new Error('登陆已失效，请重新登陆');
       } else if(res.statusCode === requestConfig['UNAUTHORIZED_ERROR']){
         history.replace('/Exception/Exception403');
-        throw new Error('UNAUTHORIZED_ERROR');
       } else if(res.statusCode !== "0"){
         console.log(res.statusMessage)
       }

@@ -22,7 +22,7 @@ export interface LoginModelType {
   };
 }
 const isSuccess = (response:any) => response.statusCode === '0';
-const errorMessage = (response:any) => message.error(response.statusMessage);
+const errorMessage = (response:any) => response.statusMessage && message.error(response.statusMessage);
 const transferMenu = (menuData:Array<any>,parentPath:string = '') => {
   return menuData.map((item:any) => {
     if(item.resourceType === 1){

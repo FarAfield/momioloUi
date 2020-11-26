@@ -33,7 +33,7 @@ interface BaseModelType {
   };
 }
 const isSuccess = (response:any) => response.statusCode === '0';
-const errorMessage = (response:any) => message.error(response.statusMessage);
+const errorMessage = (response:any) => response.statusMessage && message.error(response.statusMessage);
 const BaseModel: BaseModelType  = {
   namespace: "base",
   state: {
