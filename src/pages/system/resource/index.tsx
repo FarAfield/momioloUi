@@ -120,9 +120,9 @@ const Resource = (props:any) => {
       width: '50%',
       render:(text:string, record:any) => {
         if(record.children && record.children.length){
-          return record.children.map((item:any,index:number) => <span key={index}><Tag color="warning">{item.resourceName}</Tag></span>)
+          return record.children.map((item:any) => <Tag key={item.sid} color="warning">{item.resourceName}</Tag>)
         } else if(record.buttonChildren && record.buttonChildren.length){
-          return record.buttonChildren.map((item:any,index:number) => <span key={index}><Tag color="success">{item.resourceName}</Tag></span>)
+          return record.buttonChildren.map((item:any) => <Tag color="success" key={item.sid} closable onClose={() => handleDelete(item.sid)}>{item.resourceName}</Tag>)
         } else {
           return null;
         }
