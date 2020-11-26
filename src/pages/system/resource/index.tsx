@@ -12,11 +12,25 @@ const TYPE = [
   { value:2, label: '路由'},
   { value:3, label: '按钮'},
 ];
-const typeEnums = (type:number) => {
-  switch (type) {
-    case 1: return TYPE;
-    case 2: return TYPE.slice(2,);
-    default: return [];
+// @ts-ignore
+const getType = (record:any) => {
+  if(record.resourceType === 1){
+    // 不存在菜单/路由/按钮
+    if(!record?.children?.length && !record?.buttonChildren?.length){
+      return TYPE;
+    }
+    // 存在菜单/路由
+    if(record?.children?.length && !record?.buttonChildren?.length){
+      return TYPE.slice(0,2);
+    }
+    // 存在按钮
+    if(!record?.children?.length && record?.buttonChildren?.length){
+      return TYPE.slice(2,3);
+    }
+  } else if(record.resourceType === 2){
+    return TYPE.slice(2,3);
+  } else {
+    return [];
   }
 };
 const Resource = (props:any) => {
@@ -24,7 +38,8 @@ const Resource = (props:any) => {
   const [list,setList] = useState([]); // 列表
   const [visible,setVisible] = useState(false);
   const [formData,setFormData] = useState({});
-  const [configData,setConfigData] = useState({ selectOptions:[],initialValues:{} }); //新增时的初始值数据
+  // 新增时上级资源下拉选项   新增/编辑时资源类型下拉   新增时上级资源初始值
+  const [configData,setConfigData] = useState({ resourceParentOptions:[],resourceTypeOptions:[],initialValues:{} });
 
   useEffect(() => {
     handleSearch();
@@ -55,33 +70,35 @@ const Resource = (props:any) => {
       type:'select',
       rules:[{ required:true }],
       readOnly:[true,true],
-      selectOptions:configData.selectOptions,
+      selectOptions:configData.resourceParentOptions,
       hide:Object.keys(formData).length
     },
     {
       key:'resourceName',
       title:'资源名称',
       type:'input',
-      rules:[{ required:true }],
+      rules:[{ required:true, message:'请输入资源名称' }],
     },
     {
       key:'resourceCode',
       title:'资源编码',
       type:'input',
-      rules:[{ required:true }],
+      rules:[{ required:true, message:'请输入资源编码' }],
+      readOnly:[false,true],
     },
     {
       key:'resourceType',
       title:'资源类型',
       type:'select',
-      rules:[{ required:true }],
-      selectOptions:typeEnums(configData.initialValues.type)
+      rules:[{ required:true, message:'请选择资源类型' }],
+      readOnly:[false,true],
+      selectOptions:configData.resourceTypeOptions,
     },
     {
       key:'resourceIcon',
       title:'资源图标',
       type:'input',
-      rules:[{ required:true }],
+      rules:[{ required:true, message:'请输入资源图标' }],
     },
   ];
   const columns = [
@@ -92,7 +109,7 @@ const Resource = (props:any) => {
       render:(text:string, record:any) => {
         switch (record.resourceType) {
           case 1: return <span><Tag color="processing">菜单</Tag>{text}</span>;
-          case 2: return <span><Tag color="error">页面</Tag>{text}</span>;
+          case 2: return <span><Tag color="error">路由</Tag>{text}</span>;
           default: return null;
         }
       }
@@ -119,33 +136,34 @@ const Resource = (props:any) => {
           {
             key: 'add',
             title: '新增',
-            auth:'1',
+            auth:'resource_create',
             hide:record.resourceType === 3,
             onClick: () => {
               setVisible(true);
               setConfigData({
-                selectOptions:[{ value:record.sid,label:record.resourceName }],
-                initialValues:{ resourceParentSid:record.sid, type:record.resourceType },
+                resourceParentOptions:[{ value:record.sid,label:record.resourceName }],
+                resourceTypeOptions:getType(record),
+                initialValues:{ resourceParentSid:record.sid },
               })
             }
           },
           {
             key: 'edit',
             title: '编辑',
-            auth:'2',
+            auth:'resource_update',
             onClick: () => {
               setVisible(true);
               setFormData(record);
               setConfigData({
-                selectOptions:[],
-                initialValues:{ type:record.resourceType },
+                ...configData,
+                resourceTypeOptions:TYPE,
               })
              }
             },
           {
             title: '删除',
             key: 'remove',
-            auth:'3',
+            auth:'resource_delete',
             onClick: () => handleDelete(record.sid),
             pop: true,
             message: '是否确认删除？',

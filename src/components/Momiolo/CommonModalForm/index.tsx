@@ -90,7 +90,7 @@ const CommonModalForm = (props:any) => {
       }
       switch (type) {
         case 'input': {
-          const { type, key, title, rules, maxLength, ...rest } = item;
+          const { type,readOnly,hide, key, title, rules, maxLength, ...rest } = item;
           const placeholder = `请输入${typeof title === 'string' ? title : ''}`;
           return (
               <FormItem key={key} name={key} label={title} rules={rules}>
@@ -99,7 +99,7 @@ const CommonModalForm = (props:any) => {
           )
         }
         case 'textArea': {
-          const { type, key, title, rules, maxLength, rows = 4, ...rest } = item;
+          const { type,readOnly,hide, key, title, rules, maxLength, rows = 4, ...rest } = item;
           const placeholder = `请输入${typeof title === 'string' ? title : ''}`;
           return (
               <FormItem key={key} name={key} label={title} rules={rules}>
@@ -108,7 +108,7 @@ const CommonModalForm = (props:any) => {
           )
         }
         case 'select': {
-          const { type, key, title, rules, selectOptions = [], keyValue = ['value', 'label'], onSelectChange, ...rest } = item;
+          const { type,readOnly,hide, key, title, rules, selectOptions = [], keyValue = ['value', 'label'], onSelectChange, ...rest } = item;
           return (
               <FormItem key={key} name={key} label={title} rules={rules}>
                 <Select
