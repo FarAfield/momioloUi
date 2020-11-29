@@ -1,10 +1,11 @@
 import React,{ useState, useEffect, useCallback } from 'react';
 import { connect } from 'umi';
-import { Tag, message } from 'antd';
+import { Tag, message, Popconfirm } from 'antd';
 import CommonTable from '../../../components/Momiolo/CommonTable';
 import CommonAuth from '../../../components/Momiolo/CommonAuth';
 import CommonModalForm from '../../../components/Momiolo/CommonModalForm';
 import PageCard from '../../../components/PageCard';
+import { CloseOutlined } from '@ant-design/icons';
 
 
 const TYPE = [
@@ -39,7 +40,7 @@ const Resource = (props:any) => {
   const [visible,setVisible] = useState(false);
   const [formData,setFormData] = useState({});
   // 新增时上级资源下拉选项   新增/编辑时资源类型下拉   新增时上级资源初始值
-  const [configData,setConfigData] = useState({ resourceParentOptions:[],resourceTypeOptions:[],initialValues:{} });
+  const [configData,setConfigData] = useState<any>({ resourceParentOptions:[],resourceTypeOptions:[],initialValues:{} });
 
   useEffect(() => {
     handleSearch();
@@ -122,7 +123,16 @@ const Resource = (props:any) => {
         if(record.children && record.children.length){
           return record.children.map((item:any) => <Tag key={item.sid} color="warning">{item.resourceName}</Tag>)
         } else if(record.buttonChildren && record.buttonChildren.length){
-          return record.buttonChildren.map((item:any) => <Tag color="success" key={item.sid} closable onClose={() => handleDelete(item.sid)}>{item.resourceName}</Tag>)
+          return record.buttonChildren.map((item:any) =>
+              <Tag
+                color="success"
+                key={item.sid}
+                closable
+                onClose={(e) =>  e.preventDefault()}
+                closeIcon={<Popconfirm title={'是否确认删除'} onConfirm={() => handleDelete(item.sid)}><CloseOutlined/></Popconfirm>}
+              >
+                {item.resourceName}
+              </Tag>)
         } else {
           return null;
         }
@@ -198,5 +208,5 @@ const Resource = (props:any) => {
   )
 };
 export default connect(({ loading }:any) => ({
-  loading:loading.effects['base/getData']
+  loading:loading.effects['base/getData'] || loading.effects['base/postData']
 }))(Resource)
