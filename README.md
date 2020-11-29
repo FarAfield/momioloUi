@@ -1,6 +1,5 @@
 # momioloUi
 momiolo前端
-#  locales 国际化配置
-#  global  全局化配置
-#  
-#  todo request
+
+基于 React 16.8  Hook实现
+

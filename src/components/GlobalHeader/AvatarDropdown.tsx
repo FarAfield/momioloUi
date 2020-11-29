@@ -4,6 +4,7 @@ import { Avatar, Menu, Spin } from 'antd';
 import { connect,history } from 'umi';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
+import { nickNameAndAvatar } from '@/utils/constant';
 
 const AvatarDropdown = (props:any) => {
   const { currentUser, dispatch } = props;
@@ -51,8 +52,8 @@ const AvatarDropdown = (props:any) => {
   return currentUser && currentUser.accountSid ? (
       <HeaderDropdown overlay={menuHeaderDropdown}>
         <span className={`${styles.action} ${styles.account}`}>
-          <Avatar size="small" className={styles.avatar} src={currentUser.userAvatar} alt="avatar" />
-          <span className={`${styles.name} anticon`}>{currentUser.userName}</span>
+          <Avatar size="small" className={styles.avatar} src={currentUser.userAvatar || nickNameAndAvatar[1]} alt="avatar" />
+          <span className={`${styles.name} anticon`}>{currentUser.userName || nickNameAndAvatar[0]}</span>
         </span>
       </HeaderDropdown>
   ) : (

@@ -30,4 +30,6 @@ export const requestConfig = {
   TOKEN_INVALID_ERROR:'10002',
   UNAUTHORIZED_ERROR:'10003'
 };
+// 默认昵称以及头像配置
+export const nickNameAndAvatar = ['昵称','https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606642390996&di=c281189456e8cdcc00c29f00d59e4aa7&imgtype=0&src=http%3A%2F%2Fpic1.zhimg.com%2F50%2Fv2-a187b949aadf6ccffd0436bd346ca9ad_hd.jpg'];
 

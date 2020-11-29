@@ -3,6 +3,11 @@ import { Reducer, Effect,history } from 'umi';
 import { message } from 'antd';
 import { setToken, storageClear } from '@/utils/utils';
 
+/**
+ *   login 模块
+ *   有关账户的全部操作此处进行逻辑处理
+ */
+
 export interface StateType {
   currentUser:object,
   menuData:Array<any>,
@@ -45,6 +50,9 @@ const LoginModel: LoginModelType = {
     permissions:[],
   },
   effects: {
+    /**
+     *  登录
+     */
     *login({ payload,callback }, { call }) {
       const response = yield call(postData, Object.assign(payload,{ url:'/account/login' }));
       if(isSuccess(response)){
@@ -54,6 +62,9 @@ const LoginModel: LoginModelType = {
       }
       if(callback) callback(response);
     },
+    /**
+     *  退出登录
+     */
     *logout(_, { call }) {
       const response = yield call(postData,{ url:'/account/logout'});
       if(isSuccess(response)){
@@ -64,17 +75,23 @@ const LoginModel: LoginModelType = {
         errorMessage(response);
       }
     },
+    /**
+     *  查询当前登录用户的信息
+     */
     *findCurrentInfo(_,{ call, put }){
       const response = yield call(getData,{ url:'/account/findCurrentInfo'});
       if(isSuccess(response)){
         yield put({
           type: 'update',
-          payload: { currentUser:response.data },
+          payload: { currentUser: response.data },
         });
       } else {
         errorMessage(response)
       }
     },
+    /**
+     *  查询当前登录用户的菜单
+     */
     *findCurrentMenu({ callback },{ call, put }){
       const response = yield call(getData,{ url:'/resource/findCurrentMenu'});
       if(isSuccess(response)){
