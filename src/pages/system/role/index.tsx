@@ -1,23 +1,19 @@
 import React,{ useState, useEffect, useCallback } from 'react';
 import { connect } from 'umi';
-import { message,Button } from 'antd';
+import { message, Badge, Button } from 'antd';
 import CommonTable from '../../../components/Momiolo/CommonTable';
 import CommonAuth from '../../../components/Momiolo/CommonAuth';
-import CommonModalForm from '../../../components/Momiolo/CommonModalForm';
 import CommonSearchForm from '../../../components/Momiolo/CommonSearchForm';
 import PageCard from '../../../components/PageCard';
-import { getValueByKey } from '@/utils/support';
+import {getValueByKey} from "@/utils/support";
 
 
-const TYPE = [
-  { value:'1', label:'类型一'},
-  { value:'2', label:'类型二'},
-  { value:'3', label:'类型三'},
+const STATUS = [
+  { value:"0", label:'启用'},
+  { value:"1", label:'弃用'},
 ];
-const Notice = (props:any) => {
+const Role = (props:any) => {
   const { dispatch,loading, pageData:{ list, pagination } } = props;
-  const [visible,setVisible] = useState(false);
-  const [formData,setFormData] = useState({});
   const [formValues,setFormValues] = useState({});
   useEffect(() => {
     handleSearch();
@@ -25,13 +21,13 @@ const Notice = (props:any) => {
   const handleSearch = useCallback(() => {
     dispatch({
       type: 'base/getPage',
-      payload: {url: '/notice/findByPage'},
+      payload: {url: '/role/findByPage'},
     });
   },[]);
   const handleDelete = useCallback((sid) =>{
     dispatch({
       type: 'base/postData',
-      payload: {url: '/notice/delete',sid},
+      payload: {url: '/role/delete',sid},
       callback: (res:any) => {
         message.success('删除成功');
         handleSearch();
@@ -40,55 +36,34 @@ const Notice = (props:any) => {
   },[]);
   const searchItems = [
     {
-      key:"title",
-      title:"公告标题",
+      key:"roleName",
+      title:"角色名称",
       type:"input",
     },
     {
-      key:"type",
-      title:"公告类型",
+      key:"roleStatus",
+      title:"角色状态",
       type:"select",
-      selectOptions:TYPE,
+      selectOptions:STATUS,
     }
-  ];
-  const formItems = [
-    {
-      key:'title',
-      title:'公告标题',
-      type:'input',
-      rules:[{ required:true, message:'请输入公告标题' }],
-    },
-    {
-      key:'type',
-      title:'公告类型',
-      type:'select',
-      rules:[{ required:true, message:'请选择公告类型' }],
-      selectOptions:TYPE,
-    },
-    {
-      key:'content',
-      title:'公告内容',
-      type:'textArea',
-      rules:[{ max:500, message:'最大字符数500' }],
-    },
   ];
   const columns = [
     {
-      title: '公告标题',
-      dataIndex: 'title',
+      title: '角色名称',
+      dataIndex: 'roleName',
       width: '10%',
     },
     {
-      title: '公告类型',
-      dataIndex: 'type',
-      width: '10%',
-      render: (text:any) => getValueByKey(TYPE,['value','label'],text),
-    },
-    {
-      title: '公告内容',
-      dataIndex: 'content',
-      width:'30%',
+      title: '角色简介',
+      dataIndex: 'roleDesc',
+      width: '20%',
       ellipsis:true,
+    },
+    {
+      title: '角色状态',
+      dataIndex: 'roleStatus',
+      width:'10%',
+      render:(text:any) => <Badge status={text ? 'error' : 'success'} text={getValueByKey(STATUS,['value','label'],String(text))}/>
     },
     {
       title: '创建时间',
@@ -108,16 +83,19 @@ const Notice = (props:any) => {
           {
             key: 'edit',
             title: '编辑',
-            auth:'notice_update',
-            onClick: () => {
-              setVisible(true);
-              setFormData(record);
-            }
+            auth:'role_update',
+            onClick: () => {},
+          },
+          {
+            key: 'view',
+            title: '查看',
+            auth:'role_view',
+            onClick: () => {},
           },
           {
             title: '删除',
             key: 'remove',
-            auth:'notice_delete',
+            auth:'role_delete',
             onClick: () => handleDelete(record.sid),
             pop: true,
             message: '是否确认删除？',
@@ -146,27 +124,19 @@ const Notice = (props:any) => {
       <PageCard>
         <CommonSearchForm
           searchItems={searchItems}
-          fetchParams={{ type:'base/getPage',url: '/notice/findByPage'}}
+          fetchParams={{ type:'base/getPage',url: '/role/findByPage'}}
           saveFormValues={(v:any) => setFormValues({ ...formValues,...v})}
           handleFormReset={() => setFormValues({})}
         />
         <div style={{ display:'flex',marginBottom:12}}>
-          <Button type='primary' onClick={() => setVisible(true)}>
+          <Button type='primary' onClick={() => {}}>
             新增
           </Button>
         </div>
         <CommonTable
-           fetchParams={{ type:'base/getPage',url: '/notice/findByPage'}}
-           formValues={formValues}
-           tableProps={tableProps}
-        />
-        <CommonModalForm
-          visible={visible}
-          saveUrl={['/notice/create','/notice/update']}
-          formItems={formItems}
-          formData={formData}
-          handleCallback={() => handleSearch()}
-          handleCancel={() => { setVisible(false); setFormData({})}}
+          fetchParams={{ type:'base/getPage',url: '/role/findByPage'}}
+          formValues={formValues}
+          tableProps={tableProps}
         />
       </PageCard>
   )
@@ -174,4 +144,4 @@ const Notice = (props:any) => {
 export default connect(({ loading, base }:any) => ({
   loading:loading.effects['base/getPage'] || loading.effects['base/postData'],
   pageData:base.pageData,
-}))(Notice)
+}))(Role);

@@ -1,6 +1,6 @@
 import React,{ useState, useEffect, useCallback } from 'react';
 import { connect } from 'umi';
-import { Tag, message, Popconfirm } from 'antd';
+import { Tag, message, Popconfirm, Button } from 'antd';
 import CommonTable from '../../../components/Momiolo/CommonTable';
 import CommonAuth from '../../../components/Momiolo/CommonAuth';
 import CommonModalForm from '../../../components/Momiolo/CommonModalForm';
@@ -183,12 +183,35 @@ const Resource = (props:any) => {
       },
     },
   ];
+  const footer = (<div
+      style={{
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center',
+      }}
+    >
+    <Button
+      ghost
+      onClick = {() => {
+        setVisible(true);
+        setConfigData({
+          resourceParentOptions:[{ value:list?.[0]?.['resourceParentSid'], label:'根资源' }],
+          resourceTypeOptions:TYPE.slice(0,1),
+          initialValues:{ resourceParentSid:list?.[0]?.['resourceParentSid'] },
+        })
+      }}
+    >
+      新增一级菜单
+    </Button>
+  </div>);
   const tableProps = {
     columns,
     dataSource: list,
     loading,
     rowKey: (record:any) => record.sid,
     pagination: false,
+    footer:() => footer,
+
   };
   return (
       <PageCard>
