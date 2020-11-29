@@ -19,7 +19,7 @@ const BaseView = (props:any) => {
   const onFinish = useCallback((values:any) => {
     dispatch({
       type:'base/postData',
-      payload:{ url:'account/updateCurrentInfo',...values},
+      payload:{ url:'/account/updateCurrentInfo',...values},
       callback: (res:any) => {
         message.success("更新设置成功");
         dispatch({ type:'login/findCurrentInfo' })
