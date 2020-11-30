@@ -10,6 +10,7 @@ import RightContent from '@/components/GlobalHeader/RightContent';
 import DefaultFooter from '../components/DefaultFooter';
 import AuthorityFilter from './AuthorityFilter';
 import { isLogin, storageClear } from '@/utils/utils';
+import { getIconByName } from '@/utils/support';
 import logo from '../assets/logo-white.svg';
 
 
@@ -50,10 +51,10 @@ const BasicLayout: React.FC<any> = (props) => {
       onCollapse={handleMenuCollapse}
       onMenuHeaderClick={() => history.push('/')}
       menuItemRender={(menuItemProps, defaultDom) => {
-        if (menuItemProps.isUrl || !menuItemProps.path) {
-          return defaultDom;
-        }
-        return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+        return <Link to={menuItemProps.path || '/'}>{getIconByName(menuItemProps.resourceIcon)}{defaultDom}</Link>;
+      }}
+      subMenuItemRender={(menuItemProps, defaultDom) => {
+        return <Link to={menuItemProps.path || '/'}>{getIconByName(menuItemProps.resourceIcon)}{defaultDom}</Link>;
       }}
       breadcrumbRender={(routers = []) => [
         {

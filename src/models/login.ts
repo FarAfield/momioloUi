@@ -34,7 +34,7 @@ const transferMenu = (menuData:Array<any>,parentPath:string = '') => {
       const path = `${parentPath}/${item.resourceCode}`;
       item.path = path;
       item.name = `${item.resourceName}`;
-      item.icon = `${item.resourceIcon}`;
+      // item.icon = `${item.resourceIcon}`;
       if(item.children && item.children.length){
         item.children = transferMenu(item.children,path)
       }
