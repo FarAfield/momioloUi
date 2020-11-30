@@ -6,6 +6,7 @@ import CommonAuth from '../../../components/Momiolo/CommonAuth';
 import CommonSearchForm from '../../../components/Momiolo/CommonSearchForm';
 import PageCard from '../../../components/PageCard';
 import {getValueByKey} from "@/utils/support";
+import { PlusOutlined } from '@ant-design/icons';
 
 
 const STATUS = [
@@ -130,7 +131,7 @@ const Role = (props:any) => {
         />
         <div style={{ display:'flex',marginBottom:12}}>
           <Button type='primary' onClick={() => {}}>
-            新增
+            <PlusOutlined/>新增
           </Button>
         </div>
         <CommonTable

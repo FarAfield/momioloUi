@@ -3,6 +3,7 @@ import { Form, Row, Col, Input, Button, Select, DatePicker, InputNumber } from '
 import {transferOption} from '@/utils/support';
 import styles from './index.less';
 import {connect} from 'umi';
+import { SearchOutlined, ReloadOutlined  } from '@ant-design/icons';
 
 
 const formItemLayout = {
@@ -67,10 +68,10 @@ const CommonSearchForm = (props:any) => {
     return <Col key={'searchAndReset'} span={8} offset={offset}>
       <div className={styles.searchAndReset}>
         <Button type="primary" htmlType="submit">
-          查询
+          <SearchOutlined/>查询
         </Button>
         <Button onClick={onReset}>
-          重置
+          <ReloadOutlined/>重置
         </Button>
       </div>
     </Col>

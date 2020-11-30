@@ -5,7 +5,7 @@ import CommonTable from '../../../components/Momiolo/CommonTable';
 import CommonAuth from '../../../components/Momiolo/CommonAuth';
 import CommonModalForm from '../../../components/Momiolo/CommonModalForm';
 import PageCard from '../../../components/PageCard';
-import { CloseOutlined } from '@ant-design/icons';
+import { CloseOutlined, PlusOutlined  } from '@ant-design/icons';
 
 
 const TYPE = [
@@ -201,7 +201,7 @@ const Resource = (props:any) => {
         })
       }}
     >
-      新增一级菜单
+      <PlusOutlined/>新增一级菜单
     </Button>
   </div>);
   const tableProps = {

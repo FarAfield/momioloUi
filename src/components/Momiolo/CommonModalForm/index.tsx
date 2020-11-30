@@ -3,6 +3,7 @@ import { Form,Button, Modal,Input, Select, message } from 'antd';
 import {transferOption} from '@/utils/support';
 import {connect} from 'umi';
 import styles from './index.less';
+import { CheckOutlined, CloseOutlined  } from '@ant-design/icons';
 
 const formItemLayout = {
   labelCol: {
@@ -73,10 +74,10 @@ const CommonModalForm = (props:any) => {
     return (
       <div key={'saveAndCancel'} className={styles.saveAndCancel}>
         <Button onClick={onCancel}>
-          {buttonName[1]}
+          <CloseOutlined/>{buttonName[1]}
         </Button>
         <Button type="primary" htmlType="submit" loading={loading}>
-          {buttonName[0]}
+          <CheckOutlined/>{buttonName[0]}
         </Button>
       </div>
     )
