@@ -8,6 +8,7 @@ import CommonSearchForm from '../../../components/Momiolo/CommonSearchForm';
 import PageCard from '../../../components/PageCard';
 import { getValueByKey } from '@/utils/support';
 import { PlusOutlined } from '@ant-design/icons';
+import { isSuccess } from '@/utils/utils';
 
 const STATUS = [
   { value:"0", label:'启用'},
@@ -22,6 +23,29 @@ const Account = (props:any) => {
   const [orgTree,setOrgTree] = useState([]);
   useEffect(() => {
     handleSearch();
+    getOption();
+  },[]);
+  const getOption = useCallback(() => {
+    // 获取角色选项
+    dispatch({
+      type:'base/getDataWithRes',
+      payload:{ url: '/role/findRoleList' },
+      callback:(res:any) => {
+       if(isSuccess(res)){
+         setRoleOption(res.data);
+       }
+      }
+    });
+    // 获取组织树
+    dispatch({
+      type:'base/getDataWithRes',
+      payload:{ url:'/org/findOrgTree'},
+      callback:(res:any) => {
+        if(isSuccess(res)){
+          setOrgTree(res.data);
+        }
+      }
+    })
   },[]);
   const handleSearch = useCallback(() => {
     dispatch({
@@ -75,18 +99,14 @@ const Account = (props:any) => {
       title:'登录账号',
       type:'input',
       rules:[{ required:true, message:'请输入登录账号' }],
+      readOnly:[false,true],
     },
     {
       key:'accountPassword',
       title:'登录密码',
       type:'input',
       rules:[{ required:true, message:'请输入登录密码' }],
-    },
-    {
-      key:'accountCheckPassword',
-      title:'确认密码',
-      type:'input',
-      rules:[{ required:true, message:'请确认输入的密码' }],
+      hide:Object.keys(formData).length,
     },
     {
       key:'orgSid',

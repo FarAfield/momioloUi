@@ -11,3 +11,7 @@ export function getToken() {
 export function storageClear() {
   sessionStorage.clear();
 }
+
+export const isSuccess = (response:any) => {
+  return response?.statusCode === '0';
+};

@@ -3,7 +3,7 @@
  * You can view component api by:
  * https://github.com/ant-design/ant-design-pro-layout
  */
-import ProLayout from '@ant-design/pro-layout';
+import ProLayout,{ SettingDrawer } from '@ant-design/pro-layout';
 import React, { useState,useEffect, useCallback } from 'react';
 import { Link, connect, history } from 'umi';
 import RightContent from '@/components/GlobalHeader/RightContent';
@@ -54,7 +54,7 @@ const BasicLayout: React.FC<any> = (props) => {
         return <Link to={menuItemProps.path || '/'}>{getIconByName(menuItemProps.resourceIcon)}{defaultDom}</Link>;
       }}
       subMenuItemRender={(menuItemProps, defaultDom) => {
-        return <Link to={menuItemProps.path || '/'}>{getIconByName(menuItemProps.resourceIcon)}{defaultDom}</Link>;
+        return <div>{getIconByName(menuItemProps.resourceIcon)}{defaultDom}</div>;
       }}
       breadcrumbRender={(routers = []) => [
         {
@@ -81,20 +81,20 @@ const BasicLayout: React.FC<any> = (props) => {
       <AuthorityFilter>
         {children}
       </AuthorityFilter>
-      {/*<SettingDrawer*/}
-        {/*settings={settings}*/}
-        {/*onSettingChange={config => {*/}
-          {/*dispatch({*/}
-            {/*type:'global/changeSetting',*/}
-            {/*payload:{...config}*/}
-          {/*})*/}
-        {/*}}*/}
-        {/*hideHintAlert*/}
-      {/*/>*/}
+      <SettingDrawer
+        settings={settings}
+        onSettingChange={config => {
+          dispatch({
+            type:'global/changeSetting',
+            payload:{...config}
+          })
+        }}
+        hideHintAlert
+      />
     </ProLayout>
   );
 };
-export default connect(({ global,login }:any) => ({
+export default connect(({ global }:any) => ({
   collapsed: global.collapsed,
   settings:global.defaultSetting,
 }))(BasicLayout);
