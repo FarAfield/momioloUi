@@ -6,14 +6,62 @@ import { GithubOutlined } from '@ant-design/icons';
  */
 // 主题颜色
 export const ThemeConfig = [
-    '#1890ff',
-    '#F5222D',
-    '#FA541C',
-    '#FAAD14',
-    '#13C2C2',
-    '#52C41A',
-    '#2F54EB',
-    '#722ED1',
+  {
+    key: 'default',
+    theme:'',
+    modifyVars: {
+      '@primary-color': '#1890ff',
+    },
+  },
+  {
+    key: 'dust',
+    theme:'https://preview.pro.ant.design/theme/dust.css',
+    modifyVars: {
+      '@primary-color': '#F5222D',
+    },
+  },
+  {
+    key: 'volcano',
+    theme:'https://preview.pro.ant.design/theme/volcano.css',
+    modifyVars: {
+      '@primary-color': '#FA541C',
+    },
+  },
+  {
+    key: 'sunset',
+    theme:'https://preview.pro.ant.design/theme/sunset.css',
+    modifyVars: {
+      '@primary-color': '#FAAD14',
+    },
+  },
+  {
+    key: 'cyan',
+    theme:'https://preview.pro.ant.design/theme/cyan.css',
+    modifyVars: {
+      '@primary-color': '#13C2C2',
+    },
+  },
+  {
+    key: 'green',
+    theme:'https://preview.pro.ant.design/theme/green.css',
+    modifyVars: {
+      '@primary-color': '#52C41A',
+    },
+  },
+  {
+    key: 'geekblue',
+    theme:'https://preview.pro.ant.design/theme/geekblue.css',
+    modifyVars: {
+      '@primary-color': '#2F54EB',
+    },
+  },
+  {
+    key: 'purple',
+    theme:'https://preview.pro.ant.design/theme/purple.css',
+    modifyVars: {
+      '@primary-color': '#722ED1',
+    },
+  },
 ];
 // 登录页描述语
 export const loginDescription = 'Momiolo 是西湖区最具影响力的 Web 设计规范';
