@@ -3,7 +3,7 @@
  * You can view component api by:
  * https://github.com/ant-design/ant-design-pro-layout
  */
-import ProLayout,{ SettingDrawer } from '@ant-design/pro-layout';
+import ProLayout from '@ant-design/pro-layout';
 import React, { useState,useEffect, useCallback } from 'react';
 import { Link, connect, history } from 'umi';
 import RightContent from '@/components/GlobalHeader/RightContent';
@@ -81,16 +81,6 @@ const BasicLayout: React.FC<any> = (props) => {
       <AuthorityFilter>
         {children}
       </AuthorityFilter>
-      <SettingDrawer
-        settings={settings}
-        onSettingChange={config => {
-          dispatch({
-            type:'global/changeSetting',
-            payload:{...config}
-          })
-        }}
-        hideHintAlert
-      />
     </ProLayout>
   );
 };
