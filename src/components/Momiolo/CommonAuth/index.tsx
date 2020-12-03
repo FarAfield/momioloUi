@@ -5,6 +5,8 @@ import { connect } from 'umi';
 const btnProps = (item:any,type:string) => ({
   style:{
     marginRight: type === 'link' ? 0 : 12,
+    marginTop: 4,
+    marginBottom:4,
   }
 });
 const simpleButton = (item:any,type:any) => (

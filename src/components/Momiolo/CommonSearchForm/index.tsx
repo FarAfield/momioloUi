@@ -175,7 +175,7 @@ const CommonSearchForm = (props:any) => {
     });
     resultItems.push(searchAndReset);
     return resultItems;
-  },[]);
+  },[searchItems]);
 
   return (
       <div>

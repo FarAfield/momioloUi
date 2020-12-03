@@ -1,5 +1,5 @@
 import React,{ useEffect,useMemo, useCallback } from 'react';
-import { Form,Button, Modal,Input, Select, message } from 'antd';
+import { Form,Button, Modal,Input, Select, TreeSelect, message } from 'antd';
 import {transferOption} from '@/utils/support';
 import {connect} from 'umi';
 import styles from './index.less';
@@ -126,6 +126,24 @@ const CommonModalForm = (props:any) => {
                 >
                   { transferOption(selectOptions,keyValue) }
                 </Select>
+              </FormItem>
+          )
+        }
+        case 'treeSelect': {
+          const { type,readOnly,hide, key, title, rules,treeData, ...rest } = item;
+          return (
+              <FormItem key={key} name={key} label={title} rules={rules}>
+                <TreeSelect
+                  allowClear
+                  showSearch={false} // 单选
+                  filterTreeNode={true}
+                  placeholder={'请选择'}
+                  treeData={treeData}
+                  getPopupContainer={triggerNode => triggerNode.parentNode}
+                  disabled={disabled}
+                  treeDefaultExpandAll
+                  {...rest}
+                />
               </FormItem>
           )
         }
