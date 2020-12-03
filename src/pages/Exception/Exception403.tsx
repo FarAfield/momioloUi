@@ -9,12 +9,10 @@ export default () => (
     style={{
       background: 'none',
     }}
-    subTitle={"抱歉，你无权访问该页面。"}
+    subTitle={'抱歉，你无权访问该页面。'}
     extra={
       <Link to="/">
-        <Button type="primary">
-          {"返 回"}
-        </Button>
+        <Button type="primary">{'返 回'}</Button>
       </Link>
     }
   />

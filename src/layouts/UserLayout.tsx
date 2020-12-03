@@ -6,7 +6,6 @@ import logo from '../assets/logo.svg';
 import styles from './UserLayout.less';
 import { loginDescription } from '@/utils/constant';
 
-
 const UserLayout: React.FC<{ children: any }> = ({ children }) => {
   return (
     <HelmetProvider>

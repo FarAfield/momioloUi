@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import classNames from 'classnames';
@@ -11,14 +11,9 @@ export interface HeaderSearchProps {
   onSearch?: (value?: string) => void;
 }
 const HeaderSearch: React.FC<HeaderSearchProps> = (props) => {
-  const {
-    className,
-    placeholder,
-    defaultValue,
-    onSearch
-  } = props;
+  const { className, placeholder, defaultValue, onSearch } = props;
   const inputRef = useRef<Input | null>(null);
-  const [value,setValue] = useState(defaultValue);
+  const [value, setValue] = useState(defaultValue);
   const [searchMode, setSearchMode] = useState(false);
   const inputClass = classNames(styles.input, {
     [styles.show]: searchMode,
@@ -33,18 +28,18 @@ const HeaderSearch: React.FC<HeaderSearchProps> = (props) => {
         }
       }}
     >
-      <SearchOutlined key="Icon" style={{ cursor: 'pointer' }}/>
+      <SearchOutlined key="Icon" style={{ cursor: 'pointer' }} />
       <div className={inputClass}>
         <Input
           ref={inputRef}
           value={value}
-          onChange={e => setValue(e.target.value)}
+          onChange={(e) => setValue(e.target.value)}
           aria-label={placeholder}
           placeholder={placeholder}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               if (onSearch) {
-                  onSearch(value);
+                onSearch(value);
               }
             }
           }}

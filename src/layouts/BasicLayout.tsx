@@ -4,7 +4,7 @@
  * https://github.com/ant-design/ant-design-pro-layout
  */
 import ProLayout from '@ant-design/pro-layout';
-import React, { useState,useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, connect, history } from 'umi';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import DefaultFooter from '../components/DefaultFooter';
@@ -13,27 +13,22 @@ import { isLogin, storageClear } from '@/utils/utils';
 import { getIconByName } from '@/utils/support';
 import logo from '../assets/logo-white.svg';
 
-
 const BasicLayout: React.FC<any> = (props) => {
-  const {
-    dispatch,
-    children,
-    settings,
-  } = props;
-  const [menuData,setMenuData] = useState<Array<any>>([]);
-  const [loading,setLoading] = useState(false);
+  const { dispatch, children, settings } = props;
+  const [menuData, setMenuData] = useState<Array<any>>([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
-    if(isLogin()){
+    if (isLogin()) {
       dispatch({
         type: 'login/findCurrentInfo',
       });
       setLoading(true);
       dispatch({
         type: 'login/findCurrentMenu',
-        callback:(menuData:Array<any>) => {
+        callback: (menuData: Array<any>) => {
           setMenuData(menuData);
           setLoading(false);
-        }
+        },
       });
     } else {
       storageClear();
@@ -44,17 +39,27 @@ const BasicLayout: React.FC<any> = (props) => {
     dispatch({
       type: 'global/changeCollapsed',
     });
-  },[]);
+  }, []);
   return (
     <ProLayout
       logo={logo}
       onCollapse={handleMenuCollapse}
       onMenuHeaderClick={() => history.push('/')}
       menuItemRender={(menuItemProps, defaultDom) => {
-        return <Link to={menuItemProps.path || '/'}>{getIconByName(menuItemProps.resourceIcon)}{defaultDom}</Link>;
+        return (
+          <Link to={menuItemProps.path || '/'}>
+            {getIconByName(menuItemProps.resourceIcon)}
+            {defaultDom}
+          </Link>
+        );
       }}
       subMenuItemRender={(menuItemProps, defaultDom) => {
-        return <div>{getIconByName(menuItemProps.resourceIcon)}{defaultDom}</div>;
+        return (
+          <div>
+            {getIconByName(menuItemProps.resourceIcon)}
+            {defaultDom}
+          </div>
+        );
       }}
       breadcrumbRender={(routers = []) => [
         {
@@ -71,20 +76,18 @@ const BasicLayout: React.FC<any> = (props) => {
           <span>{route.breadcrumbName}</span>
         );
       }}
-      footerRender={() => <DefaultFooter/>}
+      footerRender={() => <DefaultFooter />}
       menuDataRender={() => menuData}
       rightContentRender={() => <RightContent />}
       menu={{ loading }}
       {...props}
       {...settings}
     >
-      <AuthorityFilter>
-        {children}
-      </AuthorityFilter>
+      <AuthorityFilter>{children}</AuthorityFilter>
     </ProLayout>
   );
 };
-export default connect(({ global }:any) => ({
+export default connect(({ global }: any) => ({
   collapsed: global.collapsed,
-  settings:global.defaultSetting,
+  settings: global.defaultSetting,
 }))(BasicLayout);

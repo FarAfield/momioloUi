@@ -1,10 +1,10 @@
-import {ThemeConfig} from "@/utils/constant";
+import { ThemeConfig } from '@/utils/constant';
 
 /**===========================  Token   ==================================*/
 export function isLogin() {
-  return (!!sessionStorage.getItem('token'));
+  return !!sessionStorage.getItem('token');
 }
-export function setToken(token:any) {
+export function setToken(token: any) {
   sessionStorage.setItem('token', token);
 }
 export function getToken() {
@@ -15,21 +15,21 @@ export function storageClear() {
 }
 
 /**===========================  Response   ==================================*/
-export const isSuccess = (response:any) => {
+export const isSuccess = (response: any) => {
   return response?.statusCode === '0';
 };
 
 /**===========================  Theme   ==================================*/
-export const changeTheme = (theme:any) => {
-  const linkDom:any = document.getElementById('theme-style') as HTMLLinkElement;
-  if(linkDom){
-    linkDom.href = ThemeConfig.find((item:any) => item.key === theme)?.theme;
+export const changeTheme = (theme: any) => {
+  const linkDom: any = document.getElementById('theme-style') as HTMLLinkElement;
+  if (linkDom) {
+    linkDom.href = ThemeConfig.find((item: any) => item.key === theme)?.theme;
   } else {
-    const style:any = document.createElement('link');
+    const style: any = document.createElement('link');
     style.type = 'text/css';
     style.rel = 'stylesheet';
     style.id = 'theme-style';
-    style.href = ThemeConfig.find((item:any) => item.key === theme)?.theme;
+    style.href = ThemeConfig.find((item: any) => item.key === theme)?.theme;
     if (document.body.append) {
       document.body.append(style);
     } else {

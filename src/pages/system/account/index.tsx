@@ -79,14 +79,13 @@ const Account = (props: any) => {
       },
     });
   }, []);
-  const handleFieldsValue = (values:any) => {
-    if(Object.keys(formData).length === 0){
+  const handleFieldsValue = (values: any) => {
+    if (Object.keys(formData).length === 0) {
       values.accountPassword = md5(values.accountPassword);
     }
-    console.log(values);
     return values;
   };
-  const mapPropsToFields = (values:any) => {
+  const mapPropsToFields = (values: any) => {
     values.roleSid = values?.roleSid?.split(',')?.map(Number) || [];
     return values;
   };
@@ -102,6 +101,12 @@ const Account = (props: any) => {
       type: 'input',
     },
     {
+      key: 'accountStatus',
+      title: '账号状态',
+      type: 'select',
+      selectOptions: STATUS,
+    },
+    {
       key: 'roleName',
       title: '所属角色',
       type: 'select',
@@ -109,10 +114,9 @@ const Account = (props: any) => {
       keyValue: ['roleName', 'roleName'],
     },
     {
-      key: 'accountStatus',
-      title: '账号状态',
-      type: 'select',
-      selectOptions: STATUS,
+      key: 'orgName',
+      title: '所属组织',
+      type: 'input',
     },
     {
       key: 'userMobile',
@@ -185,7 +189,7 @@ const Account = (props: any) => {
       render: (text: any) =>
         text
           ? text.split(',').map((item: any, index: number) => (
-              <Tag color="purple" key={index} style={{ margin: '2px 4px'}}>
+              <Tag color="purple" key={index} style={{ margin: '2px 4px' }}>
                 {item}
               </Tag>
             ))
@@ -233,7 +237,9 @@ const Account = (props: any) => {
             key: 'reset',
             title: '重置密码',
             auth: 'account_reset',
-            onClick: () => { message.info('后续功能，敬请期待！')},
+            onClick: () => {
+              message.info('后续功能，敬请期待！');
+            },
           },
         ];
         return <CommonAuth btns={btns} />;

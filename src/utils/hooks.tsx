@@ -1,48 +1,47 @@
 import { useState, useEffect, useReducer, useCallback } from 'react';
 
-
 const initPageData = {
-  list:[],
-  pagination:{
-    current:1,
-    pageSize:10,
-    total:0,
+  list: [],
+  pagination: {
+    current: 1,
+    pageSize: 10,
+    total: 0,
   },
 };
-const reducer = (state:any,action:any) => {
+const reducer = (state: any, action: any) => {
   switch (action.type) {
     case 'save':
       return {
         ...state,
         ...action.payload,
       };
-    case 'reset' :
+    case 'reset':
       return {
         ...initPageData,
       };
-    default:{
+    default: {
       return {
         ...state,
-      }
+      };
     }
   }
 };
-const useSearchTable = (fetchParams:any,form:any,initValues:object = {}) => {
-  const [pageData,dispatch] = useReducer(reducer,initPageData);
-  const [loading,setLoading] = useState(false);
+const useSearchTable = (fetchParams: any, form: any, initValues: object = {}) => {
+  const [pageData, dispatch] = useReducer(reducer, initPageData);
+  const [loading, setLoading] = useState(false);
   const { type, url, extraArgs } = fetchParams;
   // 初始化查询
-  useEffect(()=> {
+  useEffect(() => {
     onChange();
-  },[]);
-  const getFormValues = useCallback(() => form ? form.getFieldsValue() : {},[]);
+  }, []);
+  const getFormValues = useCallback(() => (form ? form.getFieldsValue() : {}), []);
   const reset = useCallback(() => {
-    if(form){
+    if (form) {
       form.resetFields(initValues);
     }
     onChange();
-  },[]);
-  const onChange = useCallback(({ current = 1, pageSize = 10 }= {}, filters = {}, sorter = {}) => {
+  }, []);
+  const onChange = useCallback(({ current = 1, pageSize = 10 } = {}, filters = {}, sorter = {}) => {
     const params = {
       page: current,
       size: pageSize,
@@ -55,12 +54,12 @@ const useSearchTable = (fetchParams:any,form:any,initValues:object = {}) => {
     dispatch({
       type,
       payload: { url, ...params },
-      callback: (pageData:object) => {
-        dispatch({ type: 'save', payload:{ ...pageData } });
+      callback: (pageData: object) => {
+        dispatch({ type: 'save', payload: { ...pageData } });
         setLoading(false);
-      }
+      },
     });
-  },[]);
+  }, []);
   const reload = useCallback((number = 0) => {
     const { pagination } = pageData;
     switch (number) {
@@ -69,16 +68,17 @@ const useSearchTable = (fetchParams:any,form:any,initValues:object = {}) => {
         break;
       }
       case 1: {
-        if((pagination.current -1) * pagination.pageSize + 1 === pagination.total){
-          onChange({ current:(pagination.current - 1) || 1, pageSize:pagination.pageSize })
+        if ((pagination.current - 1) * pagination.pageSize + 1 === pagination.total) {
+          onChange({ current: pagination.current - 1 || 1, pageSize: pagination.pageSize });
         } else {
-          onChange(pagination)
+          onChange(pagination);
         }
         break;
       }
-      default: onChange({ current: 1, pageSize: pagination.pageSize })
+      default:
+        onChange({ current: 1, pageSize: pagination.pageSize });
     }
-  },[]);
+  }, []);
 
   return {
     loading,
@@ -87,18 +87,7 @@ const useSearchTable = (fetchParams:any,form:any,initValues:object = {}) => {
     reset,
     reload,
     onChange,
-  }
+  };
 };
 
-
-
-
-
-
-
-
-
-
-export {
-  useSearchTable,
-}
+export { useSearchTable };
