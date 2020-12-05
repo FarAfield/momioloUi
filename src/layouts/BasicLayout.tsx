@@ -7,16 +7,19 @@ import ProLayout from '@ant-design/pro-layout';
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, connect, history } from 'umi';
 import RightContent from '@/components/GlobalHeader/RightContent';
-import DefaultFooter from '../components/DefaultFooter';
 import AuthorityFilter from './AuthorityFilter';
 import { isLogin, storageClear } from '@/utils/utils';
 import { getIconByName } from '@/utils/support';
 import logo from '../assets/logo-white.svg';
+import ThemeSetting from '../components/ThemeSetting';
+import { SettingOutlined } from '@ant-design/icons';
+import styles from './BasicLayout.less';
 
 const BasicLayout: React.FC<any> = (props) => {
   const { dispatch, children, settings } = props;
   const [menuData, setMenuData] = useState<Array<any>>([]);
   const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
   useEffect(() => {
     if (isLogin()) {
       dispatch({
@@ -76,7 +79,7 @@ const BasicLayout: React.FC<any> = (props) => {
           <span>{route.breadcrumbName}</span>
         );
       }}
-      footerRender={() => <DefaultFooter />}
+      footerRender={false}
       menuDataRender={() => menuData}
       rightContentRender={() => <RightContent />}
       menu={{ loading }}
@@ -84,6 +87,10 @@ const BasicLayout: React.FC<any> = (props) => {
       {...settings}
     >
       <AuthorityFilter>{children}</AuthorityFilter>
+      <ThemeSetting visible={visible} onClose={() => setVisible(false)} />
+      <div className={styles.themeSetting} onClick={() => setVisible(true)}>
+        <SettingOutlined style={{ fontSize: 20, color: 'white' }} />
+      </div>
     </ProLayout>
   );
 };

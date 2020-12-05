@@ -1,7 +1,7 @@
 import React from 'react';
 import { Select } from 'antd';
 const { Option } = Select;
-import { BankOutlined, BarsOutlined } from '@ant-design/icons';
+import { BankOutlined, BarsOutlined, SettingOutlined  } from '@ant-design/icons';
 
 export const transferOption = (arrayData = [], keyValue = ['value', 'label']) =>
   arrayData.map((item) => (
@@ -19,7 +19,9 @@ export const getIconByName = (name: any) => {
   switch (name) {
     case 'BankOutlined':
       return <BankOutlined />;
-    default:
+    case 'SettingOutlined':
+      return <SettingOutlined/>;
+          default:
       return <BarsOutlined />;
   }
 };

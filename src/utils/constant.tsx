@@ -9,6 +9,7 @@ export const ThemeConfig = [
   {
     key: 'default',
     theme: '',
+    name:'拂晓蓝',
     modifyVars: {
       '@primary-color': '#1890ff',
     },
@@ -16,6 +17,7 @@ export const ThemeConfig = [
   {
     key: 'dust',
     theme: 'https://preview.pro.ant.design/theme/dust.css',
+    name:'薄暮',
     modifyVars: {
       '@primary-color': '#F5222D',
     },
@@ -23,6 +25,7 @@ export const ThemeConfig = [
   {
     key: 'volcano',
     theme: 'https://preview.pro.ant.design/theme/volcano.css',
+    name:'火山',
     modifyVars: {
       '@primary-color': '#FA541C',
     },
@@ -30,6 +33,7 @@ export const ThemeConfig = [
   {
     key: 'sunset',
     theme: 'https://preview.pro.ant.design/theme/sunset.css',
+    name:'日暮',
     modifyVars: {
       '@primary-color': '#FAAD14',
     },
@@ -37,6 +41,7 @@ export const ThemeConfig = [
   {
     key: 'cyan',
     theme: 'https://preview.pro.ant.design/theme/cyan.css',
+    name:'明青',
     modifyVars: {
       '@primary-color': '#13C2C2',
     },
@@ -44,6 +49,7 @@ export const ThemeConfig = [
   {
     key: 'green',
     theme: 'https://preview.pro.ant.design/theme/green.css',
+    name:'极光绿',
     modifyVars: {
       '@primary-color': '#52C41A',
     },
@@ -51,6 +57,7 @@ export const ThemeConfig = [
   {
     key: 'geekblue',
     theme: 'https://preview.pro.ant.design/theme/geekblue.css',
+    name:'极客蓝',
     modifyVars: {
       '@primary-color': '#2F54EB',
     },
@@ -58,6 +65,7 @@ export const ThemeConfig = [
   {
     key: 'purple',
     theme: 'https://preview.pro.ant.design/theme/purple.css',
+    name:'酱紫',
     modifyVars: {
       '@primary-color': '#722ED1',
     },
