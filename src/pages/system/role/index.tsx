@@ -61,7 +61,7 @@ const Role = (props: any) => {
     {
       title: '角色简介',
       dataIndex: 'roleDesc',
-      width: '20%',
+      width: '30%',
       ellipsis: true,
     },
     {

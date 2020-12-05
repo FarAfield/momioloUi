@@ -67,6 +67,16 @@ const Resource = (props: any) => {
       },
     });
   }, []);
+  const handleMove = useCallback((sid:number,type: 'up' | 'down') => {
+    dispatch({
+      type:'base/postData',
+      payload:{ url: '/resource/move', sid, type},
+      callback:(res:any) => {
+        message.success(type === 'up' ? '上移成功' : '下移成功');
+        handleSearch();
+      }
+    })
+  },[]);
   const formItems = [
     {
       key: 'resourceParentSid',
@@ -138,13 +148,14 @@ const Resource = (props: any) => {
       render: (text: string, record: any) => {
         if (record.children && record.children.length) {
           return record.children.map((item: any) => (
-            <Tag key={item.sid} color="warning">
+            <Tag key={item.sid} color="warning" style={{ margin:6}}>
               {item.resourceName}
             </Tag>
           ));
         } else if (record.buttonChildren && record.buttonChildren.length) {
           return record.buttonChildren.map((item: any) => (
             <Tag
+                style={{ margin:6}}
               color="success"
               key={item.sid}
               closable
@@ -194,6 +205,24 @@ const Resource = (props: any) => {
                 resourceTypeOptions: TYPE,
               });
             },
+          },
+          {
+            title:'上移',
+            key:'up',
+            auth:'resource_move',
+            onClick:() => handleMove(record.sid,'up'),
+            pop:true,
+            message:'是否确定上移？',
+            hide: !record.showUp
+          },
+          {
+            title:'下移',
+            key:'down',
+            auth:'resource_move',
+            onClick:() => handleMove(record.sid,'down'),
+            pop:true,
+            message:'是否确定下移？',
+            hide: !record.showDown
           },
           {
             title: '删除',
