@@ -226,20 +226,20 @@ const Account = (props: any) => {
             },
           },
           {
-            title: '删除',
-            key: 'remove',
-            auth: 'account_delete',
-            onClick: () => handleDelete(record.sid),
-            pop: true,
-            message: '是否确认删除？',
-          },
-          {
             key: 'reset',
             title: '重置密码',
             auth: 'account_reset',
             onClick: () => {
               message.info('后续功能，敬请期待！');
             },
+          },
+          {
+            title: '删除',
+            key: 'remove',
+            auth: 'account_delete',
+            onClick: () => handleDelete(record.sid),
+            pop: true,
+            message: '是否确认删除？',
           },
         ];
         return <CommonAuth btns={btns} />;

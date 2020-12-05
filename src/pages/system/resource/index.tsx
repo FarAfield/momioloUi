@@ -218,6 +218,7 @@ const Resource = (props: any) => {
     >
       <Button
         ghost
+        type={'primary'}
         onClick={() => {
           setVisible(true);
           setConfigData({

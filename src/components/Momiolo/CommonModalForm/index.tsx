@@ -89,7 +89,7 @@ const CommonModalForm = (props: any) => {
         </Button>
       </div>
     );
-  }, []);
+  }, [loading]);
   const renderItem = useMemo(() => {
     const resultItems = formItems.map((item: any) => {
       const { type, readOnly = [false, false], hide } = item;

@@ -162,8 +162,9 @@ const Org = (props: any) => {
     <PageCard>
       <Row>
         <Col span={8}>
-          <Card bordered={false}>
+          <Card bordered={false} style={{ height: 600 }}>
             <Spin spinning={loading === true}>
+              <p style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 0 }}>组织管理</p>
               {renderHead()}
               <Tree onSelect={onSelect}>{transferTree()}</Tree>
             </Spin>

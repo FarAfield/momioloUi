@@ -6,7 +6,7 @@ import CommonAuth from '../../../components/Momiolo/CommonAuth';
 import CommonModalForm from '../../../components/Momiolo/CommonModalForm';
 import CommonSearchForm from '../../../components/Momiolo/CommonSearchForm';
 import PageCard from '../../../components/PageCard';
-import { getValueByKey } from '../../../utils/support';
+import { getValueByKey } from '@/utils/support';
 import { PlusOutlined } from '@ant-design/icons';
 
 const TYPE = [

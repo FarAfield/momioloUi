@@ -7,6 +7,7 @@ import CommonSearchForm from '../../../components/Momiolo/CommonSearchForm';
 import PageCard from '../../../components/PageCard';
 import { getValueByKey } from '@/utils/support';
 import { PlusOutlined } from '@ant-design/icons';
+import { history } from 'umi';
 
 const STATUS = [
   { value: '0', label: '启用' },
@@ -93,13 +94,13 @@ const Role = (props: any) => {
             key: 'edit',
             title: '编辑',
             auth: 'role_update',
-            onClick: () => {},
+            onClick: () => history.push({ pathname:'/system/role/updateRole',query:{ sid: record.sid }}),
           },
           {
             key: 'view',
             title: '查看',
             auth: 'role_view',
-            onClick: () => {},
+            onClick: () => history.push({ pathname:'/system/role/updateRole',query:{ sid: record.sid, disabled:true }}),
           },
           {
             title: '删除',
@@ -136,7 +137,7 @@ const Role = (props: any) => {
         handleFormReset={() => setFormValues({})}
       />
       <div style={{ display: 'flex', marginBottom: 12 }}>
-        <Button type="primary" onClick={() => {}}>
+        <Button type="primary" onClick={() => history.push('/system/role/updateRole')}>
           <PlusOutlined />
           新增
         </Button>
