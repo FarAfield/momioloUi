@@ -68,7 +68,7 @@ request.interceptors.request.use((url: string, options: any) => {
   };
 });
 // 非200状态的返回以及异常均由errorHandle处理
-request.interceptors.response.use(async (response) => {
+request.interceptors.response.use(async (response:any) => {
   if (response.status === 200) {
     const res = await response.clone().json();
     if (res && res.statusCode) {
@@ -76,8 +76,10 @@ request.interceptors.response.use(async (response) => {
         maxCountMessage.error('登陆已失效，请重新登陆');
         storageClear();
         history.replace('/user/login');
+        return {};
       } else if (res.statusCode === requestConfig['UNAUTHORIZED_ERROR']) {
         history.replace('/Exception/Exception403');
+        return {};
       } else if (res.statusCode !== '0') {
         console.log(res.statusMessage);
       }
