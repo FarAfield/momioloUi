@@ -18,36 +18,18 @@ const useCurrentTime = () => {
   }, []);
   return time;
 };
-
-const welcomeText = (currentUser:any) => {
-  const time = useCurrentTime();
-  return (
-    <div>
-      <h1>{`你好 ${currentUser?.userName || '管理员'}`}</h1>
-      <h1>欢迎使用</h1>
-      <p>
-        现在是
-        <span>{`${dayjs.unix(time).year()}`}</span>年
-        <span>{`${dayjs.unix(time).month() + 1}`}</span>月
-        <span>{`${dayjs.unix(time).date()}`}</span>日<span>{`${dayjs.unix(time).hour()}`}</span>时
-        <span>{`${dayjs.unix(time).minute()}`}</span>分<span>{`${dayjs.unix(time).second()}`}</span>
-        秒
-      </p>
-    </div>
-  );
-};
-
-const Home = (props:any) => {
+const Home = () => {
   if (!isLogin()) {
     return <PageLoading />;
   }
-  const { currentUser } = props;
+  const time = dayjs.unix(useCurrentTime()).format('YYYY-MM-DD HH:mm:ss');
   return (
     <Card>
       <div className={styles.sunAnimation}>
         <div className={styles.sun} />
+        <div className={styles.text}>{<h1>欢迎使用</h1>}</div>
         {
-          false && <div className={styles.text}>{welcomeText(currentUser)}</div>
+          false && time
         }
       </div>
     </Card>
