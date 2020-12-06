@@ -7,6 +7,7 @@ import ProLayout from '@ant-design/pro-layout';
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, connect, history } from 'umi';
 import RightContent from '@/components/GlobalHeader/RightContent';
+import DefaultFooter from '../components/DefaultFooter';
 import AuthorityFilter from './AuthorityFilter';
 import { isLogin, storageClear } from '@/utils/utils';
 import { getIconByName } from '@/utils/support';
@@ -79,7 +80,7 @@ const BasicLayout: React.FC<any> = (props) => {
           <span>{route.breadcrumbName}</span>
         );
       }}
-      footerRender={false}
+      footerRender={() => <DefaultFooter />}
       menuDataRender={() => menuData}
       rightContentRender={() => <RightContent />}
       menu={{ loading }}

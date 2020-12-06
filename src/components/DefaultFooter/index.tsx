@@ -1,8 +1,8 @@
 import React from 'react';
 import { DefaultFooter } from '@ant-design/pro-layout';
 import { copyRight, copyRightConfig } from '@/utils/constant';
-const links = copyRightConfig.map((item, index) => {
-  item['key'] = index;
+const links = copyRightConfig.map((item) => {
+  item['key'] = typeof item['title'] === 'string' ? item['title'] : 'gitlab';
   item['blankTarget'] = true;
   return item;
 });

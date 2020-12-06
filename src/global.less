@@ -14,12 +14,6 @@ canvas {
   display: block;
 }
 
-body {
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 ul,
 ol {
   list-style: none;
@@ -48,29 +42,46 @@ ol {
     min-height: 100vh;
   }
 }
-.ant-table-footer {
-  padding: 16px 0 0 0;
-  background: white;
-}
 
-// 全局圆角  输入框 选择框 文本域
+/* =================以下为定制化实现=================== */
+
+/* ====圆角===== */
+// 输入框  选择框  文本域
 .ant-input-affix-wrapper,
 .ant-select:not(.ant-select-customize-input) .ant-select-selector,
 .ant-form-item-control-input-content > textarea {
-  border-radius: 4px;
+  border-radius: 4px !important;
 }
-// 全局按钮圆角
+// 按钮
 button {
   border-radius: 6px !important;
 }
+// 标签
 .ant-tag {
   border-radius: 8px !important;
 }
 
 
+/* ====table footer==== */
+.ant-table-footer {
+  padding: 16px 0 0 0;
+  background: white;
+}
 
 
 
+
+/* =================动态主题部分=================== */
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  // 登录页背景色
+  --login-background-color:linear-gradient(-225deg, #7DE2FC 0%, #B9B6E5 100%);
+}
+
+
+/* =================系统主题部分=================== */
 .ant-layout-sider-children {
   background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%) !important;
 }
@@ -81,11 +92,14 @@ button {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
-//.ant-pro-global-header {
-//  background-image: linear-gradient(to top, #bdc2e8 0%, #bdc2e8 1%, #e6dee9 100%);
-//}
-//.ant-layout{
-//  min-height: 100vh;
-//  background-image: linear-gradient(-225deg,#D7FFFE 60%, #FFFEFF 20%, #D7FFFE 60%);
-//}
+.ant-pro-global-header {
+  background: #330867 !important;
+}
+.ant-layout{
+  min-height: 100vh;
+  background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%) !important;
+}
+.ant-layout-footer{
+  background: transparent !important;
+}
 

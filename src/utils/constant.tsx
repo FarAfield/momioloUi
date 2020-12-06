@@ -72,15 +72,15 @@ export const ThemeConfig = [
   },
 ];
 // 登录页描述语
-export const loginDescription = 'Momiolo 是西湖区最具影响力的 Web 设计规范';
+export const loginDescription = 'Momiolo 是极具个性化的 Web 中台系统';
 // 版权配置
 export const copyRightConfig = [
-  { title: 'react', href: 'https://react.docschina.org/docs/getting-started.html' },
+  { title: '@react', href: 'https://react.docschina.org/docs/getting-started.html' },
   { title: <GithubOutlined />, href: 'https://github.com/FarAfield' },
-  { title: 'vue', href: 'https://cn.vuejs.org/v2/guide/' },
+  { title: '@vue', href: 'https://cn.vuejs.org/v2/guide/' },
 ];
 // 版权信息
-export const copyRight = '';
+export const copyRight = '版权所有';
 // 请求状态码配置
 export const requestConfig = {
   TOKEN_INVALID_ERROR: '10002',
@@ -88,6 +88,6 @@ export const requestConfig = {
 };
 // 默认昵称以及头像配置
 export const nickNameAndAvatar = [
-  '昵称',
-  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1606642390996&di=c281189456e8cdcc00c29f00d59e4aa7&imgtype=0&src=http%3A%2F%2Fpic1.zhimg.com%2F50%2Fv2-a187b949aadf6ccffd0436bd346ca9ad_hd.jpg',
+  '管理员',
+  'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
 ];

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Alert } from 'antd';
+import { Card } from 'antd';
 import PageLoading from '../components/PageLoading';
 import { isLogin } from '@/utils/utils';
 import dayjs from 'dayjs';
 import styles from './index.less';
+import { connect } from 'umi';
 
 // 获取当前时间秒数
 const useCurrentTime = () => {
@@ -18,10 +19,12 @@ const useCurrentTime = () => {
   return time;
 };
 
-const welcomeText = () => {
+const welcomeText = (currentUser:any) => {
   const time = useCurrentTime();
   return (
-    <>
+    <div>
+      <h1>{`你好 ${currentUser?.userName || '管理员'}`}</h1>
+      <h1>欢迎使用</h1>
       <p>
         现在是
         <span>{`${dayjs.unix(time).year()}`}</span>年
@@ -30,22 +33,26 @@ const welcomeText = () => {
         <span>{`${dayjs.unix(time).minute()}`}</span>分<span>{`${dayjs.unix(time).second()}`}</span>
         秒
       </p>
-    </>
+    </div>
   );
 };
 
-const Home = () => {
+const Home = (props:any) => {
   if (!isLogin()) {
     return <PageLoading />;
   }
+  const { currentUser } = props;
   return (
     <Card>
-      <Alert message="欢迎使用,你已登录成功" type="success" style={{ marginBottom: 12 }} />
       <div className={styles.sunAnimation}>
         <div className={styles.sun} />
-        <div className={styles.text}>{welcomeText()}</div>
+        {
+          false && <div className={styles.text}>{welcomeText(currentUser)}</div>
+        }
       </div>
     </Card>
   );
 };
-export default Home;
+export default connect(({ login }: any) => ({
+  currentUser: login.currentUser,
+}))(Home);
