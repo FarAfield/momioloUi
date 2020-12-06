@@ -3,6 +3,7 @@ import proSettings from '../../config/defaultSettings';
 export interface GlobalModelState {
   collapsed: boolean;
   defaultSetting: object;
+  theme:string;
 }
 export interface GlobalModelType {
   namespace: 'global';
@@ -26,6 +27,7 @@ const GlobalModel: GlobalModelType = {
   state: {
     collapsed: false,
     defaultSetting: proSettings,
+    theme:'default'
   },
   effects: {
     *changeCollapsed(_, { put, select }) {

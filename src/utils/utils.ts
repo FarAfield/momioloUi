@@ -20,7 +20,7 @@ export const isSuccess = (response: any) => {
 };
 
 /**===========================  Theme   ==================================*/
-export const changeTheme = (theme: any) => {
+export const changeTheme = (theme: any = 'default') => {
   const linkDom: any = document.getElementById('theme-style') as HTMLLinkElement;
   if (linkDom) {
     linkDom.href = ThemeConfig.find((item: any) => item.key === theme)?.theme;

@@ -3,10 +3,11 @@ import { Drawer, Radio, message } from 'antd';
 import { changeTheme } from '@/utils/utils';
 import { ThemeConfig } from '@/utils/constant';
 import { CheckOutlined } from '@ant-design/icons';
+import { connect } from 'umi';
 
 const ThemeSetting = (props: any) => {
-  const { visible, onClose } = props;
-  const [value, setValue] = useState('default');
+  const { visible, onClose, dispatch } = props;
+  const [value, setValue] = useState<any>('default');
   useEffect(() => {
     if (visible) {
       setValue(localStorage.getItem('theme') || 'default');
@@ -15,6 +16,10 @@ const ThemeSetting = (props: any) => {
   const onChange = useCallback((e) => {
     setValue(e.target.value);
     message.loading('正在加载主题...');
+    dispatch({
+      type:'global/update',
+      payload:{ theme: e.target.value}
+    });
     localStorage.setItem('theme', e.target.value);
     changeTheme(e.target.value);
   }, []);
@@ -77,4 +82,4 @@ const ThemeSetting = (props: any) => {
     </Drawer>
   );
 };
-export default ThemeSetting;
+export default connect()(ThemeSetting);
