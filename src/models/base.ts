@@ -36,6 +36,7 @@ interface BaseModelType {
     getDataWithRes: Effect;
     putDataWithRes: Effect;
     removeWithRes: Effect;
+    commonPostData: Effect;  // 只提供给公共组件使用
   };
   reducers: {
     update: Reducer<BaseModelState>;
@@ -249,6 +250,18 @@ const BaseModel: BaseModelType = {
       const response = yield call(remove, payload);
       yield put({ type: 'update', payload: { data: response } });
       callback(response);
+    },
+
+    /**================   只提供给公共组件使用  ====================*/
+
+    *commonPostData({ payload, callback }, { call, put }) {
+      const response = yield call(postData, payload);
+      if (isSuccess(response)) {
+        yield put({ type: 'update', payload: { data: response } });
+        if (callback) callback(response);
+      } else {
+        errorMessage(response);
+      }
     },
   },
   reducers: {

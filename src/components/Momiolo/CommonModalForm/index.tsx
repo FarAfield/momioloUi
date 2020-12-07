@@ -60,7 +60,7 @@ const CommonModalForm = (props: any) => {
       const url =
         saveUrl.length === 1 ? saveUrl[0] : Object.keys(formData).length ? saveUrl[1] : saveUrl[0];
       dispatch({
-        type: 'base/postData',
+        type: 'base/commonPostData',
         payload: { url, ...resultData },
         callback: (res: any) => {
           message.success(Object.keys(formData).length ? messageInfo[1] : messageInfo[0]);
@@ -184,7 +184,7 @@ const CommonModalForm = (props: any) => {
     });
     resultItems.push(saveAndCancel);
     return resultItems;
-  }, [visible]);
+  }, [formItems,visible,loading]);
   return (
     <Modal
       visible={visible}
@@ -211,5 +211,5 @@ CommonModalForm.defaultProps = {
   messageInfo: ['新增成功', '编辑成功'],
 };
 export default connect(({ loading }: any) => ({
-  loading: loading.effects['base/postData'],
+  loading: loading.effects['base/commonPostData'],
 }))(CommonModalForm);

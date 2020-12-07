@@ -44,6 +44,7 @@ const Resource = (props: any) => {
     resourceTypeOptions: [],
     initialValues: {},
   });
+  const [resourceType,setResourceType] = useState(undefined);
 
   useEffect(() => {
     handleSearch();
@@ -107,12 +108,14 @@ const Resource = (props: any) => {
       rules: [{ required: true, message: '请选择资源类型' }],
       readOnly: [false, true],
       selectOptions: configData.resourceTypeOptions,
+      onSelectChange: (v:any) => setResourceType(v),
     },
     {
       key: 'resourceIcon',
       title: '资源图标',
       type: 'input',
       rules: [{ required: true, message: '请输入资源图标' }],
+      hide: resourceType === 3,
     },
   ];
   const columns = [

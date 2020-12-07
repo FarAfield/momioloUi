@@ -78,7 +78,7 @@ request.interceptors.response.use(async (response:any) => {
         history.replace('/user/login');
         return {};
       } else if (res.statusCode === requestConfig['UNAUTHORIZED_ERROR']) {
-        history.replace('/Exception/Exception403');
+        maxCountMessage.error('抱歉，您暂无此权限');
         return {};
       } else if (res.statusCode !== '0') {
         console.log(res.statusMessage);

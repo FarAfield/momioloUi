@@ -25,7 +25,6 @@ const LoginMessage: React.FC<{
     }}
     message={content}
     type="error"
-    showIcon
   />
 );
 const Login: React.FC<LoginProps> = (props) => {
