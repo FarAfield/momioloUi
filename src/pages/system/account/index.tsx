@@ -12,8 +12,8 @@ import { isSuccess } from '@/utils/utils';
 import md5 from 'md5';
 
 const STATUS = [
-  { value: '0', label: '启用' },
-  { value: '1', label: '弃用' },
+  { value: '0', label: '正常' },
+  { value: '1', label: '锁定' },
 ];
 const transferTree = (list: any = []) => {
   return list.map((item: any) => {
@@ -79,6 +79,26 @@ const Account = (props: any) => {
       },
     });
   }, []);
+  const handleLock = useCallback((sid) => {
+    dispatch({
+      type: 'base/postData',
+      payload: { url: '/account/lock', sid },
+      callback: (res: any) => {
+        message.success('锁定成功');
+        handleSearch();
+      },
+    });
+  }, []);
+  const handleUnlock = useCallback((sid) => {
+    dispatch({
+      type: 'base/postData',
+      payload: { url: '/account/unlock', sid },
+      callback: (res: any) => {
+        message.success('解锁成功');
+        handleSearch();
+      },
+    });
+  }, []);
   const handleFieldsValue = (values: any) => {
     if (Object.keys(formData).length === 0) {
       values.accountPassword = md5(values.accountPassword);
@@ -129,7 +149,12 @@ const Account = (props: any) => {
       key: 'accountName',
       title: '登录账号',
       type: 'input',
-      rules: [{ required: true, message: '请输入登录账号' }],
+      rules: [
+        { required: true, message: '请输入登录账号' },
+        { pattern: /^[0-9A-Za-z]{6,20}$/, message: '账号必须为6-20位数字或字母，区分大小写' },
+      ],
+
+      maxLength: 20,
       readOnly: [false, true],
     },
     {
@@ -138,8 +163,7 @@ const Account = (props: any) => {
       type: 'input',
       rules: [
         { required: true, message: '请输入登录密码' },
-        { max: 20, message: '最大字符长度20' },
-        { pattern: /^[0-9A-Za-z]{6,12}$/, message: '密码必须为6-12位数字和字母，区分大小写' },
+        { pattern: /^[0-9A-Za-z]{6,12}$/, message: '密码必须为6-12位数字或字母，区分大小写' },
       ],
       hide: Object.keys(formData).length,
     },
@@ -164,12 +188,12 @@ const Account = (props: any) => {
     {
       title: '登录账号',
       dataIndex: 'accountName',
-      width: '10%',
+      width: '12%',
     },
     {
-      title: '账号名称',
+      title: '账号名称（昵称）',
       dataIndex: 'userName',
-      width: '10%',
+      width: '12%',
     },
     {
       title: '账号状态',
@@ -185,7 +209,7 @@ const Account = (props: any) => {
     {
       title: '所属角色',
       dataIndex: 'roleName',
-      width: '20%',
+      width: '12%',
       render: (text: any) =>
         text
           ? text.split(',').map((item: any, index: number) => (
@@ -198,13 +222,13 @@ const Account = (props: any) => {
     {
       title: '所属组织',
       dataIndex: 'orgName',
-      width: '10%',
+      width: '12%',
       render: (text: any) => (text ? <Tag color="green">{text}</Tag> : null),
     },
     {
       title: '手机号',
       dataIndex: 'userMobile',
-      width: '10%',
+      width: '12%',
     },
     {
       title: '创建时间',
@@ -224,6 +248,28 @@ const Account = (props: any) => {
               setVisible(true);
               setFormData(record);
             },
+          },
+          {
+            key: 'lock',
+            title: '锁定',
+            auth: 'account_lock',
+            hide: record.accountStatus === 1,
+            onClick: () => {
+              handleLock(record.sid);
+            },
+            pop: true,
+            message: '是否确认锁定？',
+          },
+          {
+            key: 'unlock',
+            title: '解锁',
+            auth: 'account_unlock',
+            hide: record.accountStatus === 0,
+            onClick: () => {
+              handleUnlock(record.sid);
+            },
+            pop: true,
+            message: '是否确认解锁？',
           },
           {
             key: 'reset',

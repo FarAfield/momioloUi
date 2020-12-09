@@ -73,7 +73,7 @@ const Notice = (props: any) => {
       key: 'content',
       title: '公告内容',
       type: 'textArea',
-      rules: [{ max: 500, message: '最大字符数500' }],
+      rules: [{ max: 500, message: '最大字符长度500' }],
     },
   ];
   const columns = [

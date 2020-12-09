@@ -10,8 +10,8 @@ import { PlusOutlined } from '@ant-design/icons';
 import { history } from 'umi';
 
 const STATUS = [
-  { value: '0', label: '启用' },
-  { value: '1', label: '弃用' },
+  { value: '0', label: '正常' },
+  { value: '1', label: '锁定' },
 ];
 const Role = (props: any) => {
   const {
@@ -56,12 +56,12 @@ const Role = (props: any) => {
     {
       title: '角色名称',
       dataIndex: 'roleName',
-      width: '10%',
+      width: '15%',
     },
     {
       title: '角色简介',
       dataIndex: 'roleDesc',
-      width: '30%',
+      width: '25%',
       ellipsis: true,
     },
     {
@@ -94,13 +94,18 @@ const Role = (props: any) => {
             key: 'edit',
             title: '编辑',
             auth: 'role_update',
-            onClick: () => history.push({ pathname:'/system/role/updateRole',query:{ sid: record.sid }}),
+            onClick: () =>
+              history.push({ pathname: '/system/role/updateRole', query: { sid: record.sid } }),
           },
           {
             key: 'view',
             title: '查看',
             auth: 'role_view',
-            onClick: () => history.push({ pathname:'/system/role/updateRole',query:{ sid: record.sid, disabled:true }}),
+            onClick: () =>
+              history.push({
+                pathname: '/system/role/updateRole',
+                query: { sid: record.sid, disabled: true },
+              }),
           },
           {
             title: '删除',

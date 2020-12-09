@@ -87,7 +87,8 @@ const Org = (props: any) => {
       key: 'orgName',
       title: '组织名称',
       type: 'input',
-      rules: [{ required: true, message: '请输入组织名称' }],
+      rules: [{ required: true, message: '请输入组织名称' },{ max:20, message:'最大字符长度20'}],
+      maxLength:20,
     },
     {
       key: 'orgType',
@@ -109,7 +110,7 @@ const Org = (props: any) => {
       key: 'orgDesc',
       title: '组织简介',
       type: 'textArea',
-      rules: [{ max: 200, message: '最大字符200' }],
+      rules: [{ max: 200, message: '最大字符长度200' }],
       maxLength: 200,
     },
   ];

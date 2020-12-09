@@ -63,7 +63,7 @@ const UpdateRole = (props: any) => {
       callback: (res: any) => {
         form.setFieldsValue({ ...res.data?.role });
         setCheckedKeys(res.data.checked?.map(String));
-        setChecked(res.data.checked.concat(res.data.halfChecked));
+        setChecked((res.data.checked || []).concat(res.data.halfChecked || []));
       },
     });
   }, []);
@@ -144,8 +144,8 @@ const UpdateRole = (props: any) => {
                   rules={[{ required: true, message: '请选择角色状态' }]}
                 >
                   <Radio.Group disabled={disabled}>
-                    <Radio value={0}>{'启用'}</Radio>
-                    <Radio value={1}>{'弃用'}</Radio>
+                    <Radio value={0}>{'正常'}</Radio>
+                    <Radio value={1}>{'锁定'}</Radio>
                   </Radio.Group>
                 </FormItem>
                 <FormItem
@@ -191,7 +191,6 @@ const UpdateRole = (props: any) => {
                 disabled={disabled}
                 className={styles.tree}
                 checkable={true}
-                //checkStrictly={true}
                 checkedKeys={checkedKeys}
                 onCheck={(checkedKeys: any, e: any) => onCheck(checkedKeys, e)}
               >
