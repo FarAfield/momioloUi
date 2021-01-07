@@ -12,3 +12,4 @@ declare module '*.bmp';
 declare module '*.tiff';
 declare module 'omit.js';
 declare module 'md5';
+declare module 'react-color'

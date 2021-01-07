@@ -43,7 +43,8 @@
     "umi-request": "^1.0.8",
     "use-merge-value": "^1.0.1",
     "md5": "2.3.0",
-    "dayjs": "^1.9.6"
+    "dayjs": "^1.9.6",
+    "react-color": "^2.19.3"
   },
   "devDependencies": {
     "@ant-design/pro-cli": "^1.0.18",
