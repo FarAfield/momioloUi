@@ -3,25 +3,24 @@ import { SketchPicker, BlockPicker } from 'react-color';
 
 const ColorPicker = (props: any) => {
   /**
-   * type   Sketch(默认)  Block
-   * color存在为受控组件，否则为非受控组件
+   * type   =>    Sketch(默认)    Block
    */
-  const { type, width, presetColors, color, onColorChange } = props;
+  const { type, width, presetColors, defaultColor, color, onColorChange } = props;
   // 内部状态
   const [stateColor, setStateColor] = useState('#fff');
 
   useEffect(() => {
-    if (color) {
-      setStateColor(color);
-    }
-  }, [color]);
+   if(defaultColor){
+     setStateColor(defaultColor);
+   }
+  }, [defaultColor]);
 
   return (
     <>
       {type === 'Sketch' && (
         <SketchPicker
           width={width}
-          color={stateColor}
+          color={color || stateColor}
           onChangeComplete={(v: any) => {
             onColorChange(v.hex);
             if (!color) {
@@ -34,7 +33,7 @@ const ColorPicker = (props: any) => {
       {type === 'Block' && (
         <BlockPicker
           width={width}
-          color={stateColor}
+          color={color || stateColor}
           onChangeComplete={(v: any) => {
             onColorChange(v.hex);
             if (!color) {
