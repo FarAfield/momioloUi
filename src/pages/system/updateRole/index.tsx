@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'umi';
 import { message, Button, Row, Col, Spin, Card, Form, Input, Radio, Tree, Tag } from 'antd';
-import PageCard from '../../../../components/PageCard';
+import { useUnmount } from 'ahooks';
+import PageCard from '../../../components/PageCard';
 import { history } from 'umi';
 import { CloseOutlined, CheckOutlined, RollbackOutlined } from '@ant-design/icons';
 import styles from './index.less';
@@ -41,12 +42,43 @@ const UpdateRole = (props: any) => {
     // 编辑
     if (query?.sid) {
       findDetail(query.sid);
+    } else {
+      // 新增时组装面包屑
+      dispatch({
+        type: 'global/update',
+        payload: {
+          breadcrumbData: [
+            {
+              path: '/',
+              breadcrumbName: '首页',
+            },
+            {
+              path: '/system',
+              breadcrumbName: '系统管理',
+            },
+            {
+              path: '/updateRole',
+              breadcrumbName: '角色新增',
+            },
+          ],
+        },
+      });
     }
     // 查看
     if (query.disabled) {
       setDisabled(true);
     }
   }, []);
+
+  useUnmount(() => {
+    dispatch({
+      type: 'global/update',
+      payload: {
+        breadcrumbData: [],
+      },
+    });
+  });
+
   const searchMenuData = useCallback(() => {
     dispatch({
       type: 'base/getData',

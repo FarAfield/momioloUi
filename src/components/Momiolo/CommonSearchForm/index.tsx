@@ -177,7 +177,7 @@ const CommonSearchForm = (props: any) => {
             showTime = false,
             format = 'YYYY-MM-DD HH:mm:ss',
             span = 10,
-            colStyle={},
+            colStyle = {},
             ...rest
           } = item;
           return (

@@ -17,8 +17,15 @@ const ThemeSetting = (props: any) => {
     setValue(e.target.value);
     message.loading('正在加载主题...');
     dispatch({
-      type:'global/update',
-      payload:{ theme: e.target.value}
+      type: 'global/update',
+      payload: { theme: e.target.value },
+    });
+    const theme =
+      ThemeConfig.find((i: any) => i.key === e.target.value)?.modifyVars?.['@primary-color'] ||
+      '#1890ff';
+    dispatch({
+      type: 'global/changeSetting',
+      payload: { primaryColor: theme },
     });
     localStorage.setItem('theme', e.target.value);
     changeTheme(e.target.value);

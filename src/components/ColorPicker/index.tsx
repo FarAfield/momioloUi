@@ -10,9 +10,9 @@ const ColorPicker = (props: any) => {
   const [stateColor, setStateColor] = useState('#fff');
 
   useEffect(() => {
-   if(defaultColor){
-     setStateColor(defaultColor);
-   }
+    if (defaultColor) {
+      setStateColor(defaultColor);
+    }
   }, [defaultColor]);
 
   return (

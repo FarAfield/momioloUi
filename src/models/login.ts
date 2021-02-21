@@ -31,10 +31,11 @@ const errorMessage = (response: any) =>
   response.statusMessage && message.error(response.statusMessage);
 const transferMenu = (menuData: Array<any>, parentPath: string = '') => {
   return menuData.map((item: any) => {
-    if (item.resourceType === 1) {
+    if (item.resourceType !== 3) {
       const path = `${parentPath}/${item.resourceCode}`;
       item.path = path;
       item.name = `${item.resourceName}`;
+      item.hideInMenu = item.resourceType === 2;
       // item.icon = `${item.resourceIcon}`;
       if (item.children && item.children.length) {
         item.children = transferMenu(item.children, path);
@@ -84,7 +85,7 @@ const LoginModel: LoginModelType = {
       if (isSuccess(response)) {
         yield put({
           type: 'update',
-          payload: { currentUser: response.data },
+          payload: { currentUser: response.data, permissions: response.data?.permissions || [] },
         });
       } else {
         errorMessage(response);

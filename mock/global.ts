@@ -7,43 +7,48 @@ const waitTime = (time: number = 2000) => {
     }, time);
   });
 };
-const ResponseTemplate = async (req:Request,res:Response,data:any) => {
+const ResponseTemplate = async (req: Request, res: Response, data: any) => {
   await waitTime(2000);
   return res.json({
-    statusCode:'0',
-    statusMessage:'成功',
+    statusCode: '0',
+    statusMessage: '成功',
     data,
   });
 };
 export default {
   // 登陆
-  'POST /api/account/login': async (req:Request,res:Response) => ResponseTemplate(req,res,{
-    token:'0x1x2x3x4x5x6x7x8x9',
-  }),
+  'POST /api/account/login': async (req: Request, res: Response) =>
+    ResponseTemplate(req, res, {
+      token: '0x1x2x3x4x5x6x7x8x9',
+    }),
   // 退出登陆
-  'POST /api/account/logout': async (req:Request,res:Response) => ResponseTemplate(req,res,null),
+  'POST /api/account/logout': async (req: Request, res: Response) =>
+    ResponseTemplate(req, res, null),
   // 获取登陆用户信息
-  'GET /api/account/findCurrentInfo': async (req:Request,res:Response) => ResponseTemplate(req,res,{
-    accountSid:'1111',
-    accountName:'sys',
-    userName:'管理员',
-    userAvatar:'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2710977765,358906402&fm=26&gp=0.jpg',
-    permissions:[],
-  }),
+  'GET /api/account/findCurrentInfo': async (req: Request, res: Response) =>
+    ResponseTemplate(req, res, {
+      accountSid: 99,
+      accountName: 'admin',
+      userName: '管理员',
+      permissions: [],
+    }),
   // 获取登陆的菜单信息
-  'GET /api/resource/findCurrentMenu': async (req:Request,res:Response) => ResponseTemplate(req,res,{
-    children:[
-      {
-        resourceCode:'home',
-        resourceName:"首页",
-        resourceIcon:"",
-        resourceType:1,
-        children:[],
-      }
-    ],
-  }),
-
-
+  'GET /api/resource/findCurrentMenu': async (req: Request, res: Response) =>
+    ResponseTemplate(req, res, {
+      sid: 1,
+      resourceCode: 'root',
+      resourceName: '根资源',
+      children: [
+        {
+          sid: 2,
+          resourceCode: 'home',
+          resourceName: '首页',
+          resourceIcon: '',
+          resourceType: 1,
+          children: [],
+        },
+      ],
+    }),
 
   // 异常
   'GET /api/500': (req: Request, res: Response) => {

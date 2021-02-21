@@ -46,7 +46,7 @@ const confirmButton = (item: any, type: any) => (
 const CommonAuth = (props: any) => {
   const { btns, permissions, type } = props;
   const authBtns = btns
-    .filter((item: any) => !permissions.includes(item.auth))
+    .filter((item: any) => permissions.includes(item.auth))
     .filter((i: any) => !i.hide);
   return authBtns.map((item: any) =>
     !!item['pop'] ? confirmButton(item, type) : simpleButton(item, type),

@@ -17,7 +17,7 @@ import { SettingOutlined } from '@ant-design/icons';
 import styles from './BasicLayout.less';
 
 const BasicLayout: React.FC<any> = (props) => {
-  const { dispatch, children, settings } = props;
+  const { dispatch, children, settings, location } = props;
   const [menuData, setMenuData] = useState<Array<any>>([]);
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -87,7 +87,7 @@ const BasicLayout: React.FC<any> = (props) => {
       {...props}
       {...settings}
     >
-      <AuthorityFilter>{children}</AuthorityFilter>
+      <AuthorityFilter location={location}>{children}</AuthorityFilter>
       <ThemeSetting visible={visible} onClose={() => setVisible(false)} />
       <div className={styles.themeSetting} onClick={() => setVisible(true)}>
         <SettingOutlined style={{ fontSize: 20, color: 'white' }} />

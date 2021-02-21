@@ -1,14 +1,24 @@
-# momioloUi
-momiolo前端
+## momioloUi
+## React版本前端，预览地址http://www.momiolo.com
 
-# V3.0版本  已更新
-v4.0将会和vue版本同步并行更新
+- config  umi配置以及项目基础配置
+- mock 本地mock
+- public 
+- src
+  - assets 静态资源
+  - components 公共组件
+  - layout 布局
+  - models 全局dva的model
+  - pages 页面入口
+  - services 接口服务
+  - utils 工具类
+  - global.less 全局样式
+  - global.tsx 全局js
+- README.md 项目说明文档
 
 
- todo
- 1.站内搜索
- 2.公共  pageCard  面包屑
- 3.CommonAuth 权限处理
- 4.AuthorityFilter 页面权限过滤器
+
+todo 新增按钮权限处理
+
 
 

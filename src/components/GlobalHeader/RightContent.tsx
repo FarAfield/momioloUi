@@ -1,9 +1,8 @@
 import React from 'react';
-import { message } from 'antd';
 import { connect } from 'umi';
+import { message } from 'antd';
 import { BellOutlined } from '@ant-design/icons';
 import AvatarDropdown from './AvatarDropdown';
-import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
 
 const GlobalHeaderRight: React.FC<any> = (props) => {
@@ -14,16 +13,8 @@ const GlobalHeaderRight: React.FC<any> = (props) => {
   }
   return (
     <div className={className}>
-      <HeaderSearch
-        className={`${styles.action} ${styles.search}`}
-        placeholder="站内搜索"
-        defaultValue="momiolo"
-        onSearch={(value) => {
-          message.info(value);
-        }}
-      />
-      <div style={{ margin: '0 12px' }}>
-        <BellOutlined />
+      <div className={styles.other}>
+        <BellOutlined onClick={() => message.info('消息通知，敬请期待')} />
       </div>
       <AvatarDropdown />
     </div>

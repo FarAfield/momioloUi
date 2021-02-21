@@ -19,6 +19,9 @@
   margin-left: auto;
   overflow: hidden;
   color: @primary-color;
+  .other {
+    cursor: pointer;
+  }
   .action {
     display: flex;
     align-items: center;
@@ -36,16 +39,9 @@
       background: @pro-header-hover-bg;
     }
   }
-  .search {
-    padding: 0 12px;
-    &:hover {
-      background: transparent;
-    }
-  }
   .account {
     .avatar {
-      margin: ~'calc((@{layout-header-height} - 24px) / 2)' 0;
-      margin-right: 8px;
+      margin: ~'calc((@{layout-header-height} - 24px) / 2)' 8px;
       color: @primary-color;
       vertical-align: top;
       background: rgba(255, 255, 255, 0.85);

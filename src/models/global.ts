@@ -3,7 +3,8 @@ import proSettings from '../../config/defaultSettings';
 export interface GlobalModelState {
   collapsed: boolean;
   defaultSetting: object;
-  theme:string;
+  theme: string;
+  breadcrumbData: Array<any>;
 }
 export interface GlobalModelType {
   namespace: 'global';
@@ -16,18 +17,13 @@ export interface GlobalModelType {
     update: Reducer<GlobalModelState>;
   };
 }
-const updateColorWeak: (colorWeak: boolean) => void = (colorWeak) => {
-  const root = document.getElementById('root');
-  if (root) {
-    root.className = colorWeak ? 'colorWeak' : '';
-  }
-};
 const GlobalModel: GlobalModelType = {
   namespace: 'global',
   state: {
     collapsed: false,
     defaultSetting: proSettings,
-    theme:'default'
+    theme: 'default',
+    breadcrumbData: [], // 面包屑数据
   },
   effects: {
     *changeCollapsed(_, { put, select }) {
@@ -38,12 +34,11 @@ const GlobalModel: GlobalModelType = {
       });
     },
     *changeSetting({ payload }, { put, select }) {
-      const { colorWeak, contentWidth } = payload;
+      const { contentWidth } = payload;
       const defaultSetting = yield select(({ global }: any) => global.defaultSetting);
       if (defaultSetting.contentWidth !== contentWidth && window.dispatchEvent) {
         window.dispatchEvent(new Event('resize'));
       }
-      updateColorWeak(!!colorWeak);
       yield put({
         type: 'update',
         payload: { defaultSetting: { ...defaultSetting, ...payload } },

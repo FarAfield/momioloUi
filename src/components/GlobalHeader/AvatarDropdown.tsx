@@ -10,7 +10,7 @@ const AvatarDropdown = (props: any) => {
   const { currentUser, dispatch } = props;
   const menuHeaderDropdown = useMemo(
     () => (
-      <Menu className={styles.menu} selectedKeys={[]} onClick={(e) => onMenuClick(e)}>
+      <Menu className={styles.menu} onClick={(e) => onMenuClick(e)}>
         <Menu.Item key="center">
           <UserOutlined />
           个人中心
@@ -38,6 +38,7 @@ const AvatarDropdown = (props: any) => {
       const { key } = event;
       switch (key) {
         case 'center': {
+          history.push('/user/center');
           return;
         }
         case 'settings': {
@@ -56,7 +57,7 @@ const AvatarDropdown = (props: any) => {
     },
     [],
   );
-  return currentUser && currentUser.accountSid ? (
+  return currentUser?.accountSid ? (
     <HeaderDropdown overlay={menuHeaderDropdown}>
       <span className={`${styles.action} ${styles.account}`}>
         <Avatar

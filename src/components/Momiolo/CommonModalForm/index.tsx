@@ -184,7 +184,7 @@ const CommonModalForm = (props: any) => {
     });
     resultItems.push(saveAndCancel);
     return resultItems;
-  }, [formItems,visible,loading]);
+  }, [formItems, visible, loading]);
   return (
     <Modal
       visible={visible}

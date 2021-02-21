@@ -95,7 +95,7 @@ const Role = (props: any) => {
             title: '编辑',
             auth: 'role_update',
             onClick: () =>
-              history.push({ pathname: '/system/role/updateRole', query: { sid: record.sid } }),
+              history.push({ pathname: '/system/updateRole', query: { sid: record.sid } }),
           },
           {
             key: 'view',
@@ -142,7 +142,7 @@ const Role = (props: any) => {
         handleFormReset={() => setFormValues({})}
       />
       <div style={{ display: 'flex', marginBottom: 12 }}>
-        <Button type="primary" onClick={() => history.push('/system/role/updateRole')}>
+        <Button type="primary" onClick={() => history.push('/system/updateRole')}>
           <PlusOutlined />
           新增
         </Button>

@@ -12,7 +12,6 @@ export default defineConfig({
     type: 'hash',
   },
   locale: {
-    default: 'zh-CN',
     antd: true,
     baseNavigator: true,
   },
@@ -32,8 +31,8 @@ export default defineConfig({
   esbuild: {},
   proxy: {
     '/base': {
-      // target: 'http://119.45.119.55:8089/base',
-      target: 'http://localhost:8080/base',
+      target: 'http://119.45.119.55:8089/base',
+      // target: 'http://localhost:8080/base',
       changeOrigin: true,
       pathRewrite: { '/base': '' },
     },
