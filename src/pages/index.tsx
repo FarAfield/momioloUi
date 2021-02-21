@@ -28,9 +28,7 @@ const Home = () => {
       <div className={styles.sunAnimation}>
         <div className={styles.sun} />
         <div className={styles.text}>{<h1>欢迎使用</h1>}</div>
-        {
-          false && time
-        }
+        <div className={styles.text}>{time}</div>
       </div>
     </Card>
   );

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'umi';
 import Exception403 from '../pages/Exception/Exception403';
+import PageLoading from '../components/PageLoading';
 import GlobalContext from './GlobalContext';
 
 /**
@@ -25,6 +26,9 @@ const AuthorityFilter = ({ children, menuData, permissions, location }: any) => 
   if (result.concat(extraPath).includes(pathname)) {
     // 全局注入权限数据
     return <GlobalContext.Provider value={{ permissions }}>{children}</GlobalContext.Provider>;
+  } else if (!result.length) {
+    // 暂无权限数据，此时处于页面刷新，因此展示为loading
+    return <PageLoading />;
   } else {
     return <Exception403 />;
   }

@@ -89,7 +89,11 @@ const BasicLayout: React.FC<any> = (props) => {
     >
       <AuthorityFilter location={location}>{children}</AuthorityFilter>
       <ThemeSetting visible={visible} onClose={() => setVisible(false)} />
-      <div className={styles.themeSetting} onClick={() => setVisible(true)}>
+      <div
+        className={styles.themeSetting}
+        style={{ background: settings.primaryColor }}
+        onClick={() => setVisible(true)}
+      >
         <SettingOutlined style={{ fontSize: 20, color: 'white' }} />
       </div>
     </ProLayout>

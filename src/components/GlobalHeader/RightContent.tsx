@@ -6,15 +6,15 @@ import AvatarDropdown from './AvatarDropdown';
 import styles from './index.less';
 
 const GlobalHeaderRight: React.FC<any> = (props) => {
-  const { theme, layout } = props;
+  const { theme, layout, primaryColor } = props;
   let className = styles.right;
   if (theme === 'dark' && layout === 'top') {
     className = `${styles.right}  ${styles.dark}`;
   }
   return (
-    <div className={className}>
+    <div className={className} style={{ color: primaryColor }}>
       <div className={styles.other}>
-        <BellOutlined onClick={() => message.info('消息通知，敬请期待')} />
+        <BellOutlined onClick={() => message.info('消息通知，敬请期待!')} />
       </div>
       <AvatarDropdown />
     </div>
@@ -24,4 +24,5 @@ const GlobalHeaderRight: React.FC<any> = (props) => {
 export default connect(({ global }: any) => ({
   theme: global.defaultSetting.navTheme,
   layout: global.defaultSetting.layout,
+  primaryColor: global.defaultSetting.primaryColor,
 }))(GlobalHeaderRight);
