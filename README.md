@@ -1,5 +1,5 @@
 ## momioloUi
-## React版本前端，预览地址http://www.momiolo.com
+## React版本前端，预览地址https://www.momiolo.com
 
 - config  umi配置以及项目基础配置
 - mock 本地mock
