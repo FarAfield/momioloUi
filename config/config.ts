@@ -12,6 +12,7 @@ export default defineConfig({
     type: 'hash',
   },
   locale: {
+    default: 'zh-CN',
     antd: true,
     baseNavigator: true,
   },
