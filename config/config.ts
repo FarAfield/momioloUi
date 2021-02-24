@@ -31,8 +31,7 @@ export default defineConfig({
   esbuild: {},
   proxy: {
     '/base': {
-      target: 'https://119.45.119.55:4430/base',
-      // target: 'http://119.45.119.55:8090/base',
+      target: 'https://www.momiolo.com:4430/base',
       changeOrigin: true,
       pathRewrite: { '/base': '' },
     },
