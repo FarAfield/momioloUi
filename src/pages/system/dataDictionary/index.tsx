@@ -44,22 +44,22 @@ const DataDictionary = (props: any) => {
     },
     {
       key: 'dictCode',
-      title: '数据字典编码',
+      title: '字典编码',
       type: 'input',
     },
     {
       key: 'dictKey',
-      title: '数据字典key',
+      title: '字典key',
       type: 'input',
     },
     {
       key: 'dictValue',
-      title: '数据字典value',
+      title: '字典value',
       type: 'input',
     },
     {
       key: 'dictDesc',
-      title: '数据字典描述',
+      title: '字典描述',
       type: 'input',
     },
   ];
@@ -68,19 +68,16 @@ const DataDictionary = (props: any) => {
       key: 'rootName',
       title: '根名称',
       type: 'input',
-      rules: [
-        { required: true, message: '请输入根名称' },
-        { max: 20, message: '最大字符长度20' },
-      ],
+      rules: [{ max: 20, message: '最大字符长度20' }],
       maxLength: 20,
       readOnly: [false, true],
     },
     {
       key: 'dictCode',
-      title: '数据字典编码',
+      title: '字典编码',
       type: 'input',
       rules: [
-        { required: true, message: '请输入数据字典编码' },
+        { required: true, message: '请输入字典编码' },
         { max: 20, message: '最大字符长度20' },
       ],
       maxLength: 20,
@@ -88,19 +85,25 @@ const DataDictionary = (props: any) => {
     },
     {
       key: 'dictKey',
-      title: '数据字典key',
+      title: '字典key',
       type: 'input',
-      rules: [{ required: true, message: '请输入数据字典key' }],
+      rules: [
+        { required: true, message: '请输入字典key' },
+        { max: 20, message: '最大字符长度20' },
+      ],
     },
     {
       key: 'dictValue',
-      title: '数据字典value',
+      title: '字典value',
       type: 'input',
-      rules: [{ required: true, message: '请输入数据字典value' }],
+      rules: [
+        { required: true, message: '请输入字典value' },
+        { max: 200, message: '最大字符长度200' },
+      ],
     },
     {
       key: 'dictDesc',
-      title: '数据字典描述',
+      title: '字典描述',
       type: 'textArea',
       rules: [{ max: 200, message: '最大字符长度200' }],
       maxLength: 200,
@@ -113,24 +116,26 @@ const DataDictionary = (props: any) => {
       width: '15%',
     },
     {
-      title: '数据字典编码',
+      title: '字典编码',
       dataIndex: 'dictCode',
       width: '15%',
     },
     {
-      title: '数据字典key',
+      title: '字典key',
       dataIndex: 'dictKey',
       width: '15%',
     },
     {
-      title: '数据字典value',
+      title: '字典value',
       dataIndex: 'dictValue',
       width: '15%',
+      ellipsis: true,
     },
     {
-      title: '数据字典描述',
+      title: '字典描述',
       dataIndex: 'dictDesc',
       width: '25%',
+      ellipsis: true,
     },
     {
       title: '操作',

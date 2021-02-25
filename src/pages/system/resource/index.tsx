@@ -92,13 +92,19 @@ const Resource = (props: any) => {
       key: 'resourceName',
       title: '资源名称',
       type: 'input',
-      rules: [{ required: true, message: '请输入资源名称' }],
+      rules: [
+        { required: true, message: '请输入资源名称' },
+        { max: 20, message: '最大字符长度20' },
+      ],
     },
     {
       key: 'resourceCode',
       title: '资源编码',
       type: 'input',
-      rules: [{ required: true, message: '请输入资源编码' }],
+      rules: [
+        { required: true, message: '请输入资源编码' },
+        { max: 20, message: '最大字符长度20' },
+      ],
       readOnly: [false, true],
     },
     {
@@ -114,7 +120,10 @@ const Resource = (props: any) => {
       key: 'resourceIcon',
       title: '资源图标',
       type: 'input',
-      rules: [{ required: true, message: '请输入资源图标' }],
+      rules: [
+        { required: true, message: '请输入资源图标' },
+        { max: 20, message: '最大字符长度20' },
+      ],
       hide: resourceType === 3,
     },
   ];

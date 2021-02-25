@@ -100,17 +100,17 @@ const HandleLog = (props: any) => {
     {
       title: '操作账号',
       dataIndex: 'accountName',
-      width: '12%',
+      width: '8%',
     },
     {
       title: '操作模块',
       dataIndex: 'handleModule',
-      width: '12%',
+      width: '8%',
     },
     {
       title: '操作方法',
       dataIndex: 'handleMethod',
-      width: '12%',
+      width: '10%',
     },
     {
       title: '操作结果',
@@ -139,7 +139,7 @@ const HandleLog = (props: any) => {
     {
       title: '操作返回',
       dataIndex: 'handleResponse',
-      width: '16%',
+      width: '12%',
       ellipsis: true,
       render: (text: any) => <a onClick={() => handleDetailResult(text)}>{text}</a>,
     },
@@ -147,10 +147,17 @@ const HandleLog = (props: any) => {
       title: '操作异常',
       width: '8%',
       dataIndex: 'handleException',
+      ellipsis: true,
+    },
+    {
+      title: '操作IP',
+      width: '10%',
+      dataIndex: 'handleIp',
+      ellipsis: true,
     },
     {
       title: '操作时间',
-      width: '12%',
+      width: '16%',
       dataIndex: 'handleDate',
     },
   ];

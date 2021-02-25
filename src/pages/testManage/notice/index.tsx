@@ -60,7 +60,10 @@ const Notice = (props: any) => {
       key: 'title',
       title: '公告标题',
       type: 'input',
-      rules: [{ required: true, message: '请输入公告标题' }],
+      rules: [
+        { required: true, message: '请输入公告标题' },
+        { max: 50, message: '最大字符长度50' },
+      ],
     },
     {
       key: 'type',
@@ -81,6 +84,7 @@ const Notice = (props: any) => {
       title: '公告标题',
       dataIndex: 'title',
       width: '10%',
+      ellipsis: true,
     },
     {
       title: '公告类型',

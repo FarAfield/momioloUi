@@ -165,6 +165,7 @@ const Account = (props: any) => {
         { required: true, message: '请输入登录密码' },
         { pattern: /^[0-9A-Za-z]{6,12}$/, message: '密码必须为6-12位数字或字母，区分大小写' },
       ],
+      maxLength: 12,
       hide: Object.keys(formData).length,
     },
     {
