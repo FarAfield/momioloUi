@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { connect } from 'umi';
 import { Tag, message, Popconfirm, Button } from 'antd';
 import CommonTable from '../../../components/Momiolo/CommonTable';
@@ -6,6 +6,7 @@ import CommonAuth from '../../../components/Momiolo/CommonAuth';
 import CommonModalForm from '../../../components/Momiolo/CommonModalForm';
 import PageCard from '../../../components/PageCard';
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
+import GlobalContext from '../../../layouts/GlobalContext';
 
 const TYPE = [
   { value: 1, label: '菜单' },
@@ -45,6 +46,7 @@ const Resource = (props: any) => {
     initialValues: {},
   });
   const [resourceType, setResourceType] = useState(undefined);
+  const { permissions }: any = useContext(GlobalContext);
 
   useEffect(() => {
     handleSearch();
@@ -94,8 +96,9 @@ const Resource = (props: any) => {
       type: 'input',
       rules: [
         { required: true, message: '请输入资源名称' },
-        { max: 20, message: '最大字符长度20' },
+        { max: 10, message: '最大字符长度10' },
       ],
+      maxLength: 10,
     },
     {
       key: 'resourceCode',
@@ -106,6 +109,7 @@ const Resource = (props: any) => {
         { max: 20, message: '最大字符长度20' },
       ],
       readOnly: [false, true],
+      maxLength: 20,
     },
     {
       key: 'resourceType',
@@ -124,7 +128,8 @@ const Resource = (props: any) => {
         { required: true, message: '请输入资源图标' },
         { max: 20, message: '最大字符长度20' },
       ],
-      hide: resourceType === 3,
+      hide: resourceType === 3 || resourceType === 2,
+      maxLength: 20,
     },
   ];
   const columns = [
@@ -170,7 +175,7 @@ const Resource = (props: any) => {
               style={{ margin: 6 }}
               color="success"
               key={item.sid}
-              closable
+              closable={permissions.includes('resource_delete')}
               onClose={(e) => e.preventDefault()}
               closeIcon={
                 <Popconfirm title={'是否确认删除'} onConfirm={() => handleDelete(item.sid)}>
@@ -280,7 +285,7 @@ const Resource = (props: any) => {
     loading,
     rowKey: (record: any) => record.sid,
     pagination: false,
-    footer: () => footer,
+    footer: () => (permissions.includes('resource_create') ? footer : null),
   };
   return (
     <PageCard>

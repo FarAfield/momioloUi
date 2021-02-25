@@ -81,7 +81,7 @@ request.interceptors.response.use(async (response:any) => {
         maxCountMessage.error('抱歉，您暂无此权限');
         return {};
       } else if (res.statusCode !== '0') {
-        console.info(res.statusMessage);
+        console.warn(res.statusMessage);
       }
     }
   }

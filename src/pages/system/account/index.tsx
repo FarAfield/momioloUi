@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { connect } from 'umi';
 import { message, Button, Badge, Tag } from 'antd';
 import CommonTable from '../../../components/Momiolo/CommonTable';
@@ -9,6 +9,7 @@ import PageCard from '../../../components/PageCard';
 import { getValueByKey } from '@/utils/support';
 import { PlusOutlined } from '@ant-design/icons';
 import { isSuccess } from '@/utils/utils';
+import GlobalContext from '../../../layouts/GlobalContext';
 import md5 from 'md5';
 
 const STATUS = [
@@ -37,6 +38,7 @@ const Account = (props: any) => {
   const [formValues, setFormValues] = useState({});
   const [roleOption, setRoleOption] = useState([]);
   const [orgTree, setOrgTree] = useState<any>([]);
+  const { permissions }: any = useContext(GlobalContext);
   useEffect(() => {
     handleSearch();
     getOption();
@@ -66,7 +68,7 @@ const Account = (props: any) => {
   const handleSearch = useCallback(() => {
     dispatch({
       type: 'base/getPage',
-      payload: { url: '/account/findByPage' },
+      payload: { url: '/account/findByPage', ...formValues },
     });
   }, []);
   const handleDelete = useCallback((sid) => {
@@ -95,6 +97,16 @@ const Account = (props: any) => {
       payload: { url: '/account/unlock', sid },
       callback: (res: any) => {
         message.success('解锁成功');
+        handleSearch();
+      },
+    });
+  }, []);
+  const handleReset = useCallback((sid) => {
+    dispatch({
+      type: 'base/postData',
+      payload: { url: '/account/resetPassword', sid, accountPassword: md5('123456') },
+      callback: (res: any) => {
+        message.success('重置密码成功');
         handleSearch();
       },
     });
@@ -276,9 +288,9 @@ const Account = (props: any) => {
             key: 'reset',
             title: '重置密码',
             auth: 'account_reset',
-            onClick: () => {
-              message.info('后续功能，敬请期待！');
-            },
+            onClick: () => handleReset(record.sid),
+            pop: true,
+            message: '该账号的密码将会被重置为123456，是否确认？',
           },
           {
             title: '删除',
@@ -315,11 +327,14 @@ const Account = (props: any) => {
         handleFormReset={() => setFormValues({})}
       />
       <div style={{ display: 'flex', marginBottom: 12 }}>
-        <Button type="primary" onClick={() => setVisible(true)}>
-          <PlusOutlined />
-          新增
-        </Button>
+        {permissions.includes('account_create') && (
+          <Button type="primary" onClick={() => setVisible(true)}>
+            <PlusOutlined />
+            新增
+          </Button>
+        )}
       </div>
+
       <CommonTable
         fetchParams={{ type: 'base/getPage', url: '/account/findByPage' }}
         formValues={formValues}

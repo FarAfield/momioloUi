@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { connect } from 'umi';
 import { message, Button } from 'antd';
 import CommonTable from '../../../components/Momiolo/CommonTable';
@@ -6,8 +6,9 @@ import CommonAuth from '../../../components/Momiolo/CommonAuth';
 import CommonModalForm from '../../../components/Momiolo/CommonModalForm';
 import CommonSearchForm from '../../../components/Momiolo/CommonSearchForm';
 import PageCard from '../../../components/PageCard';
-import { getValueByKey } from '../../../utils/support';
+import { getValueByKey } from '@/utils/support';
 import { PlusOutlined } from '@ant-design/icons';
+import GlobalContext from '../../../layouts/GlobalContext';
 
 const TYPE = [
   { value: '1', label: '类型一' },
@@ -23,13 +24,14 @@ const Notice = (props: any) => {
   const [visible, setVisible] = useState(false);
   const [formData, setFormData] = useState({});
   const [formValues, setFormValues] = useState({});
+  const { permissions }: any = useContext(GlobalContext);
   useEffect(() => {
     handleSearch();
   }, []);
   const handleSearch = useCallback(() => {
     dispatch({
       type: 'base/getPage',
-      payload: { url: '/notice/findByPage' },
+      payload: { url: '/notice/findByPage', ...formValues },
     });
   }, []);
   const handleDelete = useCallback((sid) => {
@@ -157,10 +159,12 @@ const Notice = (props: any) => {
         handleFormReset={() => setFormValues({})}
       />
       <div style={{ display: 'flex', marginBottom: 12 }}>
-        <Button type="primary" onClick={() => setVisible(true)}>
-          <PlusOutlined />
-          新增
-        </Button>
+        {permissions.includes('notice_create') && (
+          <Button type="primary" onClick={() => setVisible(true)}>
+            <PlusOutlined />
+            新增
+          </Button>
+        )}
       </div>
       <CommonTable
         fetchParams={{ type: 'base/getPage', url: '/notice/findByPage' }}

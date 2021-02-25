@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { connect } from 'umi';
 import { message, Badge, Button } from 'antd';
 import CommonTable from '../../../components/Momiolo/CommonTable';
@@ -8,6 +8,7 @@ import PageCard from '../../../components/PageCard';
 import { getValueByKey } from '@/utils/support';
 import { PlusOutlined } from '@ant-design/icons';
 import { history } from 'umi';
+import GlobalContext from '../../../layouts/GlobalContext';
 
 const STATUS = [
   { value: '0', label: '正常' },
@@ -20,6 +21,7 @@ const Role = (props: any) => {
     pageData: { list, pagination },
   } = props;
   const [formValues, setFormValues] = useState({});
+  const { permissions }: any = useContext(GlobalContext);
   useEffect(() => {
     handleSearch();
   }, []);
@@ -98,9 +100,9 @@ const Role = (props: any) => {
               history.push({ pathname: '/system/updateRole', query: { sid: record.sid } }),
           },
           {
-            key: 'view',
-            title: '查看',
-            auth: 'role_view',
+            key: 'detail',
+            title: '详情',
+            auth: 'role_detail',
             onClick: () =>
               history.push({
                 pathname: '/system/role/updateRole',
@@ -142,10 +144,12 @@ const Role = (props: any) => {
         handleFormReset={() => setFormValues({})}
       />
       <div style={{ display: 'flex', marginBottom: 12 }}>
-        <Button type="primary" onClick={() => history.push('/system/updateRole')}>
-          <PlusOutlined />
-          新增
-        </Button>
+        {permissions.includes('role_create') && (
+          <Button type="primary" onClick={() => history.push('/system/updateRole')}>
+            <PlusOutlined />
+            新增
+          </Button>
+        )}
       </div>
       <CommonTable
         fetchParams={{ type: 'base/getPage', url: '/role/findByPage' }}

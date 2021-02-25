@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { connect } from 'umi';
 import { message, Button } from 'antd';
 import CommonTable from '../../../components/Momiolo/CommonTable';
@@ -7,6 +7,7 @@ import CommonModalForm from '../../../components/Momiolo/CommonModalForm';
 import CommonSearchForm from '../../../components/Momiolo/CommonSearchForm';
 import PageCard from '../../../components/PageCard';
 import { PlusOutlined } from '@ant-design/icons';
+import GlobalContext from '../../../layouts/GlobalContext';
 
 const DataDictionary = (props: any) => {
   const {
@@ -17,13 +18,14 @@ const DataDictionary = (props: any) => {
   const [visible, setVisible] = useState(false);
   const [formData, setFormData] = useState({});
   const [formValues, setFormValues] = useState({});
+  const { permissions }: any = useContext(GlobalContext);
   useEffect(() => {
     handleSearch();
   }, []);
   const handleSearch = useCallback(() => {
     dispatch({
       type: 'base/getPage',
-      payload: { url: '/dataDictionary/findByPage' },
+      payload: { url: '/dataDictionary/findByPage', ...formValues },
     });
   }, []);
   const handleDelete = useCallback((sid) => {
@@ -186,10 +188,12 @@ const DataDictionary = (props: any) => {
         handleFormReset={() => setFormValues({})}
       />
       <div style={{ display: 'flex', marginBottom: 12 }}>
-        <Button type="primary" onClick={() => setVisible(true)}>
-          <PlusOutlined />
-          新增
-        </Button>
+        {permissions.includes('dataDictionary_create') && (
+          <Button type="primary" onClick={() => setVisible(true)}>
+            <PlusOutlined />
+            新增
+          </Button>
+        )}
       </div>
       <CommonTable
         fetchParams={{ type: 'base/getPage', url: '/dataDictionary/findByPage' }}
