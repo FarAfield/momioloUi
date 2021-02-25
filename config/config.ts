@@ -33,6 +33,7 @@ export default defineConfig({
   proxy: {
     '/base': {
       target: 'https://www.momiolo.com:4430/base',
+      // target: 'http://localhost:8080/base',
       changeOrigin: true,
       pathRewrite: { '/base': '' },
     },
