@@ -34,8 +34,8 @@ const HandleLog = (props: any) => {
     if (values?.handleDateRange?.length) {
       values.startTime = dayjs(values.handleDateRange[0]).format('YYYY-MM-DD HH:mm:ss');
       values.endTime = dayjs(values.handleDateRange[1]).format('YYYY-MM-DD HH:mm:ss');
+      delete values.handleDateRange;
     }
-    delete values.handleDateRange;
     return values;
   };
   const searchItems = [

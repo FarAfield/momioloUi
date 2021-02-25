@@ -40,7 +40,7 @@ const errorHandler = (error: { response: Response }): Response => {
   } else if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
-    console.log(`请求状态:${status}  请求路径${url}`);
+    console.error(`请求状态:${status}  请求路径${url}`);
     maxCountMessage.error(errorText);
   }
   return response;
@@ -81,7 +81,7 @@ request.interceptors.response.use(async (response:any) => {
         maxCountMessage.error('抱歉，您暂无此权限');
         return {};
       } else if (res.statusCode !== '0') {
-        console.log(res.statusMessage);
+        console.info(res.statusMessage);
       }
     }
   }

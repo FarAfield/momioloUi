@@ -34,28 +34,26 @@ const SecurityView = (props: any) => {
               label={'原始密码'}
               rules={[
                 { required: true, message: '请输入原始密码' },
-                { max: 20, message: '最大字符长度20' },
                 {
                   pattern: /^[0-9A-Za-z]{6,12}$/,
                   message: '密码必须为6-12位数字和字母，区分大小写',
                 },
               ]}
             >
-              <Input placeholder={'请输入原始密码'} maxLength={20} allowClear />
+              <Input placeholder={'请输入原始密码'} maxLength={12} allowClear />
             </FormItem>
             <FormItem
               name={'newPassword'}
               label={'新密码'}
               rules={[
                 { required: true, message: '请输入新密码' },
-                { max: 20, message: '最大字符长度20' },
                 {
                   pattern: /^[0-9A-Za-z]{6,12}$/,
                   message: '密码必须为6-12位数字和字母，区分大小写',
                 },
               ]}
             >
-              <Input placeholder={'请输入新密码'} maxLength={20} allowClear />
+              <Input placeholder={'请输入新密码'} maxLength={12} allowClear />
             </FormItem>
             <FormItem
               name={'newCheckPassword'}
@@ -63,7 +61,6 @@ const SecurityView = (props: any) => {
               dependencies={['newPassword']}
               rules={[
                 { required: true, message: '请确认输入的密码' },
-                { max: 20, message: '最大字符长度20' },
                 {
                   pattern: /^[0-9A-Za-z]{6,12}$/,
                   message: '密码必须为6-12位数字和字母，区分大小写',
@@ -78,7 +75,7 @@ const SecurityView = (props: any) => {
                 }),
               ]}
             >
-              <Input placeholder={'请确认输入的密码'} allowClear maxLength={20} />
+              <Input placeholder={'请确认输入的密码'} allowClear maxLength={12} />
             </FormItem>
             <FormItem>
               <Button type="primary" htmlType="submit" loading={loading}>

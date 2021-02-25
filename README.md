@@ -1,5 +1,6 @@
 ## momioloUi
 ## React版本前端，预览地址https://www.momiolo.com
+## 游客身份访问  账号：guest  密码：123456
 
 - config  umi配置以及项目基础配置
 - mock 本地mock
@@ -17,8 +18,6 @@
 - README.md 项目说明文档
 
 
-
-todo 新增按钮权限处理
 
 
 

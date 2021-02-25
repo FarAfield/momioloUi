@@ -1,7 +1,7 @@
 import React from 'react';
 import { Select } from 'antd';
 const { Option } = Select;
-import { BankOutlined, BarsOutlined, SettingOutlined  } from '@ant-design/icons';
+import { BankOutlined, BarsOutlined, SettingOutlined } from '@ant-design/icons';
 
 export const transferOption = (arrayData = [], keyValue = ['value', 'label']) =>
   arrayData.map((item) => (
@@ -11,17 +11,15 @@ export const transferOption = (arrayData = [], keyValue = ['value', 'label']) =>
   ));
 
 export const getValueByKey = (data: any = [], keyValue = ['key', 'value'], key: any) =>
-  data.find((d: any) => d[keyValue[0]] === key)
-    ? data.find((d: any) => d[keyValue[0]] === key)?.[keyValue[1]]
-    : key;
+  data.find((d: any) => d[keyValue[0]] === key)?.[keyValue[1]] || key;
 
 export const getIconByName = (name: any) => {
   switch (name) {
     case 'BankOutlined':
       return <BankOutlined />;
     case 'SettingOutlined':
-      return <SettingOutlined/>;
-          default:
+      return <SettingOutlined />;
+    default:
       return <BarsOutlined />;
   }
 };
