@@ -106,10 +106,10 @@ const Resource = (props: any) => {
       type: 'input',
       rules: [
         { required: true, message: '请输入资源编码' },
-        { max: 20, message: '最大字符长度20' },
+        { max: 45, message: '最大字符长度45' },
       ],
       readOnly: [false, true],
-      maxLength: 20,
+      maxLength: 45,
     },
     {
       key: 'resourceType',
@@ -125,7 +125,6 @@ const Resource = (props: any) => {
       title: '资源图标',
       type: 'input',
       rules: [
-        { required: true, message: '请输入资源图标' },
         { max: 20, message: '最大字符长度20' },
       ],
       hide: resourceType === 3 || resourceType === 2,

@@ -105,7 +105,7 @@ const Role = (props: any) => {
             auth: 'role_detail',
             onClick: () =>
               history.push({
-                pathname: '/system/role/updateRole',
+                pathname: '/system/updateRole',
                 query: { sid: record.sid, disabled: true },
               }),
           },

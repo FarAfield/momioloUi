@@ -129,6 +129,7 @@ const UpdateRole = (props: any) => {
                 {item.resourceName}
               </span>
             }
+            disableCheckbox={item.resourceCode === 'superConfig'}
           >
             {renderTreeNodes(item.children || item.buttonChildren)}
           </TreeNode>
@@ -143,6 +144,7 @@ const UpdateRole = (props: any) => {
               {item.resourceName}
             </span>
           }
+          disableCheckbox={item.resourceCode === 'superConfig'}
         />
       );
     });

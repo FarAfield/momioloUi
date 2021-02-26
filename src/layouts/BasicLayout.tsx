@@ -13,6 +13,7 @@ import { isLogin, storageClear } from '@/utils/utils';
 import { getIconByName } from '@/utils/support';
 import logo from '../assets/logo-white.svg';
 import ThemeSetting from '../components/ThemeSetting';
+import { ThemeConfig } from '@/utils/constant';
 import { SettingOutlined } from '@ant-design/icons';
 import styles from './BasicLayout.less';
 
@@ -34,10 +35,21 @@ const BasicLayout: React.FC<any> = (props) => {
           setLoading(false);
         },
       });
+      changeThemeSetting();
     } else {
       storageClear();
       history.replace('/user/login');
     }
+  }, []);
+  const changeThemeSetting = useCallback(() => {
+    const theme =
+      ThemeConfig.find((i: any) => i.key === localStorage.getItem('theme'))?.modifyVars?.[
+        '@primary-color'
+      ] || '#1890ff';
+    dispatch({
+      type: 'global/changeSetting',
+      payload: { primaryColor: theme },
+    });
   }, []);
   const handleMenuCollapse = useCallback(() => {
     dispatch({
