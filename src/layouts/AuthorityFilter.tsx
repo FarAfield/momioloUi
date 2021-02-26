@@ -24,9 +24,14 @@ const AuthorityFilter = ({ children, menuData, permissions, currentUser, locatio
   getMenuPath(menuData, result);
   // 无需鉴权的路径
   const extraPath = ['/', '/user/center', '/user/setting'];
+  const isSuperAdmin = currentUser.accountName === superAdminName;
   if (result.concat(extraPath).includes(pathname)) {
     // 全局注入权限数据、是否是超级管理员
-    return <GlobalContext.Provider value={{ permissions, isSuperAdmin: currentUser.accountName === superAdminName }}>{children}</GlobalContext.Provider>;
+    return (
+      <GlobalContext.Provider value={{ permissions, isSuperAdmin }}>
+        {children}
+      </GlobalContext.Provider>
+    );
   } else if (!result.length) {
     // 暂无权限数据，此时处于页面刷新，因此展示为loading
     return <PageLoading />;

@@ -223,6 +223,7 @@ const UpdateRole = (props: any) => {
                 disabled={disabled}
                 className={styles.tree}
                 checkable={true}
+                selectable={false}
                 checkedKeys={checkedKeys}
                 onCheck={(checkedKeys: any, e: any) => onCheck(checkedKeys, e)}
               >
