@@ -91,3 +91,5 @@ export const nickNameAndAvatar = [
   '管理员',
   'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
 ];
+// 超级管理员账号名
+export const superAdminName = 'SysAdmin';

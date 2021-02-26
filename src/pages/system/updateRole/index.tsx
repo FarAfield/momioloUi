@@ -82,9 +82,9 @@ const UpdateRole = (props: any) => {
   const searchMenuData = useCallback(() => {
     dispatch({
       type: 'base/getData',
-      payload: { url: '/resource/findMenuTree' },
+      payload: { url: '/resource/findCurrentMenu' },
       callback: (res: any) => {
-        setMenuData(res.data);
+        setMenuData(res.data?.children || []);
       },
     });
   }, []);
@@ -235,6 +235,6 @@ const UpdateRole = (props: any) => {
     </PageCard>
   );
 };
-export default connect(({ loading, base }: any) => ({
+export default connect(({ loading }: any) => ({
   loading: loading.effects['base/getData'] || loading.effects['base/postData'],
 }))(UpdateRole);
