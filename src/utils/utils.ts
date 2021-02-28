@@ -20,16 +20,16 @@ export const isSuccess = (response: any) => {
 };
 
 /**===========================  Theme   ==================================*/
-export const changeTheme = (theme: any = 'default') => {
+export const changeTheme = (primaryColor: any = '#1890ff') => {
   const linkDom: any = document.getElementById('theme-style') as HTMLLinkElement;
   if (linkDom) {
-    linkDom.href = ThemeConfig.find((item: any) => item.key === theme)?.theme;
+    linkDom.href = ThemeConfig.find((item: any) => item.key === primaryColor)?.theme;
   } else {
     const style: any = document.createElement('link');
     style.type = 'text/css';
     style.rel = 'stylesheet';
     style.id = 'theme-style';
-    style.href = ThemeConfig.find((item: any) => item.key === theme)?.theme;
+    style.href = ThemeConfig.find((item: any) => item.key === primaryColor)?.theme;
     if (document.body.append) {
       document.body.append(style);
     } else {

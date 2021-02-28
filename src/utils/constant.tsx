@@ -7,7 +7,7 @@ import { GithubOutlined } from '@ant-design/icons';
 // 主题颜色
 export const ThemeConfig = [
   {
-    key: 'default',
+    key: '#1890ff',
     theme: '',
     name:'拂晓蓝',
     modifyVars: {
@@ -15,7 +15,7 @@ export const ThemeConfig = [
     },
   },
   {
-    key: 'dust',
+    key: '#F5222D',
     theme: 'https://preview.pro.ant.design/theme/dust.css',
     name:'薄暮',
     modifyVars: {
@@ -23,7 +23,7 @@ export const ThemeConfig = [
     },
   },
   {
-    key: 'volcano',
+    key: '#FA541C',
     theme: 'https://preview.pro.ant.design/theme/volcano.css',
     name:'火山',
     modifyVars: {
@@ -31,7 +31,7 @@ export const ThemeConfig = [
     },
   },
   {
-    key: 'sunset',
+    key: '#FAAD14',
     theme: 'https://preview.pro.ant.design/theme/sunset.css',
     name:'日暮',
     modifyVars: {
@@ -39,7 +39,7 @@ export const ThemeConfig = [
     },
   },
   {
-    key: 'cyan',
+    key: '#13C2C2',
     theme: 'https://preview.pro.ant.design/theme/cyan.css',
     name:'明青',
     modifyVars: {
@@ -47,7 +47,7 @@ export const ThemeConfig = [
     },
   },
   {
-    key: 'green',
+    key: '#52C41A',
     theme: 'https://preview.pro.ant.design/theme/green.css',
     name:'极光绿',
     modifyVars: {
@@ -55,7 +55,7 @@ export const ThemeConfig = [
     },
   },
   {
-    key: 'geekblue',
+    key: '#2F54EB',
     theme: 'https://preview.pro.ant.design/theme/geekblue.css',
     name:'极客蓝',
     modifyVars: {
@@ -63,7 +63,7 @@ export const ThemeConfig = [
     },
   },
   {
-    key: 'purple',
+    key: '#722ED1',
     theme: 'https://preview.pro.ant.design/theme/purple.css',
     name:'酱紫',
     modifyVars: {

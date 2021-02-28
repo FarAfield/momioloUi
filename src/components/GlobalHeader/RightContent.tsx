@@ -24,5 +24,4 @@ const GlobalHeaderRight: React.FC<any> = (props) => {
 export default connect(({ global }: any) => ({
   theme: global.defaultSetting.navTheme,
   layout: global.defaultSetting.layout,
-  primaryColor: global.defaultSetting.primaryColor,
 }))(GlobalHeaderRight);

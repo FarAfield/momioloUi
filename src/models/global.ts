@@ -3,7 +3,6 @@ import proSettings from '../../config/defaultSettings';
 export interface GlobalModelState {
   collapsed: boolean;
   defaultSetting: object;
-  theme: string;
   breadcrumbData: Array<any>;
 }
 export interface GlobalModelType {
@@ -22,7 +21,6 @@ const GlobalModel: GlobalModelType = {
   state: {
     collapsed: false,
     defaultSetting: proSettings,
-    theme: 'default',
     breadcrumbData: [], // 面包屑数据
   },
   effects: {

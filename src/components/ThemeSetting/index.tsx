@@ -7,27 +7,22 @@ import { connect } from 'umi';
 
 const ThemeSetting = (props: any) => {
   const { visible, onClose, dispatch } = props;
-  const [value, setValue] = useState<any>('default');
+  const [value, setValue] = useState<any>(localStorage.getItem('primaryColor') || '#1890ff');
   useEffect(() => {
-    if (visible) {
-      setValue(localStorage.getItem('theme') || 'default');
-    }
-  }, [visible]);
+    dispatch({
+      type: 'global/changeSetting',
+      payload: { primaryColor: localStorage.getItem('primaryColor') || '#1890ff' },
+    });
+    changeTheme(localStorage.getItem('primaryColor') || '#1890ff');
+  }, []);
   const onChange = useCallback((e) => {
     setValue(e.target.value);
     message.loading('正在加载主题...');
     dispatch({
-      type: 'global/update',
-      payload: { theme: e.target.value },
-    });
-    const theme =
-      ThemeConfig.find((i: any) => i.key === e.target.value)?.modifyVars?.['@primary-color'] ||
-      '#1890ff';
-    dispatch({
       type: 'global/changeSetting',
-      payload: { primaryColor: theme },
+      payload: { primaryColor: e.target.value },
     });
-    localStorage.setItem('theme', e.target.value);
+    localStorage.setItem('primaryColor', e.target.value);
     changeTheme(e.target.value);
   }, []);
   return (
@@ -55,10 +50,7 @@ const ThemeSetting = (props: any) => {
                 alignItems: 'center',
               }}
             >
-              <Radio.Button
-                value={item.key}
-                style={{ backgroundColor: `${item['modifyVars']['@primary-color']}` }}
-              >
+              <Radio.Button value={item.key} style={{ backgroundColor: `${item.key}` }}>
                 {item.key === value ? (
                   <CheckOutlined
                     style={{ fontSize: 20, color: 'white', marginLeft: -8, marginRight: -16 }}
