@@ -75,7 +75,7 @@ request.interceptors.response.use(async (response:any) => {
       if (res.statusCode === requestConfig['TOKEN_INVALID_ERROR']) {
         maxCountMessage.error('登陆已失效，请重新登陆');
         storageClear();
-        history.replace('/user/login');
+        history.push('/user/login');
         return {};
       } else if (res.statusCode === requestConfig['UNAUTHORIZED_ERROR']) {
         maxCountMessage.error('抱歉，您暂无此权限');

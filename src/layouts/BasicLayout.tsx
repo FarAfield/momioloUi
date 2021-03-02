@@ -36,7 +36,7 @@ const BasicLayout: React.FC<any> = (props) => {
       });
     } else {
       storageClear();
-      history.replace('/user/login');
+      history.push('/user/login');
     }
   }, []);
   const handleMenuCollapse = useCallback(() => {

@@ -6,9 +6,10 @@ import {
   WeiboCircleOutlined,
 } from '@ant-design/icons';
 import { Alert, Space, Form, Checkbox, Input, Button } from 'antd';
-import React, { useState } from 'react';
-import { connect, Dispatch, Link } from 'umi';
+import React, { useState, useEffect } from 'react';
+import { connect, Dispatch, Link, history } from 'umi';
 import md5 from 'md5';
+import { isLogin } from '@/utils/utils';
 import styles from './index.less';
 
 interface LoginProps {
@@ -30,6 +31,11 @@ const LoginMessage: React.FC<{
 const Login: React.FC<LoginProps> = (props) => {
   const { loading } = props;
   const [message, setMessage] = useState(undefined);
+  useEffect(() => {
+    if (isLogin()) {
+      history.push('/');
+    }
+  }, []);
   const onFinish = ({
     accountName,
     accountPassword,

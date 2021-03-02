@@ -60,7 +60,7 @@ const LoginModel: LoginModelType = {
       if (isSuccess(response)) {
         message.success('🎉 🎉 🎉  登录成功！');
         setToken(response.data.token);
-        history.replace('/');
+        history.push('/');
       }
       if (callback) callback(response);
     },
@@ -72,7 +72,7 @@ const LoginModel: LoginModelType = {
       if (isSuccess(response)) {
         message.success('退出登录成功！');
         storageClear();
-        history.replace('/user/login');
+        history.push('/user/login');
       } else {
         errorMessage(response);
       }
