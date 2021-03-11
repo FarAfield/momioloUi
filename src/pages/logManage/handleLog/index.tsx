@@ -80,7 +80,6 @@ const HandleLog = (props: any) => {
       key: 'handleDateRange',
       span: 12,
       showTime:true,
-      colStyle: { marginLeft: '-4%' },
     },
     {
       type: 'blank',

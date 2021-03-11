@@ -177,11 +177,10 @@ const CommonSearchForm = (props: any) => {
             showTime = false,
             format = 'YYYY-MM-DD HH:mm:ss',
             span = 10,
-            colStyle = {},
             ...rest
           } = item;
           return (
-            <Col key={key} span={span} style={colStyle}>
+            <Col key={key} span={span}>
               <FormItem name={key} label={title} rules={rules}>
                 <RangePicker
                   allowClear
