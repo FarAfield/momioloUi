@@ -177,10 +177,11 @@ const CommonSearchForm = (props: any) => {
             showTime = false,
             format = 'YYYY-MM-DD HH:mm:ss',
             span = 10,
+            colStyle = {},
             ...rest
           } = item;
           return (
-            <Col key={key} span={span}>
+            <Col key={key} span={span} style={colStyle}>
               <FormItem name={key} label={title} rules={rules}>
                 <RangePicker
                   allowClear
@@ -197,8 +198,8 @@ const CommonSearchForm = (props: any) => {
         }
         // 调整样式，通常搭配rangePicker使用
         case 'blank': {
-          const { key, span = 2 } = item;
-          return <Col key={key} span={span} />;
+          const { key, span = 2, colStyle } = item;
+          return <Col key={key} span={span} style={colStyle}/>;
         }
         default: {
           return null;
