@@ -41,6 +41,7 @@ const Org = (props: any) => {
       callback: (res: any) => {
         message.success('删除成功');
         handleSearch();
+        setRecord({});
       },
     });
   }, []);

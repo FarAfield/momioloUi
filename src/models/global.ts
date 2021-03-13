@@ -15,6 +15,7 @@ export interface GlobalModelType {
   reducers: {
     update: Reducer<GlobalModelState>;
   };
+  subscriptions: any;
 }
 const GlobalModel: GlobalModelType = {
   namespace: 'global',
@@ -49,6 +50,13 @@ const GlobalModel: GlobalModelType = {
         ...state,
         ...action.payload,
       };
+    },
+  },
+  subscriptions: {
+    routerInterceptor({ dispatch, history }: any) {
+      history.listen((location: any) => {
+        console.log(location);
+      });
     },
   },
 };
