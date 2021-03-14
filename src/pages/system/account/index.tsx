@@ -226,7 +226,7 @@ const Account = (props: any) => {
       render: (text: any) =>
         text
           ? text.split(',').map((item: any, index: number) => (
-              <Tag color="purple" key={index} style={{ margin: '2px 4px' }}>
+              <Tag color="purple" key={index} style={{ margin: '6px' }}>
                 {item}
               </Tag>
             ))

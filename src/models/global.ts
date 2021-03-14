@@ -55,7 +55,7 @@ const GlobalModel: GlobalModelType = {
   subscriptions: {
     routerInterceptor({ dispatch, history }: any) {
       history.listen((location: any) => {
-        console.log(location);
+        //console.log(location);
       });
     },
   },
