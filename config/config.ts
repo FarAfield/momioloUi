@@ -1,7 +1,6 @@
 // https://umijs.org/config/
 import { defineConfig } from 'umi';
 import defaultSettings from './defaultSettings';
-
 export default defineConfig({
   hash: true,
   antd: {},
@@ -18,6 +17,9 @@ export default defineConfig({
   },
   targets: {
     ie: 11,
+  },
+  chainWebpack(memo) {
+    memo.plugin('monaco-editor-webpack-plugin').use(require('monaco-editor-webpack-plugin'))
   },
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: {
