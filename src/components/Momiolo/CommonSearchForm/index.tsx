@@ -102,7 +102,6 @@ const CommonSearchForm = (props: any) => {
               <FormItem name={key} label={title} rules={rules}>
                 <InputNumber
                   placeholder={placeholder}
-                  allowClear
                   {...rest}
                   style={{ width: '100%', ...style }}
                 />

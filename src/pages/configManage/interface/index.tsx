@@ -10,11 +10,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { history } from 'umi';
 import GlobalContext from '../../../layouts/GlobalContext';
 
-const STATUS = [
-  { value: '0', label: '正常' },
-  { value: '1', label: '锁定' },
-];
-const Role = (props: any) => {
+const InterfacePro = (props: any) => {
   const {
     dispatch,
     loading,
@@ -28,13 +24,13 @@ const Role = (props: any) => {
   const handleSearch = useCallback(() => {
     dispatch({
       type: 'base/getPage',
-      payload: { url: '/role/findByPage',...formValues },
+      payload: { url: '/interface/findByPage', ...formValues },
     });
   }, []);
   const handleDelete = useCallback((sid) => {
     dispatch({
       type: 'base/postData',
-      payload: { url: '/role/delete', sid },
+      payload: { url: '/interface/delete', sid },
       callback: (res: any) => {
         message.success('删除成功');
         handleSearch();
@@ -43,49 +39,112 @@ const Role = (props: any) => {
   }, []);
   const searchItems = [
     {
-      key: 'roleName',
-      title: '角色名称',
+      key: 'name',
+      title: '接口名称',
       type: 'input',
     },
     {
-      key: 'roleStatus',
-      title: '角色状态',
+      key: 'url',
+      title: '接口URL',
+      type: 'input',
+    },
+    {
+      key: 'methods',
+      title: '请求方式',
       type: 'select',
-      selectOptions: STATUS,
+      selectOptions: [
+        {
+          value: 'post',
+          label: 'POST',
+        },
+        {
+          value: 'get',
+          label: 'GET',
+        },
+      ],
+    },
+    {
+      key: 'isPaging',
+      title: '是否分页',
+      type: 'select',
+      selectOptions: [
+        {
+          value: '0',
+          label: '是',
+        },
+        {
+          value: '1',
+          label: '否',
+        },
+      ],
     },
   ];
   const columns = [
     {
-      title: '角色名称',
-      dataIndex: 'roleName',
-      width: '15%',
+      title: '接口名称',
+      dataIndex: 'name',
+      width: '10%',
     },
     {
-      title: '角色简介',
-      dataIndex: 'roleDesc',
+      title: '接口URL',
+      dataIndex: 'url',
+      width: '10%',
+    },
+    {
+      title: '接口描述',
+      dataIndex: 'description',
       width: '25%',
       ellipsis: true,
     },
     {
-      title: '角色状态',
-      dataIndex: 'roleStatus',
+      title: '请求方式',
+      dataIndex: 'methods',
+      width: '10%',
+      render: (text: any) =>
+        getValueByKey(
+          [
+            {
+              value: 'post',
+              label: 'POST',
+            },
+            {
+              value: 'get',
+              label: 'GET',
+            },
+          ],
+          ['value', 'label'],
+          text,
+        ),
+    },
+    {
+      title: '是否分页',
+      dataIndex: 'isPaging',
       width: '10%',
       render: (text: any) => (
         <Badge
           status={text ? 'error' : 'success'}
-          text={getValueByKey(STATUS, ['value', 'label'], String(text))}
+          text={getValueByKey(
+            [
+              {
+                value: '0',
+                label: '是',
+              },
+              {
+                value: '1',
+                label: '否',
+              },
+            ],
+            ['value', 'label'],
+            String(text),
+          )}
         />
       ),
     },
     {
-      title: '创建时间',
-      dataIndex: 'createDate',
-      width: '15%',
-    },
-    {
-      title: '更新时间',
-      dataIndex: 'updateDate',
-      width: '15%',
+      title: '延时',
+      dataIndex: 'delay',
+      width: '10%',
+      render: (text: any) => text + 's',
     },
     {
       title: '操作',
@@ -95,24 +154,17 @@ const Role = (props: any) => {
           {
             key: 'edit',
             title: '编辑',
-            auth: 'role_update',
-            onClick: () =>
-              history.push({ pathname: '/system/updateRole', query: { sid: record.sid } }),
-          },
-          {
-            key: 'detail',
-            title: '详情',
-            auth: 'role_detail',
+            auth: 'interface_update',
             onClick: () =>
               history.push({
-                pathname: '/system/updateRole',
-                query: { sid: record.sid, disabled: true },
+                pathname: '/configManage/updateInterface',
+                query: { sid: record.sid },
               }),
           },
           {
             title: '删除',
             key: 'remove',
-            auth: 'role_delete',
+            auth: 'interface_delete',
             onClick: () => handleDelete(record.sid),
             pop: true,
             message: '是否确认删除？',
@@ -135,24 +187,25 @@ const Role = (props: any) => {
     rowKey: (record: any) => record.sid,
     pagination: paginationProps,
   };
+
   return (
     <PageCard>
       <CommonSearchForm
         searchItems={searchItems}
-        fetchParams={{ type: 'base/getPage', url: '/role/findByPage' }}
+        fetchParams={{ type: 'base/getPage', url: '/interface/findByPage' }}
         saveFormValues={(v: any) => setFormValues({ ...formValues, ...v })}
         handleFormReset={() => setFormValues({})}
       />
       <div style={{ display: 'flex', marginBottom: 12 }}>
-        {permissions.includes('role_create') && (
-          <Button type="primary" onClick={() => history.push('/system/updateRole')}>
+        {permissions.includes('interface_create') && (
+          <Button type="primary" onClick={() => history.push('/configManage/updateInterface')}>
             <PlusOutlined />
             新增
           </Button>
         )}
       </div>
       <CommonTable
-        fetchParams={{ type: 'base/getPage', url: '/role/findByPage' }}
+        fetchParams={{ type: 'base/getPage', url: '/interface/findByPage' }}
         formValues={formValues}
         tableProps={tableProps}
       />
@@ -162,4 +215,4 @@ const Role = (props: any) => {
 export default connect(({ loading, base }: any) => ({
   loading: loading.effects['base/getPage'],
   pageData: base.pageData,
-}))(Role);
+}))(InterfacePro);

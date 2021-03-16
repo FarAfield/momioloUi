@@ -30,6 +30,7 @@ const UpdateRole = (props: any) => {
   const {
     location: { query },
     loading,
+    submitLoading,
     dispatch,
   } = props;
   const [menuData, setMenuData] = useState([]); // 全部的菜单数据
@@ -155,7 +156,7 @@ const UpdateRole = (props: any) => {
   };
   return (
     <PageCard>
-      <Spin spinning={false}>
+      <Spin spinning={loading === true}>
         <Row gutter={24}>
           <Col span={8}>
             <Card bordered={false} title={<h3>基本信息</h3>}>
@@ -208,7 +209,7 @@ const UpdateRole = (props: any) => {
                           <CloseOutlined />
                           {'取消'}
                         </Button>
-                        <Button type="primary" htmlType="submit" loading={loading}>
+                        <Button type="primary" htmlType="submit" loading={submitLoading}>
                           <CheckOutlined />
                           {'保存'}
                         </Button>
@@ -239,5 +240,6 @@ const UpdateRole = (props: any) => {
   );
 };
 export default connect(({ loading }: any) => ({
-  loading: loading.effects['base/getData'] || loading.effects['base/postData'],
+  loading: loading.effects['base/getData'],
+  submitLoading: loading.effects['base/postData'],
 }))(UpdateRole);
