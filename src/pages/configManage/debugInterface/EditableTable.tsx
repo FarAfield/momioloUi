@@ -17,11 +17,11 @@ const EditableTable = (props: any) => {
         render: (text: any, record: any, index: number) => {
           if (record.paramName === 'current' || record.paramName === 'size') {
             return (
-              <InputNumber min={1} max={100} precision={0} onChange={(v) => onChange(v, index)} />
+              <InputNumber value={text} min={1} max={100} precision={0} onChange={(v) => onChange(v, index)} />
             );
           }
           return (
-            <Input onChange={(e) => onChange(e.target.value, index)} style={{ width: '50%' }} />
+            <Input value={text} onChange={(e) => onChange(e.target.value, index)} style={{ width: '50%' }} />
           );
         },
       };

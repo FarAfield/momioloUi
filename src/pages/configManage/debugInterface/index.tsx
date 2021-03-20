@@ -147,7 +147,7 @@ const DebugInterface = (props: any) => {
         点此发送请求
       </Button>
       <Descriptions title="请求结果" style={{ marginTop: 12 }} />
-      <TextArea autoSize={{ minRows: 12 }} value={formatJson(result)} />
+      <TextArea autoSize={{ minRows: 12, maxRows: 36 }}  style={{ color:'green'}} value={formatJson(result)} />
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: 12 }}>
         <Button onClick={() => history.goBack()} style={{ width: 120 }}>
           返回
