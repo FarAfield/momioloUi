@@ -93,3 +93,10 @@ export const nickNameAndAvatar = [
 ];
 // 超级管理员账号名
 export const superAdminName = 'SysAdmin';
+
+// 接口配置路径
+export const baseUrl = 'https://www.momiolo.com/base/applets';
+// 接口配置分页查询后缀(GET和POST)
+export const pageSuffix = ['getByPage','postByPage'];
+// 接口配置查询后缀
+export const findSuffix = ['getData','postData','putData','deleteData'];

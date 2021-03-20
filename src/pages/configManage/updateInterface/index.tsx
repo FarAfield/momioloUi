@@ -64,8 +64,8 @@ const UpdateInterface = (props: any) => {
       type: 'base/getData',
       payload: { url: '/interface/findDetail', sid },
       callback: (res: any) => {
-        // todo 数据回显以及state设置
-        form.setFieldsValue({});
+        setCode(res.data.content);
+        form.setFieldsValue({ ...res.data });
       },
     });
   }, []);
@@ -80,32 +80,59 @@ const UpdateInterface = (props: any) => {
   });
 
   const onFinish = (values: any) => {
+    // 分页方式检查
+    if ((values.methods === 'put' || values.methods === 'delete') && values.isPaging === 0) {
+      message.warn('PUT以及DELETE请求不支持分页，请修改！');
+      return;
+    }
+    // 额外参数解析检查
+    if (values.params) {
+      try {
+        JSON.parse(values.params);
+      } catch (e) {
+        message.warn('额外参数解析失败，请检查！');
+        return;
+      }
+    }
+    // 数据配置解析检查
     let responseData: any = undefined;
     // 校验空
     if (!code) {
-      message.warn('JSON为空，请输入后在提交！');
+      message.warn('返回体JSON为空，请输入后在提交！');
       return;
     }
     // 校验格式
     try {
       responseData = JSON.parse(code);
     } catch (e) {
-      message.warn('JSON解析异常，请检查！');
+      message.warn('返回体JSON解析异常，请检查！');
       return;
     }
     // 校验配置是否正确
     if (values.isPaging === 0 && !Array.isArray(responseData)) {
-      message.warn('该JSON格式不支持分页，请修改！');
+      message.warn('返回体JSON格式不支持分页，请修改！');
       return;
     }
-    console.log(values, code, responseData);
+    dispatch({
+      type: 'base/postData',
+      payload: {
+        url: query?.sid ? '/interface/update' : '/interface/create',
+        ...values,
+        content: code,
+        sid: query?.sid,
+      },
+      callback: (res: any) => {
+        message.success(query?.sid ? '编辑成功' : '新增成功');
+        history.goBack();
+      },
+    });
   };
 
   return (
     <PageCard>
       <Spin spinning={loading === true}>
         <Row gutter={24}>
-          <Col span={8}>
+          <Col span={10}>
             <Card bordered={false} title={<h3>接口基础信息</h3>}>
               <Form form={form} onFinish={onFinish} initialValues={{ delay: 0 }} layout="vertical">
                 <FormItem
@@ -116,15 +143,16 @@ const UpdateInterface = (props: any) => {
                   <Input allowClear placeholder={'请输入接口名称'} maxLength={20} />
                 </FormItem>
                 <FormItem
-                  name={'url'}
-                  label={'接口URL(作为参数传递)'}
-                  rules={[{ required: true, message: '请输入接口URL' }]}
+                  name={'path'}
+                  label={'接口路径'}
+                  rules={[{ required: true, message: '请输入接口路径' }]}
                 >
                   <Input
                     allowClear
-                    placeholder={'请输入接口URL'}
+                    placeholder={'请输入接口路径'}
                     maxLength={20}
                     addonBefore="https://"
+                    disabled={!!query.sid}
                   />
                 </FormItem>
                 <FormItem
@@ -137,7 +165,7 @@ const UpdateInterface = (props: any) => {
                 <FormItem
                   name={'methods'}
                   label={'请求方式'}
-                  rules={[{ required: false, message: '请选择' }]}
+                  rules={[{ required: true, message: '请选择请求方式' }]}
                 >
                   <Select
                     allowClear
@@ -150,8 +178,22 @@ const UpdateInterface = (props: any) => {
                   >
                     {transferOption(
                       [
-                        { value: 'post', label: 'POST' },
-                        { value: 'get', label: 'GET' },
+                        {
+                          value: 'get',
+                          label: 'GET',
+                        },
+                        {
+                          value: 'post',
+                          label: 'POST',
+                        },
+                        {
+                          value: 'put',
+                          label: 'PUT',
+                        },
+                        {
+                          value: 'delete',
+                          label: 'DELETE',
+                        },
                       ],
                       ['value', 'label'],
                     )}
@@ -174,29 +216,28 @@ const UpdateInterface = (props: any) => {
                 >
                   <InputNumber placeholder={'请选择'} min={0} max={30} step={1} precision={0} />
                 </FormItem>
-                <FormItem>
-                  <div style={{ display: 'flex', justifyContent: 'center', marginLeft: '30%' }}>
-                    <Button onClick={() => history.goBack()} style={{ marginRight: 12 }}>
-                      <CloseOutlined />
-                      {'取消'}
-                    </Button>
-                    <Button type="primary" htmlType="submit" loading={submitLoading}>
-                      <CheckOutlined />
-                      {'保存'}
-                    </Button>
-                  </div>
+                <FormItem name={'params'} label={'额外参数'}>
+                  <MonacoEditor height={100} width={'100%'} />
                 </FormItem>
               </Form>
             </Card>
           </Col>
-          <Col span={16}>
+          <Col span={14}>
             <Card bordered={false} title={<h3>返回体配置</h3>}>
-              <div style={{ width: '95%' }}>
-                <MonacoEditor height={500} code={code} saveCode={(v: any) => setCode(v)} />
-              </div>
+              <MonacoEditor height={500} value={code} onChange={(v: any) => setCode(v)} />
             </Card>
           </Col>
         </Row>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Button onClick={() => history.goBack()} style={{ marginRight: 12 }}>
+            <CloseOutlined />
+            {'取消'}
+          </Button>
+          <Button type="primary" loading={submitLoading} onClick={() => form.submit()}>
+            <CheckOutlined />
+            {'保存'}
+          </Button>
+        </div>
       </Spin>
     </PageCard>
   );

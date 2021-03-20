@@ -5,26 +5,24 @@ const ColorPicker = (props: any) => {
   /**
    * type   =>    Sketch(默认)    Block
    */
-  const { type, width, presetColors, defaultColor, color, onColorChange } = props;
+  const { type, width, presetColors, defaultValue, value, onChange } = props;
   // 内部状态
-  const [stateColor, setStateColor] = useState('#fff');
-
+  const [color, setColor] = useState('#fff');
   useEffect(() => {
-    if (defaultColor) {
-      setStateColor(defaultColor);
+    if (defaultValue) {
+      setColor(defaultValue);
     }
-  }, [defaultColor]);
-
+  }, [defaultValue]);
   return (
     <>
       {type === 'Sketch' && (
         <SketchPicker
           width={width}
-          color={color || stateColor}
+          color={value || color}
           onChangeComplete={(v: any) => {
-            onColorChange(v.hex);
-            if (!color) {
-              setStateColor(v.hex);
+            onChange(v.hex);
+            if (!value) {
+              setColor(v.hex);
             }
           }}
           presetColors={presetColors}
@@ -33,11 +31,11 @@ const ColorPicker = (props: any) => {
       {type === 'Block' && (
         <BlockPicker
           width={width}
-          color={color || stateColor}
+          color={value || color}
           onChangeComplete={(v: any) => {
-            onColorChange(v.hex);
-            if (!color) {
-              setStateColor(v.hex);
+            onChange(v.hex);
+            if (!value) {
+              setColor(v.hex);
             }
           }}
           presetColors={presetColors}
@@ -61,6 +59,8 @@ ColorPicker.defaultProps = {
     '#F78DA7',
     '#9900EF',
   ],
-  onColorChange: () => {},
+  defaultValue: '#fff',
+  value: '#fff',
+  onChange: () => {},
 };
 export default ColorPicker;

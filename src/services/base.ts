@@ -63,6 +63,6 @@ export async function putList({ url, list }: Payload) {
 /**
  *  delete方法
  */
-export async function remove({ url }: Payload) {
-  return request.delete(`${url}`, {});
+export async function remove({ url,...params }: Payload) {
+  return request.delete(`${url}`, { params });
 }

@@ -44,8 +44,8 @@ const InterfacePro = (props: any) => {
       type: 'input',
     },
     {
-      key: 'url',
-      title: '接口URL',
+      key: 'path',
+      title: '接口路径',
       type: 'input',
     },
     {
@@ -54,12 +54,20 @@ const InterfacePro = (props: any) => {
       type: 'select',
       selectOptions: [
         {
+          value: 'get',
+          label: 'GET',
+        },
+        {
           value: 'post',
           label: 'POST',
         },
         {
-          value: 'get',
-          label: 'GET',
+          value: 'put',
+          label: 'PUT',
+        },
+        {
+          value: 'delete',
+          label: 'DELETE',
         },
       ],
     },
@@ -83,17 +91,17 @@ const InterfacePro = (props: any) => {
     {
       title: '接口名称',
       dataIndex: 'name',
-      width: '10%',
+      width: '15%',
     },
     {
-      title: '接口URL',
-      dataIndex: 'url',
-      width: '10%',
+      title: '接口路径',
+      dataIndex: 'path',
+      width: '15%',
     },
     {
       title: '接口描述',
       dataIndex: 'description',
-      width: '25%',
+      width: '20%',
       ellipsis: true,
     },
     {
@@ -104,12 +112,20 @@ const InterfacePro = (props: any) => {
         getValueByKey(
           [
             {
+              value: 'get',
+              label: 'GET',
+            },
+            {
               value: 'post',
               label: 'POST',
             },
             {
-              value: 'get',
-              label: 'GET',
+              value: 'put',
+              label: 'PUT',
+            },
+            {
+              value: 'delete',
+              label: 'DELETE',
             },
           ],
           ['value', 'label'],
@@ -158,6 +174,16 @@ const InterfacePro = (props: any) => {
             onClick: () =>
               history.push({
                 pathname: '/configManage/updateInterface',
+                query: { sid: record.sid },
+              }),
+          },
+          {
+            key: 'debug',
+            title: '调试',
+            auth: 'interface_debug',
+            onClick: () =>
+              history.push({
+                pathname: '/configManage/debugInterface',
                 query: { sid: record.sid },
               }),
           },

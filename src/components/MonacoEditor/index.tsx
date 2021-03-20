@@ -1,21 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 
 const MonacoEditorPro = (props: any) => {
-  const { width, height, theme, language, code, saveCode } = props;
-  const [value, setValue] = useState('');
-  useEffect(() => {
-    if (code) {
-      setValue(code);
-    }
-  }, []);
+  const { width, height, theme, language, defaultValue, value, onChange } = props;
+  const [code, setCode] = useState('');
   const editorDidMount = (editor: any) => {
-    editor.focus();
+    // 是否初始加载时聚焦
+    // editor.focus();
   };
-  const onChange = (value: any) => {
-    setValue(value);
-    saveCode(value);
-  };
+  useEffect(() => {
+    if (defaultValue) {
+      setCode(defaultValue);
+    }
+  }, [defaultValue]);
   const options = {
     selectOnLineNumbers: true,
     renderSideBySide: false,
@@ -26,8 +23,13 @@ const MonacoEditorPro = (props: any) => {
       height={height}
       theme={theme}
       language={language}
-      value={value}
-      onChange={onChange}
+      value={value || code}
+      onChange={(v) => {
+        onChange(v);
+        if (!value) {
+          setCode(v);
+        }
+      }}
       options={options}
       editorDidMount={editorDidMount}
     />
@@ -38,7 +40,8 @@ MonacoEditorPro.defaultProps = {
   height: 400,
   theme: 'vs-dark', // 'vs', 'vs-dark', 'hc-black'
   language: 'json',
-  code: '', // 初始值
-  saveCode: () => {}, // 保存当前输入的值
+  defaultValue: '', // 默认值
+  value: '',
+  onChange: () => {}, // 保存当前输入的值
 };
 export default MonacoEditorPro;

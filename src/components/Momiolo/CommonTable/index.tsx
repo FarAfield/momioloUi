@@ -7,15 +7,37 @@ const CommonTable = (props: any) => {
     fetchParams: { type, url, extraArgs },
     formValues,
     tableProps,
+    handleSort,
     dispatch,
   } = props;
   const onChange = useCallback(
     (pagination, filters, sorter, extra) => {
+      // sorter支持多列排序，设置sorter:{ multiple: 1 } 标识多列排序（multiple数字越小，使用前端排序越优先，使用后端排序时也遵从此规则），设置为true标识单列排序
+      let sorterResult: Array<any> = [];
+      if (sorter && Array.isArray(sorter)) {
+        // 多列排序  sorter是个数组，此处先按照优先级排序
+        sorterResult = sorter.sort((a, b) => a.column.sorter.multiple - b.column.sorter.multiple);
+      } else if (sorter && Object.keys(sorter).length) {
+        // 单列排序  sorter是个对象
+        sorterResult = [sorter];
+      }
+      // 根据优先级生成需要排序的字段
+      const sorterList: Array<any> = [];
+      sorterResult.forEach((item) => {
+        // 取消多列或者单列排序时，也会存在一个sorter,但是order为undefined，因此过滤且不参与排序
+        if (item.order) {
+          sorterList.push({
+            order: item.order,
+            field: item.field,
+          });
+        }
+      });
       const params = {
         current: pagination.current,
         size: pagination.pageSize,
         ...formValues,
         ...filters,
+        ...handleSort(sorterList), // 使用自定义函数处理排序字段，默认返回{}
         ...extraArgs,
       };
       dispatch({
@@ -31,6 +53,7 @@ CommonTable.defaultProps = {
   fetchParams: {},
   formValues: {},
   tableProps: {},
+  handleSort: () => {},
 };
 export default connect()(CommonTable);
 
@@ -38,4 +61,5 @@ export default connect()(CommonTable);
  *   fetchParams:{ type, url, extraArgs } 分页查询时必传
  *   formValues  表单的查询条件
  *   tableProps  传递给原生table的参数
+ *   handleSort  排序函数 返回一个{}用于合并进查询，同时页面中需要留存一份数据用于查询以及重置
  */
