@@ -19,8 +19,9 @@ const useCurrentTime = () => {
 };
 const Home = () => {
   useEffect(() => {
-    createSocket('https://www.momiolo.com:9092');
-    return () => closeSocket;
+    // 本地访问需要加端口 localhost:9092
+    createSocket('www.momiolo.com');
+    return () => closeSocket();
   },[]);
   const [value,setValue] = useState('');
   const onClick = () => {

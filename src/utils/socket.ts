@@ -2,7 +2,8 @@ import io from 'socket.io-client';
 
 let socket: any = null;
 const createSocket = (socketServer: string) => {
-  socket = io(`wss://${socketServer}`, {
+  // 本地访问为ws
+  socket = io(`https://${socketServer}`, {
     reconnection: true,
     reconnectionDelay: 15000,
     reconnectionAttempts:10, // 重连次数
@@ -18,7 +19,7 @@ const createSocket = (socketServer: string) => {
     console.log('socket.io连接失败', reason);
   });
 };
-const closeSocket = socket && socket.disconnect();
+const closeSocket = () => socket.disconnect();
 export { socket, createSocket, closeSocket };
 
 
