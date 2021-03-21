@@ -1,31 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Card } from 'antd';
+import { Card, Button, Input, message } from 'antd';
 import dayjs from 'dayjs';
 import styles from './index.less';
-import Test from './Test';
-
-
-
-
-
-
-// 是否开启首页测试
-const IS_TEST = false;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import { socket, createSocket, closeSocket } from '@/utils/socket';
 
 
 // 获取当前时间秒数
@@ -41,21 +18,32 @@ const useCurrentTime = () => {
   return time;
 };
 const Home = () => {
+  useEffect(() => {
+    createSocket('https://www.momiolo.com:9092');
+    return () => closeSocket;
+  },[]);
+  const [value,setValue] = useState('');
+  const onClick = () => {
+    socket && value &&
+    socket.emit('sendMsgEvent', {
+      msgContent: value,
+    });
+  };
+  socket &&
+  socket.on('receiveMsgEvent', (data: any) => {
+    message.info(data);
+  });
   const time = dayjs.unix(useCurrentTime()).format('YYYY-MM-DD HH:mm:ss');
   return (
-    <>
-      {IS_TEST ? (
-        <Test />
-      ) : (
-        <Card>
-          <div className={styles.sunAnimation}>
-            <div className={styles.sun} />
-            <div className={styles.text}>{<h1>欢迎使用</h1>}</div>
-            <div className={styles.text}>{time}</div>
-          </div>
-        </Card>
-      )}
-    </>
+    <Card>
+      <div className={styles.sunAnimation}>
+        <div className={styles.sun} />
+        <div className={styles.text}>{<h1>欢迎使用</h1>}</div>
+        <div className={styles.text}>{time}</div>
+      </div>
+      <Input style={{ margin: '12px 0', width: '30%'}} value={value} placeholder={'请输入内容'} onChange={(e:any) => setValue(e.target.value)}/>
+      <Button onClick={onClick}>点击使用socket发送消息</Button>
+    </Card>
   );
 };
 export default Home;

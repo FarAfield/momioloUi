@@ -1,9 +1,11 @@
 import io from 'socket.io-client';
 
-export const Socket = (socketServer: string) => {
-  const socket = io(`ws://${socketServer}`, {
+let socket: any = null;
+const createSocket = (socketServer: string) => {
+  socket = io(`wss://${socketServer}`, {
     reconnection: true,
-    reconnectionDelay: 5000,
+    reconnectionDelay: 15000,
+    reconnectionAttempts:10, // 重连次数
     transports: ['websocket', 'polling'],
   });
   socket.on('connect', () => {
@@ -12,8 +14,30 @@ export const Socket = (socketServer: string) => {
   socket.on('disconnect', () => {
     console.log('socket.io断开连接');
   });
-  socket.on('connect_error', (reason:any) => {
-    console.log('socket.io连接失败',reason);
+  socket.on('connect_error', (reason: any) => {
+    console.log('socket.io连接失败', reason);
   });
-  return socket;
 };
+const closeSocket = socket && socket.disconnect();
+export { socket, createSocket, closeSocket };
+
+
+// 全局接收事件
+// socket.on('receiveMsgEvent', (data: any) => {
+// });
+
+// 全局发送事件
+// socket.emit('sendMsgEvent', {
+//   msgContent: '',
+// });
+
+// 加入房间
+// socket.emit('joinRoom',roomId);
+
+// 离开房间
+// socket.emit('leaveRoom',roomId);
+
+// 给指定房间发送事件
+// socket.emit('sendRoomMsgEvent', {
+//   msgContent:'',
+// },roomId);
