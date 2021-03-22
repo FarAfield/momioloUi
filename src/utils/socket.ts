@@ -2,7 +2,7 @@ import io from 'socket.io-client';
 
 let socket: any = null;
 const createSocket = (socketServer: string = '') => {
-  // 本地访问为ws:localhost:9092
+  // 本地访问为localhost:9092
   socket = io(`https://www.momiolo.com`, {
     reconnection: true,
     reconnectionDelay: 15000,
