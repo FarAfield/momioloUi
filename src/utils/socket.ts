@@ -1,12 +1,12 @@
 import io from 'socket.io-client';
 
 let socket: any = null;
-const createSocket = (socketServer: string) => {
-  // 本地访问为ws
-  socket = io(`https://${socketServer}`, {
+const createSocket = (socketServer: string = '') => {
+  // 本地访问为ws:localhost:9092
+  socket = io(`https://www.momiolo.com`, {
     reconnection: true,
     reconnectionDelay: 15000,
-    reconnectionAttempts:10, // 重连次数
+    reconnectionAttempts: 10, // 重连次数
     transports: ['websocket', 'polling'],
   });
   socket.on('connect', () => {
@@ -21,7 +21,6 @@ const createSocket = (socketServer: string) => {
 };
 const closeSocket = () => socket.disconnect();
 export { socket, createSocket, closeSocket };
-
 
 // 全局接收事件
 // socket.on('receiveMsgEvent', (data: any) => {
