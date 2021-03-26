@@ -6,7 +6,7 @@ import CommonAuth from '../../../components/Momiolo/CommonAuth';
 import CommonSearchForm from '../../../components/Momiolo/CommonSearchForm';
 import PageCard from '../../../components/PageCard';
 import { getValueByKey } from '@/utils/support';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, NodeExpandOutlined  } from '@ant-design/icons';
 import { history } from 'umi';
 import GlobalContext from '../../../layouts/GlobalContext';
 
@@ -227,6 +227,16 @@ const InterfacePro = (props: any) => {
           <Button type="primary" onClick={() => history.push('/configManage/updateInterface')}>
             <PlusOutlined />
             新增
+          </Button>
+        )}
+        {permissions.includes('interface_format') && (
+          <Button
+            type="primary"
+            onClick={() => history.push('/configManage/formatInterface')}
+            style={{ marginLeft: 24 }}
+          >
+            <NodeExpandOutlined />
+            数据格式化
           </Button>
         )}
       </div>
