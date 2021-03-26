@@ -6,7 +6,7 @@ import CommonAuth from '../../../components/Momiolo/CommonAuth';
 import CommonSearchForm from '../../../components/Momiolo/CommonSearchForm';
 import PageCard from '../../../components/PageCard';
 import { getValueByKey } from '@/utils/support';
-import { PlusOutlined, NodeExpandOutlined  } from '@ant-design/icons';
+import { PlusOutlined, NodeExpandOutlined } from '@ant-design/icons';
 import { history } from 'umi';
 import GlobalContext from '../../../layouts/GlobalContext';
 
@@ -27,7 +27,7 @@ const InterfacePro = (props: any) => {
       payload: { url: '/interface/findByPage', ...formValues },
     });
   }, []);
-  const handleDelete = useCallback((sid) => {
+  const handleDelete = useCallback((sid: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/interface/delete', sid },
