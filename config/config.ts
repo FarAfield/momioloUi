@@ -27,7 +27,9 @@ export default defineConfig({
   },
   title: false,
   ignoreMomentLocale: true,
-  dynamicImport: {},
+  dynamicImport: {
+    loading: '@/components/PageLoading',
+  },
   publicPath:'/',
   manifest: {
     basePath: '/',
