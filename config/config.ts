@@ -27,6 +27,7 @@ export default defineConfig({
   },
   title: false,
   ignoreMomentLocale: true,
+  dynamicImport: {},
   publicPath:'/',
   manifest: {
     basePath: '/',
