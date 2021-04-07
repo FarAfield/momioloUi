@@ -12,7 +12,10 @@ const CommonTable = (props: any) => {
   } = props;
   const onChange = useCallback(
     (pagination, filters, sorter, extra) => {
-      // sorter支持多列排序，设置sorter:{ multiple: 1 } 标识多列排序（multiple数字越小，使用前端排序越优先，使用后端排序时也遵从此规则），设置为true标识单列排序
+      /**
+       *  sorter处理
+       */
+      // sorter支持多列排序，设置sorter:{ multiple: 1 } 标识多列排序（multiple数字越小，使用前端排序越优先，使用后端排序时也默认遵从此规则），设置为true标识单列排序
       let sorterResult: Array<any> = [];
       if (sorter && Array.isArray(sorter)) {
         // 多列排序  sorter是个数组，此处先按照优先级排序
@@ -21,23 +24,30 @@ const CommonTable = (props: any) => {
         // 单列排序  sorter是个对象
         sorterResult = [sorter];
       }
-      // 根据优先级生成需要排序的字段
-      const sorterList: Array<any> = [];
-      sorterResult.forEach((item) => {
-        // 取消多列或者单列排序时，也会存在一个sorter,但是order为undefined，因此过滤且不参与排序
-        if (item.order) {
-          sorterList.push({
-            order: item.order,
-            field: item.field,
-          });
+      // 取消多列或者单列排序时，也会存在一个sorter,但是order为undefined，因此过滤且不参与排序
+      sorterResult = sorterResult.filter((i: any) => i.order);
+      /**
+       *   filters
+       */
+      // 使用filters进行全选时,改变传参为undefined
+      const filterColumns = tableProps.columns.filter((i: any) => !!i.filters);
+      const filtersResult = {};
+      for (const k in filters) {
+        if (filters[k]) {
+          const target = filterColumns.find((i: any) => i.dataIndex === k);
+          if (target.filters.length === filters[k].length) {
+            filtersResult[k] = undefined;
+          } else {
+            filtersResult[k] = filters[k];
+          }
         }
-      });
+      }
       const params = {
         current: pagination.current,
         size: pagination.pageSize,
         ...formValues,
-        ...filters,
-        ...handleSort(sorterList), // 使用自定义函数处理排序字段，默认返回{}
+        ...filtersResult,
+        ...handleSort(sorterResult), // 使用自定义函数处理排序字段，默认返回{}
         ...extraArgs,
       };
       dispatch({
