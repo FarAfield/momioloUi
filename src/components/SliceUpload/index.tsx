@@ -24,6 +24,7 @@ const SliceUpload = (props: any) => {
   const [fileList, setFileList] = useState<any>([]);
   const { percent, fileResult, errorMessage }: any = useFileSlice(fileList[0], {
     maxSize: 10000,
+    chunkSize: 0.1 * 1024 * 1024,
   });
   const [uploading, setUploading] = useState(false); // 是否在上传中
   const [uploadChunkSum,setUploadChunkSum] = useState(0); // 上传成功的片数
