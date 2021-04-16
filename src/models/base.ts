@@ -7,6 +7,7 @@ import {
   putParams,
   putList,
   remove,
+  upload
 } from '@/services/base';
 import { Reducer, Effect } from 'umi';
 import { message } from 'antd';
@@ -36,6 +37,7 @@ interface BaseModelType {
     getDataWithRes: Effect;
     putDataWithRes: Effect;
     removeWithRes: Effect;
+    upload:Effect;
     commonPostData: Effect;  // 只提供给公共组件使用
   };
   reducers: {
@@ -248,6 +250,15 @@ const BaseModel: BaseModelType = {
      */
     *removeWithRes({ payload, callback }, { call, put }) {
       const response = yield call(remove, payload);
+      yield put({ type: 'update', payload: { data: response } });
+      callback(response);
+    },
+
+    /**
+     *  upload方法 payload包含两个参数   url  file
+     */
+    *upload({ payload, callback }, { call, put }) {
+      const response = yield call(upload, payload);
       yield put({ type: 'update', payload: { data: response } });
       callback(response);
     },

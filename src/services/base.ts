@@ -3,6 +3,7 @@ interface Payload {
   url: string;
   params?: object;
   list?: Array<any>;
+  file?: any;
 }
 /**
  *   get方法
@@ -65,4 +66,12 @@ export async function putList({ url, list }: Payload) {
  */
 export async function remove({ url,...params }: Payload) {
   return request.delete(`${url}`, { params });
+}
+
+
+/**
+ *  upload方法
+ */
+export async function upload({ url, file }: Payload) {
+  return request.post(`${url}`, { data: file });
 }
