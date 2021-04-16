@@ -27,7 +27,8 @@ const SliceUpload = (props: any) => {
     maxSize: 10000,
   });
   const [uploading, setUploading] = useState(false); // 是否在上传中
-  const [uploadPercent, setUploadPercent] = useState(0); // 上传进度
+  const [uploadChunkSum,setUploadChunkSum] = useState(0); // 上传成功的片数
+  const [uploadPercent, setUploadPercent] = useState(0); // 上传进度（由片数计算出来）
   const breakRequest = useRef(false); // 是否中断上传
   const [fileInfo,setFileInfo] = useState<any>({}); //  fileStatus为done/error
   const update = useUpdate();
@@ -40,6 +41,18 @@ const SliceUpload = (props: any) => {
       message.warn(errorMessage);
     }
   }, [errorMessage]);
+
+  /**
+   *  计算上传进度
+   */
+  useEffect(() => {
+    if(uploadChunkSum){
+      const {
+        file: { chunkSum },
+      } = fileResult;
+      setUploadPercent(Number(((uploadChunkSum / chunkSum) * 100).toFixed(2)));
+    }
+  }, [uploadChunkSum]);
 
   /**
    * ① 第一步，上传前处理，文件md5校验，断点续传校验
@@ -67,7 +80,7 @@ const SliceUpload = (props: any) => {
       payload: { url:'fileUpload/preUpload',...paramsResult},
       callback: (res: any) => {
         console.info(res.data);
-        //  todo  返回数据包含断点数据
+        //  todo  返回数据包含断点数据  需要设置上传成功的片数
         partUpload(chunks);
       }
     });
@@ -112,8 +125,8 @@ const SliceUpload = (props: any) => {
           payload: { url: '/fileUpload/partUpload', file: formData },
           callback: (res:any) => {
             if(res.statusCode === '0'){
-              // 设置上传进度
-              setUploadPercent((v:number) => Number((((Math.round(v/100*chunkSum) + 1) / chunkSum) * 100).toFixed(2)));
+              // 设置上传片数
+              setUploadChunkSum((v) => v + 1);
             } else {
               // todo  重试一次
               // 某一个分片失败则终止上传
@@ -163,6 +176,7 @@ const SliceUpload = (props: any) => {
   const onRemove = () => {
     setFileList([]);
     setUploading(false);
+    setUploadChunkSum(0);
     setUploadPercent(0);
     breakRequest.current = false;
     setFileInfo({});
