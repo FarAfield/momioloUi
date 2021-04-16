@@ -92,7 +92,7 @@ const SliceUpload = (props: any) => {
     // 执行文件预处理
     dispatch({
       type:'base/postData',
-      payload: { url:'fileUpload/preUpload',...paramsResult},
+      payload: { url:'/fileUpload/preUpload',...paramsResult},
       callback: (res: any) => {
         console.info('执行预上传');
         //  todo  设置哪些数据需要重新上传  setUploadChunkSum(0);
@@ -164,7 +164,7 @@ const SliceUpload = (props: any) => {
   const mergeUploadFile = () => {
     dispatch({
       type: 'base/postData',
-      payload: { url:'fileUpload/mergeFile', fileMd5: fileResult.file.fileMd5 },
+      payload: { url:'/fileUpload/mergeFile', fileMd5: fileResult.file.fileMd5 },
       callback: (res:any) => {
         console.info('文件上传成功！');
         // todo 将文件信息留存交给父组件
