@@ -41,7 +41,6 @@ MonacoEditorPro.defaultProps = {
   theme: 'vs-dark', // 'vs', 'vs-dark', 'hc-black'
   language: 'json',
   defaultValue: '', // 默认值
-  value: '',
   onChange: () => {}, // 保存当前输入的值
 };
 export default MonacoEditorPro;

@@ -1,15 +1,15 @@
 const createWaterMark = (options: any) => {
   const {
     container = document.body, // 容器
-    width = '300px', // canvas元素宽
-    height = '200px', // canvas元素高
-    textAlign = 'left', // 文字对齐
+    width = '160px', // canvas元素宽
+    height = '160px', // canvas元素高
+    textAlign = 'center', // 文字对齐
     textBaseline = 'center', // 基准线
     font = 'italic 16px STHeiti ', // 字体大小及样式
     fillStyle = '#000', // 自定义水印的颜色
     content = 'Momiolo', // 水印内容
     globalAlpha = 0.1, // 设置图形和图像透明度的值
-    rotate = 16, // 文字旋转角度
+    rotate = -30, // 文字旋转角度
     zIndex = 1000, // 元素堆叠顺序
   } = options;
 

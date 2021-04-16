@@ -60,7 +60,6 @@ ColorPicker.defaultProps = {
     '#9900EF',
   ],
   defaultValue: '#fff',
-  value: '#fff',
   onChange: () => {},
 };
 export default ColorPicker;
