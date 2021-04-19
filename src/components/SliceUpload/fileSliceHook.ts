@@ -23,8 +23,8 @@ export const useFileSlice = (file: any, options: any = {}) => {
   }
   // 配置合并
   const fileOptions = {
-    suffix: ['.zip', '.tar','.rar'], // 文件后缀，例如['.zip','.tar']
-    maxSize: 1000, // 文件大小，默认为1000M
+    suffix: ['.zip', '.tar', '.rar'], // 文件后缀，例如['.zip','.tar','.rar']
+    maxSize: 1024, // 文件大小，默认为1G
     chunkSize: 2 * 1024 * 1024, // 分片大小，默认2M
     ...options,
   };
@@ -39,8 +39,6 @@ export const useFileSlice = (file: any, options: any = {}) => {
   }
   // ② 文件大小校验
   if (file.size > maxSize * 1024 * 1024) {
-    setPercent(0);
-    setFileResult({});
     return { percent: 0, fileResult: {}, errorMessage: `文件大小不得超过${maxSize}M！` };
   }
   /**

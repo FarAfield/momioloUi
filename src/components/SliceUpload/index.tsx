@@ -23,7 +23,7 @@ const SliceUpload = (props: any) => {
   const { style, dispatch } = props;
   const [fileList, setFileList] = useState<any>([]);
   const { percent, fileResult, errorMessage }: any = useFileSlice(fileList[0], {
-    maxSize: 10000,
+    maxSize: 10*1024,
     chunkSize: 0.1 * 1024 * 1024,
   });
   const [uploading, setUploading] = useState(false); // 是否在上传中
@@ -95,8 +95,13 @@ const SliceUpload = (props: any) => {
       type:'base/postData',
       payload: { url:'/fileUpload/preUpload',...paramsResult},
       callback: (res: any) => {
+        console.info('文件预处理结果',paramsResult);
         console.info('执行预上传');
-        //  todo  设置哪些数据需要重新上传  setUploadChunkSum(0);
+        /**
+         *  todo (断点续传后端实现)  setUploadChunkSum(0); partUpload(chunks);
+         */
+        // 前端模拟断点续传（设置已上传的分片数以及需要上传的分片）
+        setUploadChunkSum(v => v);
         partUpload(chunks.slice(uploadChunkSum));
       }
     });
@@ -115,6 +120,7 @@ const SliceUpload = (props: any) => {
     timer.current = setInterval(() => {
       if(batchDone >= batchCount){
         clearInterval(timer.current);
+        timer.current = null;
         return;
       }
       batchAppend(uploadList,batchDone,batchSize);
@@ -140,7 +146,7 @@ const SliceUpload = (props: any) => {
       formData.append('fileMd5', fileMd5);
       formData.append('chunkIndex', chunkIndex);
       formData.append('chunkSum', chunkSum);
-      console.info(`当前上传片数：${chunkIndex},总片数：${chunkSum}`);
+      console.info(`当前上传片数：${chunkIndex},总片数：${chunkSum}，分片Md5：${chunkMd5}`);
       dispatch({
         type: 'base/upload',
         payload: { url: '/fileUpload/partUpload', file: formData },
@@ -179,8 +185,9 @@ const SliceUpload = (props: any) => {
    *  组件卸载，清除所有数据并中断请求
    */
   useUnmount(() => {
+    clearInterval(timer.current);
+    timer.current = null;
     onRemove();
-    breakRequest.current = true;
   });
 
   const beforeUpload = (file: any) => {
@@ -213,7 +220,8 @@ const SliceUpload = (props: any) => {
             <InboxOutlined />
           </p>
           <p className="ant-upload-text">点击或将文件拖拽到这里上传</p>
-          <p className="ant-upload-hint">支持.zip.tar.rar文件，最大文件大小为10000M</p>
+          <p className="ant-upload-hint">支持.zip.tar.rar文件，最大文件大小为10G</p>
+          <p className="ant-upload-hint">受限于服务器配置，每次分片大小调整为0.1M</p>
         </Dragger>
       )}
       {/**  文件预处理中  */}
