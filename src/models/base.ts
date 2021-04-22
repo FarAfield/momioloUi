@@ -7,10 +7,11 @@ import {
   putParams,
   putList,
   remove,
-  upload
+  upload,
 } from '@/services/base';
 import { Reducer, Effect } from 'umi';
 import { message } from 'antd';
+import asyncDebounce from '../utils/asyncDebounce';
 interface BaseModelState {
   pageUrl: string | undefined;
   pageData: {
@@ -37,8 +38,9 @@ interface BaseModelType {
     getDataWithRes: Effect;
     putDataWithRes: Effect;
     removeWithRes: Effect;
-    upload:Effect;
-    commonPostData: Effect;  // 只提供给公共组件使用
+    upload: Effect;
+    commonPostData: Effect; // 只提供给公共组件使用
+    asyncGetData: Effect;
   };
   reducers: {
     update: Reducer<BaseModelState>;
@@ -70,24 +72,28 @@ const BaseModel: BaseModelType = {
           payload: { pageUrl: url, pageData: { list: [], pagination: {} } },
         });
       }
+      // 开启异步校验
+      const isValid = asyncDebounce('baseGetPage');
       const response = yield call(getData, payload);
-      if (isSuccess(response)) {
-        const { records = [], total = 0, current = 1, size = 10 } = response.data;
-        const pageData = {
-          list: records,
-          pagination: {
-            current,
-            pageSize: size,
-            total,
-          },
-        };
-        yield put({ type: 'update', payload: { pageData } });
-        if (callback) callback(response);
-      } else {
-        // 如果出错了则不清空数据，继续沿用之前数据
-        const pageData = yield select(({ base }: any) => base.pageData);
-        yield put({ type: 'update', payload: { pageData } });
-        errorMessage(response);
+      if (isValid()) {
+        if (isSuccess(response)) {
+          const { records = [], total = 0, current = 1, size = 10 } = response.data;
+          const pageData = {
+            list: records,
+            pagination: {
+              current,
+              pageSize: size,
+              total,
+            },
+          };
+          yield put({ type: 'update', payload: { pageData } });
+          if (callback) callback(response);
+        } else {
+          // 如果出错了则不清空数据，继续沿用之前数据
+          const pageData = yield select(({ base }: any) => base.pageData);
+          yield put({ type: 'update', payload: { pageData } });
+          errorMessage(response);
+        }
       }
     },
     /**
@@ -102,24 +108,28 @@ const BaseModel: BaseModelType = {
           payload: { pageUrl: url, pageData: { list: [], pagination: {} } },
         });
       }
+      // 开启异步校验
+      const isValid = asyncDebounce('basePostPage');
       const response = yield call(postData, payload);
-      if (isSuccess(response)) {
-        const { records = [], total = 0, current = 1, size = 10 } = response.data;
-        const pageData = {
-          list: records,
-          pagination: {
-            current,
-            pageSize: size,
-            total,
-          },
-        };
-        yield put({ type: 'update', payload: { pageData } });
-        if (callback) callback(response);
-      } else {
-        // 如果出错了则不清空数据，继续沿用之前数据
-        const pageData = yield select(({ base }: any) => base.pageData);
-        yield put({ type: 'update', payload: { pageData } });
-        errorMessage(response);
+      if (isValid()) {
+        if (isSuccess(response)) {
+          const { records = [], total = 0, current = 1, size = 10 } = response.data;
+          const pageData = {
+            list: records,
+            pagination: {
+              current,
+              pageSize: size,
+              total,
+            },
+          };
+          yield put({ type: 'update', payload: { pageData } });
+          if (callback) callback(response);
+        } else {
+          // 如果出错了则不清空数据，继续沿用之前数据
+          const pageData = yield select(({ base }: any) => base.pageData);
+          yield put({ type: 'update', payload: { pageData } });
+          errorMessage(response);
+        }
       }
     },
     /**
@@ -272,6 +282,25 @@ const BaseModel: BaseModelType = {
         if (callback) callback(response);
       } else {
         errorMessage(response);
+      }
+    },
+
+    /**================================  异步并发  ===================================*/
+    /**
+     *  对于同一个请求路径，例如请求1响应时间5s,请求2响应时间1s。那么在执行callback时会造成数据覆盖
+     *  使用异步并发方式，可以实现每次callback时拿到的永远是最新一次请求的数据
+     *  目前仅实现get请求获取数据的方式
+     */
+    /**
+     *  asyncGetData
+     */
+    *asyncGetData({ payload, callback }, { call, put }) {
+      const { url } = payload;
+      const isValid = asyncDebounce(url);
+      const response = yield call(getData, payload);
+      if (isValid()) {
+        yield put({ type: 'update', payload: { data: response } });
+        if (callback) callback(response);
       }
     },
   },
