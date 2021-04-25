@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { connect } from 'umi';
 import { message, Button } from 'antd';
@@ -32,7 +33,7 @@ const DataDictionary = (props: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/dataDictionary/delete', sid },
-      callback: (res: any) => {
+      callback: () => {
         message.success('删除成功');
         handleSearch();
       },

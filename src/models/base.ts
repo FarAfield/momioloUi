@@ -12,10 +12,11 @@ import {
 import { Reducer, Effect } from 'umi';
 import { message } from 'antd';
 import asyncDebounce from '../utils/asyncDebounce';
+
 interface BaseModelState {
   pageUrl: string | undefined;
   pageData: {
-    list: Array<any>;
+    list: any[];
     pagination: object;
   };
   data: object;
@@ -229,7 +230,7 @@ const BaseModel: BaseModelType = {
       }
     },
 
-    /**================  以下的方法会直接返回response,当不论结果都需要使用回调函数时使用    ============================*/
+    /** ================  以下的方法会直接返回response,当不论结果都需要使用回调函数时使用    ============================ */
 
     /**
      *  get方法不论结果都使用回调
@@ -273,7 +274,7 @@ const BaseModel: BaseModelType = {
       callback(response);
     },
 
-    /**================   只提供给公共组件使用  ====================*/
+    /** ================   只提供给公共组件使用  ==================== */
 
     *commonPostData({ payload, callback }, { call, put }) {
       const response = yield call(postData, payload);
@@ -285,7 +286,7 @@ const BaseModel: BaseModelType = {
       }
     },
 
-    /**================================  异步并发  ===================================*/
+    /** ================================  异步并发  =================================== */
     /**
      *  对于同一个请求路径，例如请求1响应时间5s,请求2响应时间1s。那么在执行callback时会造成数据覆盖
      *  使用异步并发方式，可以实现每次callback时拿到的永远是最新一次请求的数据

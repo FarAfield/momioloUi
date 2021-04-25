@@ -37,7 +37,7 @@ const errorHandler = (error: { response: Response }): Response => {
     maxCountMessage.error('请求超时');
     // @ts-ignore
     return { status: 408, statusText: '请求超时' };
-  } else if (response && response.status) {
+  } if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
     console.error(`请求状态:${status}  请求路径${url}`);
@@ -68,19 +68,19 @@ request.interceptors.request.use((url: string, options: any) => {
   };
 });
 // 非200状态的返回以及异常均由errorHandle处理
-request.interceptors.response.use(async (response:any) => {
+request.interceptors.response.use(async (response: any) => {
   if (response.status === 200) {
     const res = await response.clone().json();
     if (res && res.statusCode) {
-      if (res.statusCode === requestConfig['TOKEN_INVALID_ERROR']) {
+      if (res.statusCode === requestConfig.TOKEN_INVALID_ERROR) {
         maxCountMessage.error('登陆已失效，请重新登陆');
         storageClear();
         history.push('/user/login');
         return {};
-      } else if (res.statusCode === requestConfig['UNAUTHORIZED_ERROR']) {
+      } if (res.statusCode === requestConfig.UNAUTHORIZED_ERROR) {
         maxCountMessage.error('抱歉，您暂无此权限');
         return {};
-      } else if (res.statusCode !== '0') {
+      } if (res.statusCode !== '0') {
         console.warn(res.statusMessage);
       }
     }

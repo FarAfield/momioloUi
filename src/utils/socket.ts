@@ -1,6 +1,8 @@
 import io from 'socket.io-client';
 
+// eslint-disable-next-line import/no-mutable-exports
 let socket: any = null;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const createSocket = (socketServer: string = '') => {
   // 本地访问为localhost:9092
   socket = io(`https://www.momiolo.com`, {

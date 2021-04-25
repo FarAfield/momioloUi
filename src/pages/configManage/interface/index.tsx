@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { connect } from 'umi';
 import { message, Badge, Button } from 'antd';
@@ -31,7 +32,7 @@ const InterfacePro = (props: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/interface/delete', sid },
-      callback: (res: any) => {
+      callback: () => {
         message.success('删除成功');
         handleSearch();
       },
@@ -160,7 +161,7 @@ const InterfacePro = (props: any) => {
       title: '延时',
       dataIndex: 'delay',
       width: '10%',
-      render: (text: any) => text + 's',
+      render: (text: any) => `${text  }s`,
     },
     {
       title: '操作',

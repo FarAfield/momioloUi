@@ -1,5 +1,6 @@
 import { getData, postData } from '@/services/base';
-import { Reducer, Effect, history } from 'umi';
+import { Reducer, Effect } from 'umi';
+import { history } from 'umi';
 import { message } from 'antd';
 import { setToken, storageClear } from '@/utils/utils';
 
@@ -10,8 +11,8 @@ import { setToken, storageClear } from '@/utils/utils';
 
 export interface StateType {
   currentUser: object;
-  menuData: Array<any>;
-  permissions: Array<string>;
+  menuData: any[];
+  permissions: string[];
 }
 export interface LoginModelType {
   namespace: string;
@@ -29,8 +30,9 @@ export interface LoginModelType {
 const isSuccess = (response: any) => response.statusCode === '0';
 const errorMessage = (response: any) =>
   response.statusMessage && message.error(response.statusMessage);
-const transferMenu = (menuData: Array<any>, parentPath: string = '') => {
-  return menuData.map((item: any) => {
+const transferMenu = (menuData: any[], parentPath: string = '') => {
+  return menuData.map((i: any) => {
+    const item = { ...i };
     if (item.resourceType !== 3) {
       const path = `${parentPath}/${item.resourceCode}`;
       item.path = path;

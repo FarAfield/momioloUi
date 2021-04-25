@@ -1,3 +1,5 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
 import React, { useState } from 'react';
 import { Button, Row, Col, Card, Form, Input, Space, message } from 'antd';
 import PageCard from '../../../components/PageCard';
@@ -39,10 +41,11 @@ const FormatInterface = () => {
     const defaultValues = array.map((i: any) => i.defaultValue);
     // 额外需要附加的字段
     const extraFields = sourceFields.filter((i: any) => !Object.keys(sourceData[0]).includes(i));
-    const result = sourceData.map((item: any) => {
+    const result = sourceData.map((i: any) => {
+      const item = { ...i }
       for (const k in item) {
         // 完成字段删除、映射、默认值赋予
-        const index = sourceFields.findIndex((i: any) => i === k);
+        const index = sourceFields.findIndex((s: any) => s === k);
         if (index > -1) {
           if (mappingFields[index]) {
             item[mappingFields[index]] = defaultValues[index] ? defaultValues[index] : item[k];
@@ -57,7 +60,7 @@ const FormatInterface = () => {
       }
       // 添加附加参数
       extraFields.forEach((e: any) => {
-        const eIndex = sourceFields.findIndex((i: any) => i === e);
+        const eIndex = sourceFields.findIndex((s: any) => s === e);
         item[sourceFields[eIndex]] = defaultValues[eIndex] || '';
       });
       return item;
@@ -82,7 +85,7 @@ const FormatInterface = () => {
                       >
                         <Form.Item
                           {...field}
-                          //label={'源字段'}
+                          // label={'源字段'}
                           name={[field.name, 'sourceField']}
                           fieldKey={[field.fieldKey, 'sourceField']}
                           rules={[{ required: true, message: '源字段必填' }]}
@@ -91,7 +94,7 @@ const FormatInterface = () => {
                         </Form.Item>
                         <Form.Item
                           {...field}
-                          //label={'映射字段'}
+                          // label={'映射字段'}
                           name={[field.name, 'mappingField']}
                           fieldKey={[field.fieldKey, 'mappingField']}
                         >
@@ -99,7 +102,7 @@ const FormatInterface = () => {
                         </Form.Item>
                         <Form.Item
                           {...field}
-                          //label={'默认值'}
+                          // label={'默认值'}
                           name={[field.name, 'defaultValue']}
                           fieldKey={[field.fieldKey, 'defaultValue']}
                         >

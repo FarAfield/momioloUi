@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import styles from './index.less';
 import { connect } from 'umi';

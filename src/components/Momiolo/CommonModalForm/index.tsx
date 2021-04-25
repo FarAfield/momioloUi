@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable no-restricted-syntax */
 import React, { useEffect, useMemo, useCallback } from 'react';
 import { Form, Button, Modal, Input, Select, TreeSelect, message } from 'antd';
 import { transferOption } from '@/utils/support';
@@ -16,7 +21,7 @@ const formItemLayout = {
   },
 };
 const FormItem = Form.Item;
-const TextArea = Input.TextArea;
+const {TextArea} = Input;
 const CommonModalForm = (props: any) => {
   const {
     visible,
@@ -62,7 +67,7 @@ const CommonModalForm = (props: any) => {
       dispatch({
         type: 'base/commonPostData',
         payload: { url, ...resultData },
-        callback: (res: any) => {
+        callback: () => {
           message.success(Object.keys(formData).length ? messageInfo[1] : messageInfo[0]);
           // 成功方法回调时支持入参判断属于什么操作
           handleCallback && handleCallback(Object.keys(formData).length ? 'create' : 'update');

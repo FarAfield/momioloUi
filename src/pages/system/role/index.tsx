@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { connect } from 'umi';
 import { message, Badge, Button } from 'antd';
@@ -35,7 +36,7 @@ const Role = (props: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/role/delete', sid },
-      callback: (res: any) => {
+      callback: () => {
         message.success('删除成功');
         handleSearch();
       },
@@ -106,7 +107,7 @@ const Role = (props: any) => {
             onClick: () =>
               history.push({
                 pathname: '/system/updateRole',
-                query: { sid: record.sid, disabled: true },
+                query: { sid: record.sid, disabled: "true" },
               }),
           },
           {

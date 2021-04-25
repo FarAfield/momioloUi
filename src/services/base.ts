@@ -1,8 +1,9 @@
 import request from '@/utils/request';
+
 interface Payload {
   url: string;
   params?: object;
-  list?: Array<any>;
+  list?: any[];
   file?: any;
 }
 /**

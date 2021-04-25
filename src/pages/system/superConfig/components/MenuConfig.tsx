@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState, useEffect, useCallback } from 'react';
 import { Tree, Tag, Spin, Switch, message } from 'antd';
 import { connect } from 'umi';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import styles from './index.less';
 
-const TreeNode = Tree.TreeNode;
+const {TreeNode} = Tree;
 const TYPE = {
   1: { value: '菜单', color: '#1890ff' },
   2: { value: '页面', color: '#f5222d' },
@@ -26,6 +27,7 @@ const MenuConfig = (props: any) => {
       },
     });
   }, []);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onChange = (checked: any, e: any, sid: any) => {
     e.stopPropagation();
     message.info('敬请期待!');
@@ -39,8 +41,8 @@ const MenuConfig = (props: any) => {
             key={item.sid}
             title={
               <span>
-                <Tag color={TYPE[item.resourceType]['color']}>
-                  {TYPE[item.resourceType]['value']}
+                <Tag color={TYPE[item.resourceType].color}>
+                  {TYPE[item.resourceType].value}
                 </Tag>
                 {item.resourceName}
                 <Switch
@@ -61,7 +63,7 @@ const MenuConfig = (props: any) => {
           key={item.sid}
           title={
             <span>
-              <Tag color={TYPE[item.resourceType]['color']}>{TYPE[item.resourceType]['value']}</Tag>
+              <Tag color={TYPE[item.resourceType].color}>{TYPE[item.resourceType].value}</Tag>
               {item.resourceName}
               <Switch
                 checkedChildren={<CheckOutlined />}

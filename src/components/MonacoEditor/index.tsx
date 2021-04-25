@@ -4,8 +4,8 @@ import MonacoEditor from 'react-monaco-editor';
 const MonacoEditorPro = (props: any) => {
   const { width, height, theme, language, defaultValue, value, onChange } = props;
   const [code, setCode] = useState('');
-  const editorDidMount = (editor: any) => {
-    // 是否初始加载时聚焦
+  const editorDidMount = () => {
+    // 是否初始加载时聚焦  
     // editor.focus();
   };
   useEffect(() => {

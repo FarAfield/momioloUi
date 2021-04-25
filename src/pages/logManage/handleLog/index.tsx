@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'umi';
 import { Badge } from 'antd';

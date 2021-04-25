@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { connect } from 'umi';
 import { message, Button, Badge, Tag } from 'antd';
@@ -75,7 +77,7 @@ const Account = (props: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/account/delete', sid },
-      callback: (res: any) => {
+      callback: () => {
         message.success('删除成功');
         handleSearch();
       },
@@ -85,7 +87,7 @@ const Account = (props: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/account/lock', sid },
-      callback: (res: any) => {
+      callback: () => {
         message.success('锁定成功');
         handleSearch();
       },
@@ -95,7 +97,7 @@ const Account = (props: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/account/unlock', sid },
-      callback: (res: any) => {
+      callback: () => {
         message.success('解锁成功');
         handleSearch();
       },
@@ -105,7 +107,7 @@ const Account = (props: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/account/resetPassword', sid, accountPassword: md5('123456') },
-      callback: (res: any) => {
+      callback: () => {
         message.success('重置密码成功');
         handleSearch();
       },

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { connect } from 'umi';
 import { Tag, message, Popconfirm, Button } from 'antd';
@@ -13,7 +14,8 @@ const TYPE = [
   { value: 2, label: '路由' },
   { value: 3, label: '按钮' },
 ];
-// @ts-ignore
+
+// eslint-disable-next-line consistent-return
 const getType = (record: any) => {
   if (record.resourceType === 1) {
     // 不存在菜单/路由/按钮
@@ -36,7 +38,7 @@ const getType = (record: any) => {
 };
 const Resource = (props: any) => {
   const { dispatch, loading } = props;
-  const [list, setList] = useState([]); // 列表
+  const [list, setList] = useState<any[]>([]); // 列表
   const [visible, setVisible] = useState(false);
   const [formData, setFormData] = useState({});
   // 新增时上级资源下拉选项   新增/编辑时资源类型下拉   新增时上级资源初始值
@@ -64,7 +66,7 @@ const Resource = (props: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/resource/delete', sid },
-      callback: (res: any) => {
+      callback: () => {
         message.success('删除成功');
         handleSearch();
       },
@@ -74,7 +76,7 @@ const Resource = (props: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/resource/move', sid, type },
-      callback: (res: any) => {
+      callback: () => {
         message.success(type === 'up' ? '上移成功' : '下移成功');
         handleSearch();
       },
@@ -168,7 +170,7 @@ const Resource = (props: any) => {
               {item.resourceName}
             </Tag>
           ));
-        } else if (record.buttonChildren && record.buttonChildren.length) {
+        } if (record.buttonChildren && record.buttonChildren.length) {
           return record.buttonChildren.map((item: any) => (
             <Tag
               style={{ margin: 6 }}
@@ -185,9 +187,9 @@ const Resource = (props: any) => {
               {item.resourceName}
             </Tag>
           ));
-        } else {
+        } 
           return null;
-        }
+        
       },
     },
     {
@@ -267,9 +269,9 @@ const Resource = (props: any) => {
         onClick={() => {
           setVisible(true);
           setConfigData({
-            resourceParentOptions: [{ value: list?.[0]?.['resourceParentSid'], label: '根资源' }],
+            resourceParentOptions: [{ value: list?.[0]?.resourceParentSid, label: '根资源' }],
             resourceTypeOptions: TYPE.slice(0, 1),
-            initialValues: { resourceParentSid: list?.[0]?.['resourceParentSid'] },
+            initialValues: { resourceParentSid: list?.[0]?.resourceParentSid },
           });
         }}
       >

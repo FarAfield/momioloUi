@@ -20,7 +20,7 @@ const BaseView = (props: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/account/updateCurrentInfo', ...values },
-      callback: (res: any) => {
+      callback: () => {
         message.success('更新设置成功');
         dispatch({ type: 'login/findCurrentInfo' });
       },

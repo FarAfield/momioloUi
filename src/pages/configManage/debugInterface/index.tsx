@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Descriptions, Alert, Input, Button } from 'antd';
@@ -10,7 +12,7 @@ import { formatJson } from '@/utils/support';
 // 解析方法
 const parseRecord = (record: any) => {
   let url = '';
-  const paramsList: Array<any> = [];
+  const paramsList: any[] = [];
   if (Object.keys(record).length) {
     const { path, methods, isPaging, params } = record;
     // 请求路径
@@ -39,7 +41,7 @@ const parseRecord = (record: any) => {
       }
     }
     // 入参
-    let paramsObj = params ? JSON.parse(params) : {};
+    const paramsObj = params ? JSON.parse(params) : {};
     if (isPaging === 0) {
       paramsList.push(
         ...[
@@ -81,6 +83,7 @@ const DebugInterface = (props: any) => {
         payload: { url: '/interface/findDetail', sid: query.sid },
         callback: (res: any) => {
           setRecord(res.data);
+          // eslint-disable-next-line @typescript-eslint/no-shadow
           const { info, paramsList }: any = parseRecord(res.data);
           setInfo(info);
           setList(paramsList);
@@ -131,7 +134,7 @@ const DebugInterface = (props: any) => {
         <Descriptions.Item label="是否分页">
           {record.isPaging === 0 ? '分页' : '不分页'}
         </Descriptions.Item>
-        <Descriptions.Item label="延时">{record.delay + 's'}</Descriptions.Item>
+        <Descriptions.Item label="延时">{`${record.delay  }s`}</Descriptions.Item>
         <Descriptions.Item label="接口描述">{record.description}</Descriptions.Item>
       </Descriptions>
       <Descriptions title="接口调试信息" />

@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useEffect, useMemo, useCallback } from 'react';
 import { Form, Row, Col, Input, Button, Select, DatePicker, InputNumber } from 'antd';
 import { transferOption } from '@/utils/support';
@@ -16,7 +20,7 @@ const formItemLayout = {
   },
 };
 const FormItem = Form.Item;
-const RangePicker = DatePicker.RangePicker;
+const {RangePicker} = DatePicker;
 const CommonSearchForm = (props: any) => {
   const {
     fetchParams: { type, url, extraArgs },
@@ -49,7 +53,7 @@ const CommonSearchForm = (props: any) => {
     const values = handleFieldsValue ? handleFieldsValue(fieldsValue) : fieldsValue;
     if (!values || typeof values !== 'object') return;
     // 数据为空处理
-    for (let v in values) {
+    for (const v in values) {
       if (!values[v] || !values[v].toString().trim()) {
         values[v] = undefined;
       }

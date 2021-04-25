@@ -8,7 +8,7 @@ import { Card } from 'antd';
  */
 const PageCard = ({ children, breadcrumbData }: any) => {
   const header = {
-    title: breadcrumbData?.[breadcrumbData.length - 1]?.['breadcrumbName'],
+    title: breadcrumbData?.[breadcrumbData.length - 1]?.breadcrumbName,
     breadcrumb: {
       routes: breadcrumbData,
       itemRender: (route: any, params: any, routes: any, paths: any) => {

@@ -49,7 +49,7 @@ const CommonAuth = (props: any) => {
     .filter((item: any) => permissions.includes(item.auth))
     .filter((i: any) => !i.hide);
   return authBtns.map((item: any) =>
-    !!item['pop'] ? confirmButton(item, type) : simpleButton(item, type),
+    item.pop ? confirmButton(item, type) : simpleButton(item, type),
   );
 };
 CommonAuth.defaultProps = {

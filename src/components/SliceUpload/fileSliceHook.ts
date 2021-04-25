@@ -46,11 +46,11 @@ export const useFileSlice = (file: any, options: any = {}) => {
    */
   // 兼容性处理
   // @ts-ignore
-  let blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice;
+  const blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice;
   const chunkSum = Math.ceil(file.size / chunkSize); // 总分片数
   let currentChunk = 0; // 当前分片
-  let spark = new SparkMD5.ArrayBuffer(); // 计算单个分片
-  let totalSpark = new SparkMD5.ArrayBuffer(); // 计算整个文件
+  const spark = new SparkMD5.ArrayBuffer(); // 计算单个分片
+  const totalSpark = new SparkMD5.ArrayBuffer(); // 计算整个文件
   const chunkFileReader = new FileReader(); // 计算分片fileRender
   // 文件全部信息
   const fileChunk: any = {
@@ -75,7 +75,7 @@ export const useFileSlice = (file: any, options: any = {}) => {
       chunkSum, // 分片总数
     };
     fileChunk.chunks.push(chunkInfo);
-    currentChunk++;
+    currentChunk += 1;
     if (currentChunk < chunkSum) {
       loadNext();
       setPercent(Number(((currentChunk / chunkSum) * 100).toFixed(2)));
@@ -86,10 +86,11 @@ export const useFileSlice = (file: any, options: any = {}) => {
     }
   };
   chunkFileReader.onerror = function (e: any) {
+    console.error(e);
     return { percent: 0, fileResult: {}, errorMessage: '文件分片处理失败！' };
   };
   function loadNext() {
-    let start = currentChunk * chunkSize;
+    const start = currentChunk * chunkSize;
     let end = start + chunkSize;
     if (end > file.size) {
       end = file.size;

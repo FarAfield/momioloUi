@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'umi';
 import {
@@ -21,7 +22,7 @@ import { transferOption } from '@/utils/support';
 import MonacoEditor from '../../../components/MonacoEditor';
 
 const FormItem = Form.Item;
-const TextArea = Input.TextArea;
+const {TextArea} = Input;
 
 const UpdateInterface = (props: any) => {
   const {
@@ -95,7 +96,7 @@ const UpdateInterface = (props: any) => {
       }
     }
     // 数据配置解析检查
-    let responseData: any = undefined;
+    let responseData: any;
     // 校验空
     if (!code) {
       message.warn('返回体JSON为空，请输入后在提交！');
@@ -121,7 +122,7 @@ const UpdateInterface = (props: any) => {
         content: code,
         sid: query?.sid,
       },
-      callback: (res: any) => {
+      callback: () => {
         message.success(query?.sid ? '编辑成功' : '新增成功');
         history.goBack();
       },

@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable no-restricted-syntax */
 import { ThemeConfig } from '@/utils/constant';
 import moment from 'moment';
 
-/**===========================  Token   ==================================*/
+/** ===========================  Token   ================================== */
 export function isLogin() {
   return !!sessionStorage.getItem('token');
 }
@@ -15,12 +17,12 @@ export function storageClear() {
   sessionStorage.clear();
 }
 
-/**===========================  Response   ==================================*/
+/** ===========================  Response   ================================== */
 export const isSuccess = (response: any) => {
   return response?.statusCode === '0';
 };
 
-/**===========================  Theme   ==================================*/
+/** ===========================  Theme   ================================== */
 export const changeTheme = (primaryColor: any = '#1890ff') => {
   const linkDom: any = document.getElementById('theme-style') as HTMLLinkElement;
   if (linkDom) {
@@ -39,11 +41,11 @@ export const changeTheme = (primaryColor: any = '#1890ff') => {
   }
 };
 
-/**=======================   异步并发限制   =============================*/
+/** =======================   异步并发限制   ============================= */
 // poolLimit：并发限制  array  iteratorFn: 要执行的函数（返回promise）
-export async function asyncPool(poolLimit: number, array: Array<any>, iteratorFn: Function) {
+export async function asyncPool(poolLimit: number, array: any[], iteratorFn: Function) {
   const ret = [];
-  const executing: Array<any> = []; // 当前正在执行的Promise数组
+  const executing: any[] = []; // 当前正在执行的Promise数组
   for (const item of array) {
     // 实例化promise
     const p = Promise.resolve().then(() => iteratorFn(item, array));
@@ -51,14 +53,15 @@ export async function asyncPool(poolLimit: number, array: Array<any>, iteratorFn
     const e: any = p.then(() => executing.splice(executing.indexOf(e), 1));
     executing.push(e);
     if (executing.length >= poolLimit) {
+      // eslint-disable-next-line no-await-in-loop
       await Promise.race(executing);
     }
   }
   return Promise.all(ret);
 }
-/**使用方式如下*/
+/** 使用方式如下 */
 // 10个随机数的数组
-const array = new Array(10).fill(true).map((i) => {
+const array = new Array(10).fill(true).map(() => {
   return Math.ceil(Math.random() * 20);
 });
 // 入参为数组的每一项，返回一个promise
@@ -71,7 +74,7 @@ function iteratorFn(delay: any) {
   });
 }
 // 使用异步并发，确保大量请求时线程池每次都只有2个promise在执行
-// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function start() {
   const results = await asyncPool(2, array, iteratorFn);
   console.log(results, '结果');

@@ -4,7 +4,7 @@ import GlobalContext from '../../../layouts/GlobalContext';
 import { Row, Col, Card } from 'antd';
 import MenuConfig from './components/MenuConfig';
 
-const SuperConfig = (props: any) => {
+const SuperConfig = () => {
   const { isSuperAdmin }: any = useContext(GlobalContext);
 
   return (

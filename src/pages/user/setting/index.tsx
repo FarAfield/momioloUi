@@ -13,7 +13,7 @@ const menuMap = [
   { value: 'notification', label: '新消息通知' },
 ];
 const getRightTitle = (selectKey: string) => {
-  const item: any = menuMap.find((item: any) => item.value === selectKey);
+  const item: any = menuMap.find((i: any) => i.value === selectKey);
   return item.label;
 };
 const renderChildren = (selectKey: any) => {

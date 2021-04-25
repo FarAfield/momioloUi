@@ -18,7 +18,7 @@ import styles from './BasicLayout.less';
 
 const BasicLayout: React.FC<any> = (props) => {
   const { dispatch, children, settings, location } = props;
-  const [menuData, setMenuData] = useState<Array<any>>([]);
+  const [menuData, setMenuData] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -29,7 +29,8 @@ const BasicLayout: React.FC<any> = (props) => {
       setLoading(true);
       dispatch({
         type: 'login/findCurrentMenu',
-        callback: (menuData: Array<any>) => {
+        // eslint-disable-next-line @typescript-eslint/no-shadow
+        callback: (menuData: any[]) => {
           setMenuData(menuData);
           setLoading(false);
         },

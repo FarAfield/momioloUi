@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 const createWaterMark = (options: any) => {
   const {
     container = document.body, // 容器
@@ -13,10 +14,10 @@ const createWaterMark = (options: any) => {
     zIndex = 1000, // 元素堆叠顺序
   } = options;
 
-  let canvas = document.createElement('canvas');
+  const canvas = document.createElement('canvas');
   canvas.setAttribute('width', width);
   canvas.setAttribute('height', height);
-  let ctx: any = canvas.getContext('2d'); // 获取 canvas2d 上下文
+  const ctx: any = canvas.getContext('2d'); // 获取 canvas2d 上下文
   ctx.globalAlpha = globalAlpha;
   ctx.textAlign = textAlign;
   ctx.textBaseline = textBaseline;
@@ -27,7 +28,8 @@ const createWaterMark = (options: any) => {
 
   const base64Url = canvas.toDataURL(); // 返回一个包含图片展示的 data URI
 
-  const __wm = document.querySelector('.__wm'); //选择器
+  // eslint-disable-next-line no-underscore-dangle
+  const __wm = document.querySelector('.__wm'); // 选择器
   const watermarkDiv = __wm || document.createElement('div');
   const styleProps = `
     position:absolute;
@@ -54,6 +56,7 @@ const createWaterMark = (options: any) => {
   // 检查浏览器是否支持这个API
   if (MutationObserver) {
     let mo = new MutationObserver(function () {
+      // eslint-disable-next-line no-underscore-dangle
       const __wm = document.querySelector('.__wm');
       // 只在__wm元素变动才重新调用
       if (

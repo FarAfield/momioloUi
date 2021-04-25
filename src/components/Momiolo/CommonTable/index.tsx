@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import React, { useCallback } from 'react';
 import { Table } from 'antd';
 import { connect } from 'umi';
@@ -11,12 +12,13 @@ const CommonTable = (props: any) => {
     dispatch,
   } = props;
   const onChange = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (pagination, filters, sorter, extra) => {
       /**
        *  sorter处理
        */
       // sorter支持多列排序，设置sorter:{ multiple: 1 } 标识多列排序（multiple数字越小，使用前端排序越优先，使用后端排序时也默认遵从此规则），设置为true标识单列排序
-      let sorterResult: Array<any> = [];
+      let sorterResult: any[] = [];
       if (sorter && Array.isArray(sorter)) {
         // 多列排序  sorter是个数组，此处先按照优先级排序
         sorterResult = sorter.sort((a, b) => a.column.sorter.multiple - b.column.sorter.multiple);

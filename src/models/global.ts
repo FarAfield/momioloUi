@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Reducer, Effect } from 'umi';
 import proSettings from '../../config/defaultSettings';
+
 export interface GlobalModelState {
   collapsed: boolean;
   defaultSetting: object;
-  breadcrumbData: Array<any>;
+  breadcrumbData: any[];
 }
 export interface GlobalModelType {
   namespace: 'global';
@@ -55,7 +57,7 @@ const GlobalModel: GlobalModelType = {
   subscriptions: {
     routerInterceptor({ dispatch, history }: any) {
       history.listen((location: any) => {
-        //console.log(location);
+        // console.log(location);
       });
     },
   },

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'umi';
 import { Row, Col, Card, Tree, message, Descriptions, Spin } from 'antd';
@@ -38,7 +39,7 @@ const Org = (props: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/org/delete', sid },
-      callback: (res: any) => {
+      callback: () => {
         message.success('删除成功');
         handleSearch();
         setRecord({});
@@ -46,7 +47,7 @@ const Org = (props: any) => {
     });
   }, []);
 
-  const onSelect = (selectedKeys: Array<any>) => {
+  const onSelect = (selectedKeys: any[]) => {
     if (selectedKeys.length === 1) {
       dispatch({
         type: 'base/getDataWithRes',

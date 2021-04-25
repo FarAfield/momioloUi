@@ -8,6 +8,35 @@ import { nickNameAndAvatar } from '@/utils/constant';
 
 const AvatarDropdown = (props: any) => {
   const { currentUser, dispatch } = props;
+  const onMenuClick = useCallback(
+    (event: {
+      key: React.Key;
+      keyPath: React.Key[];
+      item: React.ReactInstance;
+      domEvent: React.MouseEvent<HTMLElement>;
+    }) => {
+      const { key } = event;
+      switch (key) {
+        case 'center': {
+          history.push('/user/center');
+          break;
+        }
+        case 'settings': {
+          history.push('/user/setting');
+          break;
+        }
+        case 'logout': {
+          dispatch({
+            type: 'login/logout',
+          });
+          break
+        }
+        default: break
+
+      }
+    },
+    [],
+  );
   const menuHeaderDropdown = useMemo(
     () => (
       <Menu className={styles.menu} onClick={(e) => onMenuClick(e)}>
@@ -28,35 +57,7 @@ const AvatarDropdown = (props: any) => {
     ),
     [],
   );
-  const onMenuClick = useCallback(
-    (event: {
-      key: React.Key;
-      keyPath: React.Key[];
-      item: React.ReactInstance;
-      domEvent: React.MouseEvent<HTMLElement>;
-    }) => {
-      const { key } = event;
-      switch (key) {
-        case 'center': {
-          history.push('/user/center');
-          return;
-        }
-        case 'settings': {
-          history.push('/user/setting');
-          return;
-        }
-        case 'logout': {
-          dispatch({
-            type: 'login/logout',
-          });
-          return;
-        }
-        default:
-          return;
-      }
-    },
-    [],
-  );
+
   return currentUser?.accountSid ? (
     <HeaderDropdown overlay={menuHeaderDropdown}>
       <span className={`${styles.action} ${styles.account}`}>

@@ -8,7 +8,7 @@ import { superAdminName } from '@/utils/constant';
 /**
  * 页面拦截器
  */
-const getMenuPath = (array: Array<any>, result: Array<any>) => {
+const getMenuPath = (array: any[], result: any[]) => {
   array.forEach((item: any) => {
     if (item.resourceType !== 3) {
       result.push(item.path);
@@ -20,7 +20,7 @@ const getMenuPath = (array: Array<any>, result: Array<any>) => {
 };
 const AuthorityFilter = ({ children, menuData, permissions, currentUser, location }: any) => {
   const { pathname } = location;
-  const result: Array<any> = [];
+  const result: any[] = [];
   getMenuPath(menuData, result);
   // 无需鉴权的路径
   const extraPath = ['/', '/user/center', '/user/setting'];
@@ -32,12 +32,12 @@ const AuthorityFilter = ({ children, menuData, permissions, currentUser, locatio
         {children}
       </GlobalContext.Provider>
     );
-  } else if (!result.length) {
+  } if (!result.length) {
     // 暂无权限数据，此时处于页面刷新，因此展示为loading
     return <PageLoading />;
-  } else {
+  } 
     return <Exception404 />;
-  }
+  
 };
 export default connect(({ login }: any) => ({
   menuData: login.menuData,

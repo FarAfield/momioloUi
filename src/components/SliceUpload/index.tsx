@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState, useEffect, useRef } from 'react';
 import { Upload, message, Progress, Spin, Button, Result } from 'antd';
 import { connect } from 'umi';
@@ -94,7 +95,7 @@ const SliceUpload = (props: any) => {
     dispatch({
       type:'base/postData',
       payload: { url:'/fileUpload/preUpload',...paramsResult},
-      callback: (res: any) => {
+      callback: () => {
         console.info('文件预处理结果',paramsResult);
         console.info('执行预上传');
         /**
@@ -124,11 +125,11 @@ const SliceUpload = (props: any) => {
         return;
       }
       batchAppend(uploadList,batchDone,batchSize);
-      batchDone++;
+      batchDone+=1;
     },3000);
   };
 
-  function batchAppend(uploadList:any,batchDone:any,batchSize:any) {
+  function batchAppend(uploadList: any,batchDone: any,batchSize: any) {
     const list = uploadList.slice(batchSize * batchDone, batchSize * (batchDone + 1));
     batchUpload(list);
   }
@@ -150,7 +151,7 @@ const SliceUpload = (props: any) => {
       dispatch({
         type: 'base/upload',
         payload: { url: '/fileUpload/partUpload', file: formData },
-        callback: (res:any) => {
+        callback: (res: any) => {
           if(res.statusCode === '0'){
             // 设置上传片数
             setUploadChunkSum((v) => v + 1);
@@ -172,7 +173,7 @@ const SliceUpload = (props: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url:'/fileUpload/mergeFile', fileMd5: fileResult.file.fileMd5 },
-      callback: (res:any) => {
+      callback: () => {
         console.info('文件上传成功！');
         // todo 将文件信息留存交给父组件
         setTimeout(() => {

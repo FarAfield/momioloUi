@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'umi';
 import { message, Button, Row, Col, Spin, Card, Form, Input, Radio, Tree, Tag } from 'antd';
@@ -8,8 +9,8 @@ import { CloseOutlined, CheckOutlined, RollbackOutlined } from '@ant-design/icon
 import styles from './index.less';
 
 const FormItem = Form.Item;
-const TextArea = Input.TextArea;
-const TreeNode = Tree.TreeNode;
+const {TextArea} = Input;
+const {TreeNode} = Tree;
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -110,7 +111,7 @@ const UpdateRole = (props: any) => {
         resourceSids: checked,
         sid: query?.sid,
       },
-      callback: (res: any) => {
+      callback: () => {
         message.success(query?.sid ? '编辑成功' : '新增成功');
         history.goBack();
       },
@@ -124,8 +125,8 @@ const UpdateRole = (props: any) => {
             key={item.sid}
             title={
               <span>
-                <Tag color={TYPE[item.resourceType]['color']}>
-                  {TYPE[item.resourceType]['value']}
+                <Tag color={TYPE[item.resourceType].color}>
+                  {TYPE[item.resourceType].value}
                 </Tag>
                 {item.resourceName}
               </span>
@@ -141,7 +142,7 @@ const UpdateRole = (props: any) => {
           key={item.sid}
           title={
             <span>
-              <Tag color={TYPE[item.resourceType]['color']}>{TYPE[item.resourceType]['value']}</Tag>
+              <Tag color={TYPE[item.resourceType].color}>{TYPE[item.resourceType].value}</Tag>
               {item.resourceName}
             </span>
           }
@@ -150,6 +151,7 @@ const UpdateRole = (props: any) => {
       );
     });
   };
+  // eslint-disable-next-line @typescript-eslint/no-shadow
   const onCheck = (checkedKeys: any, e: any) => {
     setChecked([...new Set(checkedKeys.concat(e.halfCheckedKeys))]);
     setCheckedKeys(checkedKeys);
@@ -228,6 +230,7 @@ const UpdateRole = (props: any) => {
                 checkable={true}
                 selectable={false}
                 checkedKeys={checkedKeys}
+                // eslint-disable-next-line @typescript-eslint/no-shadow
                 onCheck={(checkedKeys: any, e: any) => onCheck(checkedKeys, e)}
               >
                 {renderTreeNodes(menuData)}

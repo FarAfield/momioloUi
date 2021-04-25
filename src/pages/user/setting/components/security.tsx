@@ -16,7 +16,7 @@ const SecurityView = (props: any) => {
         originalPassword: md5(originalPassword),
         newPassword: md5(newPassword),
       },
-      callback: (res: any) => {
+      callback: () => {
         message.info('密码修改成功，正在退出！');
         setTimeout(() => {
           dispatch({ type: 'login/logout' });
@@ -70,6 +70,7 @@ const SecurityView = (props: any) => {
                     if (!value || getFieldValue('newPassword') === value) {
                       return Promise.resolve();
                     }
+                    // eslint-disable-next-line prefer-promise-reject-errors
                     return Promise.reject('两次输入的密码不一致!');
                   },
                 }),

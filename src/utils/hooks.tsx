@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import { useState, useEffect, useReducer, useCallback } from 'react';
 
 const initPageData = {
@@ -54,6 +55,7 @@ const useSearchTable = (fetchParams: any, form: any, initValues: object = {}) =>
     dispatch({
       type,
       payload: { url, ...params },
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       callback: (pageData: object) => {
         dispatch({ type: 'save', payload: { ...pageData } });
         setLoading(false);

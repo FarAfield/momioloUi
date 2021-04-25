@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { connect } from 'umi';
 import { message, Button } from 'antd';
@@ -38,7 +39,7 @@ const Notice = (props: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/notice/delete', sid },
-      callback: (res: any) => {
+      callback: () => {
         message.success('删除成功');
         handleSearch();
       },

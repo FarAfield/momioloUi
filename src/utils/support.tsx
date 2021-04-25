@@ -1,7 +1,8 @@
 import React from 'react';
 import { Select } from 'antd';
-const { Option } = Select;
 import { BankOutlined, BarsOutlined, SettingOutlined } from '@ant-design/icons';
+
+const { Option } = Select;
 
 export const transferOption = (arrayData: any = [], keyValue = ['value', 'label']) =>
   arrayData.map((item: any) => (
@@ -28,17 +29,17 @@ export const formatJson = (str: any) => {
   const stack = [];
   let tmpStr = '';
   const len = str.length;
-  for (let i = 0; i < len; i++) {
-    //当遇到结构块起始结构
+  for (let i = 0; i < len; i+=1) {
+    // 当遇到结构块起始结构
     if (str[i] === '{' || str[i] === '[') {
-      tmpStr += str[i] + '\n';
+      tmpStr += `${str[i]  }\n`;
       stack.push(str[i]);
       tmpStr += '\t'.repeat(stack.length);
     } else if (str[i] === ']' || str[i] === '}') {
       stack.pop();
-      tmpStr += '\n' + '\t'.repeat(stack.length) + str[i];
+      tmpStr += `\n${  '\t'.repeat(stack.length)  }${str[i]}`;
     } else if (str[i] === ',') {
-      tmpStr += str[i] + '\n' + '\t'.repeat(stack.length);
+      tmpStr += `${str[i]  }\n${  '\t'.repeat(stack.length)}`;
     } else {
       tmpStr += str[i];
     }
