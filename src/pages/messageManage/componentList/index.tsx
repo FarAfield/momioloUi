@@ -6,12 +6,14 @@ import SliceUpload from '../../../components/SliceUpload';
 import ColorPicker from '../../../components/ColorPicker';
 import WaterMark from '../../../components/WaterMark';
 import MonacoEditor from '../../../components/MonacoEditor';
+import HighLightKeyword from '../../../components/HighLightKeyword';
 
 const defaultList = [
   { key: 'sliceUpload', value: '分片上传组件' },
   { key: 'colorPicker', value: '拾色器组件' },
   { key: 'waterMark', value: '水印组件' },
   { key: 'monacoEditor', value: '代码编辑器组件' },
+  { key: 'highLightKeyword', value: '关键词高亮组件' },
 ];
 
 const ComponentList = () => {
@@ -85,6 +87,22 @@ const ComponentList = () => {
             onChange={(v: any) => console.log(v)}
           />
         </div>
+      </Card>
+      <Card className={`${styles.card} ${isHidden('highLightKeyword') ? styles.hidden : ''}`}>
+        <Descriptions title="关键词高亮组件" />
+        <HighLightKeyword
+          config={[
+            { keyword: '苦其心志', color: '#7BDCB5' },
+            { keyword: '劳其筋骨', color: '#8ED1FC' },
+            { keyword: '饿其体肤', color: '#EB144C' },
+            {
+              keyword: '空乏其身',
+              markRender: (k: string) => `<span style="color: #9900EF">【${k}】</span>`,
+            },
+          ]}
+        >
+          天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为，所以动心忍性，曾益其所不能！
+        </HighLightKeyword>
       </Card>
     </PageCard>
   );
