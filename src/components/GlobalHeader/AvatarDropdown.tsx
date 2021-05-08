@@ -58,7 +58,7 @@ const AvatarDropdown = (props: any) => {
     [],
   );
 
-  return currentUser?.accountSid ? (
+  return currentUser.accountSid ? (
     <HeaderDropdown overlay={menuHeaderDropdown}>
       <span className={`${styles.action} ${styles.account}`}>
         <Avatar

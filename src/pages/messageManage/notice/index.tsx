@@ -12,9 +12,9 @@ import { PlusOutlined } from '@ant-design/icons';
 import GlobalContext from '../../../layouts/GlobalContext';
 
 const TYPE = [
-  { value: '1', label: '类型一' },
-  { value: '2', label: '类型二' },
-  { value: '3', label: '类型三' },
+  { value: '1', label: '即时通知' },
+  { value: '2', label: '延时通知' },
+  { value: '3', label: '定时通知' },
 ];
 const Notice = (props: any) => {
   const {
@@ -48,12 +48,12 @@ const Notice = (props: any) => {
   const searchItems = [
     {
       key: 'title',
-      title: '公告标题',
+      title: '通知标题',
       type: 'input',
     },
     {
       key: 'type',
-      title: '公告类型',
+      title: '通知类型',
       type: 'select',
       selectOptions: TYPE,
     },
@@ -61,42 +61,42 @@ const Notice = (props: any) => {
   const formItems = [
     {
       key: 'title',
-      title: '公告标题',
+      title: '通知标题',
       type: 'input',
       rules: [
-        { required: true, message: '请输入公告标题' },
+        { required: true, message: '请输入通知标题' },
         { max: 50, message: '最大字符长度50' },
       ],
     },
     {
       key: 'type',
-      title: '公告类型',
+      title: '通知类型',
       type: 'select',
-      rules: [{ required: true, message: '请选择公告类型' }],
+      rules: [{ required: true, message: '请选择通知类型' }],
       selectOptions: TYPE,
     },
     {
       key: 'content',
-      title: '公告内容',
+      title: '通知内容',
       type: 'textArea',
       rules: [{ max: 500, message: '最大字符长度500' }],
     },
   ];
   const columns = [
     {
-      title: '公告标题',
+      title: '通知标题',
       dataIndex: 'title',
       width: '10%',
       ellipsis: true,
     },
     {
-      title: '公告类型',
+      title: '通知类型',
       dataIndex: 'type',
       width: '10%',
       render: (text: any) => getValueByKey(TYPE, ['value', 'label'], text),
     },
     {
-      title: '公告内容',
+      title: '通知内容',
       dataIndex: 'content',
       width: '30%',
       ellipsis: true,
