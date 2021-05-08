@@ -71,8 +71,36 @@ export const ThemeConfig = [
     },
   },
 ];
-// 登录页描述语
-export const loginDescription = 'Momiolo 是极具个性化的 Web 中台系统';
+// 请求状态码配置
+export const requestConfig = {
+  TOKEN_INVALID_ERROR: '10002',
+  UNAUTHORIZED_ERROR: '10003',
+};
+// 超级管理员账号名
+export const superAdminName = 'SysAdmin';
+// 全局样式配置
+export const proSettings = {
+  navTheme: 'dark',
+  primaryColor: '#1890ff', // 拂晓蓝
+  layout: 'side', // side top
+  contentWidth: 'Fluid', // 默认Fluid，layout为top时可设置为Fixed
+  fixedHeader: true, // 固定头部
+  fixSiderbar: true, // 固定右边菜单,layout为side时可设置为true
+  colorWeak: false,
+  title: 'MomioloPro',
+  pwa: false,
+  iconfontUrl: '',
+};
+// 登录页配置
+export const loginPageConfig = {
+  metaTitle: 'momiolo',
+  title: 'Momiolo',
+  loginDescription: 'Momiolo 是极具个性化的 Web 中台系统',
+};
+// 登陆成功提示语
+export const loginSuccessTip = '🎉 🎉 🎉  欢迎登陆！';
+// 退出登录成功提示语
+export const logoutSuccessTip = '已成功退出登录！';
 // 版权配置
 export const copyRightConfig = [
   { title: '@react', href: 'https://react.docschina.org/docs/getting-started.html' },
@@ -81,18 +109,13 @@ export const copyRightConfig = [
 ];
 // 版权信息
 export const copyRight = '版权所有';
-// 请求状态码配置
-export const requestConfig = {
-  TOKEN_INVALID_ERROR: '10002',
-  UNAUTHORIZED_ERROR: '10003',
-};
 // 默认昵称以及头像配置
 export const nickNameAndAvatar = [
   '管理员',
   'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
 ];
-// 超级管理员账号名
-export const superAdminName = 'SysAdmin';
+
+
 
 // 接口配置路径
 export const baseUrl = 'https://www.momiolo.com/base/applets';

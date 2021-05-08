@@ -21,7 +21,7 @@ const createSocket = (socketServer: string = '') => {
     console.log('socket.io连接失败', reason);
   });
 };
-const closeSocket = () => socket.disconnect();
+const closeSocket = () => socket && socket.disconnect();
 export { socket, createSocket, closeSocket };
 
 // 全局接收事件

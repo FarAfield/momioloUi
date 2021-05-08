@@ -1,6 +1,4 @@
-// https://umijs.org/config/
 import { defineConfig } from 'umi';
-import defaultSettings from './defaultSettings';
 export default defineConfig({
   hash: true,
   antd: {},
@@ -19,18 +17,18 @@ export default defineConfig({
     ie: 11,
   },
   chainWebpack(memo) {
-    memo.plugin('monaco-editor-webpack-plugin').use(require('monaco-editor-webpack-plugin'))
+    memo.plugin('monaco-editor-webpack-plugin').use(require('monaco-editor-webpack-plugin'));
   },
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: {
-    'primary-color': defaultSettings.primaryColor,
+    'primary-color': '#1890ff',
   },
   title: false,
   ignoreMomentLocale: true,
   dynamicImport: {
     loading: '@/components/PageLoading',
   },
-  publicPath:'/',
+  publicPath: '/',
   manifest: {
     basePath: '/',
   },

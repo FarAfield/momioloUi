@@ -3,7 +3,6 @@ import { Select } from 'antd';
 import { BankOutlined, BarsOutlined, SettingOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
-
 export const transferOption = (arrayData: any = [], keyValue = ['value', 'label']) =>
   arrayData.map((item: any) => (
     <Option key={item[keyValue[0]]} value={item[keyValue[0]]}>

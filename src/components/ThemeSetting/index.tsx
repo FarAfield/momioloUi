@@ -1,19 +1,21 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Drawer, Radio, message } from 'antd';
 import { changeTheme } from '@/utils/utils';
-import { ThemeConfig } from '@/utils/constant';
+import { ThemeConfig, proSettings } from '@/utils/constant';
 import { CheckOutlined } from '@ant-design/icons';
 import { connect } from 'umi';
+import styles from './index.less';
 
 const ThemeSetting = (props: any) => {
   const { visible, onClose, dispatch } = props;
-  const [value, setValue] = useState<any>(localStorage.getItem('primaryColor') || '#1890ff');
+  const primaryColor = localStorage.getItem('primaryColor') || proSettings.primaryColor;
+  const [value, setValue] = useState<any>(primaryColor);
   useEffect(() => {
     dispatch({
       type: 'global/changeSetting',
-      payload: { primaryColor: localStorage.getItem('primaryColor') || '#1890ff' },
+      payload: { primaryColor },
     });
-    changeTheme(localStorage.getItem('primaryColor') || '#1890ff');
+    changeTheme(primaryColor);
   }, []);
   const onChange = useCallback((e) => {
     setValue(e.target.value);
@@ -39,40 +41,16 @@ const ThemeSetting = (props: any) => {
       <div style={{ display: 'flex' }}>
         <Radio.Group value={value} onChange={onChange}>
           {ThemeConfig.map((item: any, index: number) => (
-            <div
-              key={index}
-              style={{
-                marginTop: 12,
-                width: 40,
-                height: 40,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
+            <div key={index} className={styles.themeRadio}>
               <Radio.Button value={item.key} style={{ backgroundColor: `${item.key}` }}>
-                {item.key === value ? (
-                  <CheckOutlined
-                    style={{ fontSize: 20, color: 'white', marginLeft: -8, marginRight: -16 }}
-                  />
-                ) : null}
+                {item.key === value ? <CheckOutlined className={styles.icon} /> : null}
               </Radio.Button>
             </div>
           ))}
         </Radio.Group>
         <div>
           {ThemeConfig.map((item: any, index: number) => (
-            <div
-              key={index}
-              style={{
-                marginTop: 12,
-                width: 80,
-                height: 40,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
+            <div key={index} className={styles.themeName}>
               {item.name}
             </div>
           ))}

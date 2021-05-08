@@ -43,13 +43,19 @@ ol {
   }
 }
 
-/* =================以下为定制化实现=================== */
 
-/* ====圆角===== */
-// 输入框  选择框  文本域
+
+
+
+
+/* =================全局圆角=================== */
+
+
+// 输入框  选择框  文本域  时间选择器
 .ant-input-affix-wrapper,
-.ant-select:not(.ant-select-customize-input) .ant-select-selector,
-.ant-form-item-control-input-content > textarea {
+.ant-select-selector,
+.ant-input-affix-wrapper > textarea,
+.ant-picker{
   border-radius: 4px !important;
 }
 // 按钮
@@ -60,14 +66,22 @@ button {
 .ant-tag {
   border-radius: 8px !important;
 }
-
-/* ====table footer==== */
+// table footer
 .ant-table-footer {
   padding: 16px 0 0 0;
   background: white !important;
 }
+// 文本域最大高度
+textarea {
+  max-height: 50vh !important;
+}
 
-/* =================动态主题部分=================== */
+
+
+/* =================动态主题=================== */
+
+
+
 body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -76,7 +90,11 @@ body {
   --login-background-color: linear-gradient(-225deg, #7de2fc 0%, #b9b6e5 100%);
 }
 
-/* =================系统主题部分=================== */
+
+
+/* =================系统主题=================== */
+
+
 .ant-layout-sider-children {
   background-image: linear-gradient(to bottom, #667eea 0%, #764ba2 100%) !important;
 }
@@ -97,6 +115,11 @@ body {
 .ant-layout-footer {
   background: transparent !important;
 }
+
+
+
+/* =================滚动条=================== */
+
 
 ::-webkit-scrollbar {
   /* 滚动条整体样式 */

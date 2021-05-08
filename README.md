@@ -3,9 +3,9 @@
 ## 游客身份访问  账号：Guest123456  密码：123456
 ## 新增组件列表预览
 
-- config  umi配置以及项目基础配置
+- config  umi配置
 - mock 本地mock
-- public 
+- public 公共资源文件
 - src
   - assets 静态资源
   - components 公共组件

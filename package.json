@@ -1,15 +1,13 @@
 {
   "name": "momiolo",
-  "version": "4.3.0",
+  "version": "5.0.0",
   "private": true,
   "description": "An out-of-box UI solution for enterprise applications",
   "scripts": {
     "start": "umi dev",
     "build": "umi build",
     "analyze": "cross-env ANALYZE=1 umi build",
-    "deploy": "npm run site && npm run gh-pages",
-    "test": "umi test",
-    "test:all": "node ./tests/run-tests.js"
+    "test": "umi test"
   },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",

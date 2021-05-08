@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Reducer, Effect } from 'umi';
-import proSettings from '../../config/defaultSettings';
+import { proSettings } from '@/utils/constant';
 
 export interface GlobalModelState {
   collapsed: boolean;
@@ -35,11 +35,7 @@ const GlobalModel: GlobalModelType = {
       });
     },
     *changeSetting({ payload }, { put, select }) {
-      const { contentWidth } = payload;
       const defaultSetting = yield select(({ global }: any) => global.defaultSetting);
-      if (defaultSetting.contentWidth !== contentWidth && window.dispatchEvent) {
-        window.dispatchEvent(new Event('resize'));
-      }
       yield put({
         type: 'update',
         payload: { defaultSetting: { ...defaultSetting, ...payload } },
@@ -57,7 +53,7 @@ const GlobalModel: GlobalModelType = {
   subscriptions: {
     routerInterceptor({ dispatch, history }: any) {
       history.listen((location: any) => {
-        // console.log(location);
+        // 路由监听器
       });
     },
   },

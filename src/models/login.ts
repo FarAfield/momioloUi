@@ -3,6 +3,7 @@ import { Reducer, Effect } from 'umi';
 import { history } from 'umi';
 import { message } from 'antd';
 import { setToken, storageClear } from '@/utils/utils';
+import { loginSuccessTip, logoutSuccessTip } from '@/utils/constant';
 
 /**
  *   login 模块
@@ -60,7 +61,7 @@ const LoginModel: LoginModelType = {
     *login({ payload, callback }, { call }) {
       const response = yield call(postData, Object.assign(payload, { url: '/account/login' }));
       if (isSuccess(response)) {
-        message.success('🎉 🎉 🎉  登录成功！');
+        loginSuccessTip && message.success(loginSuccessTip);
         setToken(response.data.token);
         history.push('/');
       }
@@ -72,7 +73,7 @@ const LoginModel: LoginModelType = {
     *logout(_, { call }) {
       const response = yield call(postData, { url: '/account/logout' });
       if (isSuccess(response)) {
-        message.success('退出登录成功！');
+        logoutSuccessTip && message.success(logoutSuccessTip);
         storageClear();
         history.push('/user/login');
       } else {

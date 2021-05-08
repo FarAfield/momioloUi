@@ -1,25 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Card, Button, Input, message } from 'antd';
-import dayjs from 'dayjs';
-import styles from './index.less';
 import GlobalContext from '@/layouts/GlobalContext';
+import { useCurrentTime } from '@/utils/hooks';
+import styles from './index.less';
 
-// 获取当前时间秒数
-const useCurrentTime = () => {
-  const now = dayjs();
-  const [time, setTime] = useState(now.unix());
-  useEffect(() => {
-    const flag = setInterval(() => {
-      setTime((v) => v + 1);
-    }, 1000);
-    return () => clearInterval(flag);
-  }, []);
-  return time;
-};
 const Home = () => {
   const [value, setValue] = useState('');
   const { socket }: any = useContext(GlobalContext);
+  const time = useCurrentTime();
   const onClick = () => {
     value &&
       socket.emit('sendMsgEvent', {
@@ -29,7 +18,6 @@ const Home = () => {
   socket.on('receiveMsgEvent', (data: any) => {
     message.info(data);
   });
-  const time = dayjs.unix(useCurrentTime()).format('YYYY-MM-DD HH:mm:ss');
   return (
     <Card>
       <div className={styles.sunAnimation}>

@@ -2,7 +2,7 @@ import React, { useMemo, useCallback } from 'react';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
 import { connect, history } from 'umi';
-import HeaderDropdown from '../HeaderDropdown';
+import HeaderDropdown from './components/HeaderDropdown';
 import styles from './index.less';
 import { nickNameAndAvatar } from '@/utils/constant';
 

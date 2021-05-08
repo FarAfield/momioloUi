@@ -4,14 +4,14 @@ import { Link } from 'umi';
 import DefaultFooter from '../components/DefaultFooter';
 import logo from '../assets/logo.svg';
 import styles from './UserLayout.less';
-import { loginDescription } from '@/utils/constant';
+import { loginPageConfig } from '@/utils/constant';
 
 const UserLayout: React.FC<{ children: any }> = ({ children }) => {
   return (
     <HelmetProvider>
       <Helmet>
-        <title>{'登录-momiolo'}</title>
-        <meta name="description" content={'momiolo'} />
+        <title>{`登录-${loginPageConfig.metaTitle}`}</title>
+        <meta name="description" content={loginPageConfig.metaTitle} />
       </Helmet>
       <div className={styles.container}>
         <div className={styles.content}>
@@ -19,11 +19,11 @@ const UserLayout: React.FC<{ children: any }> = ({ children }) => {
             <div className={styles.header}>
               <Link to="/user/login">
                 <img alt="logo" className={styles.logo} src={logo} />
-                <span className={styles.title}>Momiolo</span>
+                <span className={styles.title}>{loginPageConfig.title}</span>
               </Link>
             </div>
             <div className={styles.desc}>
-              <span>{loginDescription}</span>
+              <span>{loginPageConfig.loginDescription}</span>
             </div>
           </div>
           {children}
