@@ -67,7 +67,27 @@ const UpdateRole = (props: any) => {
       });
     }
     // 查看
-    if (query.disabled) {
+    if (query.disabled && query.sid) {
+      // 查看时组装面包屑
+      dispatch({
+        type: 'global/update',
+        payload: {
+          breadcrumbData: [
+            {
+              path: '/',
+              breadcrumbName: '首页',
+            },
+            {
+              path: '/system',
+              breadcrumbName: '系统管理',
+            },
+            {
+              path: '/updateRole',
+              breadcrumbName: '角色详情',
+            },
+          ],
+        },
+      });
       setDisabled(true);
     }
   }, []);

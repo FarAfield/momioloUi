@@ -1,10 +1,10 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react';
-import styles from './index.less';
 import { connect } from 'umi';
 import { GridContent } from '@ant-design/pro-layout';
 import { Row, Col, Card, Divider } from 'antd';
 import { nickNameAndAvatar } from '@/utils/constant';
+import styles from './index.less';
 
 const Center = (props: any) => {
   const { currentUser } = props;

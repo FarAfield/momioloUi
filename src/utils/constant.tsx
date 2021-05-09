@@ -87,7 +87,7 @@ export const proSettings = {
   fixedHeader: true, // 固定头部
   fixSiderbar: true, // 固定右边菜单,layout为side时可设置为true
   colorWeak: false,
-  title: 'MomioloPro',
+  title: 'Momiolo',
   pwa: false,
   iconfontUrl: '',
 };
