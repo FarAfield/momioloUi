@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import { useState } from 'react';
 
 // eslint-disable-next-line import/no-mutable-exports
 let socket: any = null;
@@ -22,7 +23,22 @@ const createSocket = (socketServer: string = '') => {
   });
 };
 const closeSocket = () => socket && socket.disconnect();
-export { socket, createSocket, closeSocket };
+// 封装hook避免无意义的重渲染
+const socketSend = (msgContent: any) => {
+  socket &&
+    socket.emit('sendMsgEvent', {
+      msgContent,
+    });
+};
+const useSocketReceiveEvent = () => {
+  const [msgContent, setMsgContent] = useState('');
+  socket &&
+    socket.on('receiveMsgEvent', (data: any) => {
+      setMsgContent(data);
+    });
+  return msgContent;
+};
+export { socket, createSocket, closeSocket, socketSend, useSocketReceiveEvent };
 
 // 全局接收事件
 // socket.on('receiveMsgEvent', (data: any) => {

@@ -1,0 +1,82 @@
+.root {
+  height: 70vh;
+  margin-bottom: 24px;
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 52px;
+    color: white;
+    font-size: 24px;
+    background-color: black;
+  }
+  .content {
+    height: calc(100% - 32px);
+    overflow-y: auto;
+    background-color: rgba(232, 232, 232);
+  }
+}
+
+.systemInfo {
+  width: 40%;
+  margin: 8px auto;
+  padding: 4px;
+  color: white;
+  text-align: center;
+  background-color: rgba(153, 153, 151);
+  border-radius: 6px;
+  font-size: 16px;
+}
+.normalInfoLeft {
+  width: 80%;
+  display: flex;
+  margin: 8px 0;
+  .avatar{
+    margin: 0 6px;
+    box-sizing: border-box;
+    width: 40px;
+    height: 40px;
+    background-color: white;
+  }
+  .message {
+    display: flex;
+    flex-direction: column;
+    .nick {
+      font-size: 12px;
+    }
+    .text {
+      background-color: rgba(97,184,0);
+      color: white;
+      border-radius: 4px;
+      padding: 8px;
+    }
+  }
+}
+
+
+.normalInfoRight {
+  max-width: 80%;
+  display: flex;
+  justify-content: flex-end; // 反向
+  margin: 8px 0 8px 20%;   // 设置间距
+  .avatar{
+    margin: 0 6px;
+    box-sizing: border-box;
+    width: 40px;
+    height: 40px;
+    background-color: white;
+  }
+  .message {
+    display: flex;
+    flex-direction: column;
+    .nick {
+      font-size: 12px;
+      text-align: right;  // 反向
+    }
+    .text {
+      background-color: rgba(255,255,255);
+      border-radius: 4px;
+      padding: 8px;
+    }
+  }
+}
