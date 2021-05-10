@@ -5,14 +5,14 @@ const MonacoEditorPro = (props: any) => {
   const { width, height, theme, language, defaultValue, value, onChange } = props;
   const [code, setCode] = useState('');
   const editorDidMount = () => {
-    // 是否初始加载时聚焦  
+    // 是否初始加载时聚焦
     // editor.focus();
   };
   useEffect(() => {
     if (defaultValue) {
       setCode(defaultValue);
     }
-  }, [defaultValue]);
+  }, []);
   const options = {
     selectOnLineNumbers: true,
     renderSideBySide: false,

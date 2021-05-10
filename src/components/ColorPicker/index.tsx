@@ -12,7 +12,7 @@ const ColorPicker = (props: any) => {
     if (defaultValue) {
       setColor(defaultValue);
     }
-  }, [defaultValue]);
+  }, []);
   return (
     <>
       {type === 'Sketch' && (
