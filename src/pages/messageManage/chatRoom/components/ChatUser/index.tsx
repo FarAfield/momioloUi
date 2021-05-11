@@ -9,8 +9,6 @@ const ChatUser = (props: any) => {
   const [value, setValue] = useState('');
   const [checked, setChecked] = useState(false);
 
-  console.log('user');
-
   useEffect(() => {
     socketSend(
       JSON.stringify({

@@ -51,3 +51,7 @@ export const type = (o: any) => {
   const s: any = Object.prototype.toString.call(o);
   return s.match(/\[object (.*?)\]/)[1].toLowerCase();
 };
+
+export const getRandom = (minNum:number,maxNum:number) => {
+  return Math.floor(Math.random() * (maxNum - minNum + 1) + minNum)
+};
