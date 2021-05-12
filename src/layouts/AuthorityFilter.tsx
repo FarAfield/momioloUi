@@ -18,7 +18,7 @@ const getMenuPath = (array: any[], result: any[]) => {
     }
   });
 };
-const AuthorityFilter = ({ children, menuData, permissions, currentUser, location, socket }: any) => {
+const AuthorityFilter = ({ children, menuData, permissions, currentUser, location }: any) => {
   const { pathname } = location;
   const result: any[] = [];
   getMenuPath(menuData, result);
@@ -28,16 +28,16 @@ const AuthorityFilter = ({ children, menuData, permissions, currentUser, locatio
   if (result.concat(extraPath).includes(pathname)) {
     // 全局注入权限数据、是否是超级管理员
     return (
-      <GlobalContext.Provider value={{ permissions, isSuperAdmin, socket }}>
+      <GlobalContext.Provider value={{ permissions, isSuperAdmin }}>
         {children}
       </GlobalContext.Provider>
     );
-  } if (!result.length) {
+  }
+  if (!result.length) {
     // 暂无权限数据，此时处于页面刷新，因此展示为loading
     return <PageLoading />;
   }
-    return <Exception404 />;
-
+  return <Exception404 />;
 };
 export default connect(({ login }: any) => ({
   menuData: login.menuData,

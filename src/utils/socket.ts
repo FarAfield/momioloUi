@@ -1,10 +1,8 @@
 import io from 'socket.io-client';
 import { useState } from 'react';
 
-// eslint-disable-next-line import/no-mutable-exports
 let socket: any = null;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const createSocket = (socketServer: string = '') => {
+const createSocket = () => {
   // 本地访问为localhost:9092
   socket = io(`https://www.momiolo.com`, {
     reconnection: true,
@@ -23,26 +21,67 @@ const createSocket = (socketServer: string = '') => {
   });
 };
 const closeSocket = () => socket && socket.disconnect();
-// 封装hook避免无意义的重渲染
-const socketSend = (msgContent: any) => {
+// 全局socket发送  isAll(默认0当前客户端  1全部客户端)
+const socketSend = (msgContent: string, isAll: string = '0') => {
   socket &&
     socket.emit('sendMsgEvent', {
       msgContent,
+      isAll,
     });
 };
+// 全局socket接收（hooks用法）
 const useSocketReceiveEvent = () => {
   const [msgContent, setMsgContent] = useState('');
   socket &&
-    socket.on('receiveMsgEvent', (data: any) => {
+    socket.on('receiveMsgEvent', (data: string) => {
       setMsgContent(data);
     });
   return msgContent;
 };
-export { socket, createSocket, closeSocket, socketSend, useSocketReceiveEvent };
+/**
+ *  房间相关：（socket连接时默认加入""房间）
+ *  保持唯一房间（加入新房间前需要离开旧房间）
+ *  保持多个房间（直接加入新房间，同一客户端可以加入多个房间）
+ *  多个客户端加入同一个房间，使用socketRoomSend与useSocketRoomReceiveEvent
+ *  其效果等同于使用全局连接并设置isAll为1
+ */
+// socket加入房间
+const socketJoinRoom = (roomId: string) => {
+  socket && socket.emit('joinRoom', roomId);
+};
+// socket离开房间
+const socketLeaveRoom = (roomId: string) => {
+  socket && socket.emit('leaveRoom', roomId);
+};
+// 给指定房间内客户端发送消息
+const socketRoomSend = (roomId: string, msgContent: string) => {
+  socket &&
+    socket.emit('sendRoomMsgEvent', roomId, {
+      msgContent,
+    });
+};
+// 接收指定房间的消息
+const useSocketRoomReceiveEvent = () => {
+  const [msgContent, setMsgContent] = useState('');
+  socket &&
+    socket.on('receiveRoomMsgEvent', (roomId: string, data: string) => {
+      setMsgContent(data);
+    });
+  return msgContent;
+};
+export {
+  createSocket,
+  closeSocket,
+  socketSend,
+  useSocketReceiveEvent,
+  socketJoinRoom,
+  socketLeaveRoom,
+  socketRoomSend,
+  useSocketRoomReceiveEvent,
+};
 
 // 全局接收事件
-// socket.on('receiveMsgEvent', (data: any) => {
-// });
+// socket.on('receiveMsgEvent', (data: any) => {});
 
 // 全局发送事件
 // socket.emit('sendMsgEvent', {
@@ -50,12 +89,15 @@ export { socket, createSocket, closeSocket, socketSend, useSocketReceiveEvent };
 // });
 
 // 加入房间
-// socket.emit('joinRoom',roomId);
+// socket.emit('joinRoom', roomId);
 
 // 离开房间
-// socket.emit('leaveRoom',roomId);
+// socket.emit('leaveRoom', roomId);
 
-// 给指定房间发送事件
-// socket.emit('sendRoomMsgEvent', {
-//   msgContent:'',
-// },roomId);
+// 给指定房间发送消息
+// socket.emit('sendRoomMsgEvent', roomId, {
+//   msgContent: '',
+// });
+
+// 接收指定房间的消息
+// socket.emit('receiveRoomMsgEvent', (data: any) => {});

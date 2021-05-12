@@ -14,7 +14,7 @@ import { getIconByName } from '@/utils/support';
 import logo from '../assets/logo-white.svg';
 import ThemeSetting from '../components/ThemeSetting';
 import { SettingOutlined } from '@ant-design/icons';
-import { socket, createSocket, closeSocket } from '@/utils/socket';
+import { createSocket, closeSocket } from '@/utils/socket';
 import { useUnmount } from 'ahooks';
 import styles from './BasicLayout.less';
 
@@ -95,7 +95,7 @@ const BasicLayout: React.FC<any> = (props) => {
       {...props}
       {...settings}
     >
-      <AuthorityFilter location={location} socket={socket}>{children}</AuthorityFilter>
+      <AuthorityFilter location={location}>{children}</AuthorityFilter>
       <ThemeSetting visible={visible} onClose={() => setVisible(false)} />
       <div
         className={styles.themeSetting}

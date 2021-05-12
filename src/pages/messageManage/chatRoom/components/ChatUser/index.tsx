@@ -15,6 +15,7 @@ const ChatUser = (props: any) => {
         messageType: 'system',
         messageContent: `${userNickname}加入群聊`,
       }),
+      '1',
     );
     return () => {
       socketSend(
@@ -22,6 +23,7 @@ const ChatUser = (props: any) => {
           messageType: 'system',
           messageContent: `${userNickname}退出群聊`,
         }),
+        '1',
       );
     };
   }, []);
@@ -36,6 +38,7 @@ const ChatUser = (props: any) => {
           userNickname,
           direction: checked ? 'right' : 'left',
         }),
+        '1',
       );
       setValue('');
     }

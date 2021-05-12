@@ -16,7 +16,7 @@ const CreateUser = (props: any) => {
       title={
         <div>
           创建用户
-          <Tooltip title="聊天室基于socket实现">
+          <Tooltip title="聊天室基于socket实现，可开启多窗口进行尝试">
             <MessageOutlined style={{ color: '#999', marginLeft: 4 }} />
           </Tooltip>
         </div>
