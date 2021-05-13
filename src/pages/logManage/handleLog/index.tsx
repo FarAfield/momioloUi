@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Badge } from 'antd';
 import CommonTable from '../../../components/Momiolo/CommonTable';
@@ -20,18 +20,18 @@ const HandleLog = (props: any) => {
   useEffect(() => {
     handleSearch();
   }, []);
-  const handleSearch = useCallback(() => {
+  const handleSearch = () => {
     dispatch({
       type: 'base/getPage',
       payload: { url: '/handleLog/findByPage' },
     });
-  }, []);
-  const handleDetailParams = useCallback((text: any) => {
+  };
+  const handleDetailParams = (text: any) => {
     setContentConfig({ title: '操作入参详细信息', visible: true, text });
-  }, []);
-  const handleDetailResult = useCallback((text: any) => {
+  };
+  const handleDetailResult = (text: any) => {
     setContentConfig({ title: '操作返回详细信息', visible: true, text });
-  }, []);
+  };
   const handleFieldsValue = (values: any) => {
     if (values?.handleDateRange?.length) {
       values.startTime = dayjs(values.handleDateRange[0]).format('YYYY-MM-DD HH:mm:ss');
@@ -81,7 +81,7 @@ const HandleLog = (props: any) => {
       type: 'rangePicker',
       key: 'handleDateRange',
       span: 12,
-      showTime:true,
+      showTime: true,
       colStyle: { marginLeft: '-4%' },
     },
     {

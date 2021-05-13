@@ -5,7 +5,7 @@ import { connect } from 'umi';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import styles from './index.less';
 
-const {TreeNode} = Tree;
+const { TreeNode } = Tree;
 const TYPE = {
   1: { value: '菜单', color: '#1890ff' },
   2: { value: '页面', color: '#f5222d' },
@@ -41,9 +41,7 @@ const MenuConfig = (props: any) => {
             key={item.sid}
             title={
               <span>
-                <Tag color={TYPE[item.resourceType].color}>
-                  {TYPE[item.resourceType].value}
-                </Tag>
+                <Tag color={TYPE[item.resourceType].color}>{TYPE[item.resourceType].value}</Tag>
                 {item.resourceName}
                 <Switch
                   checkedChildren={<CheckOutlined />}

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import React, { useState, useEffect, useCallback, useContext } from 'react';
-import { connect } from 'umi';
+import React, { useState, useEffect, useContext } from 'react';
+import { connect, history } from 'umi';
 import { message, Badge, Button } from 'antd';
 import CommonTable from '../../../components/Momiolo/CommonTable';
 import CommonAuth from '../../../components/Momiolo/CommonAuth';
@@ -8,7 +8,6 @@ import CommonSearchForm from '../../../components/Momiolo/CommonSearchForm';
 import PageCard from '../../../components/PageCard';
 import { getValueByKey } from '@/utils/support';
 import { PlusOutlined, NodeExpandOutlined } from '@ant-design/icons';
-import { history } from 'umi';
 import GlobalContext from '../../../layouts/GlobalContext';
 
 const InterfacePro = (props: any) => {
@@ -22,13 +21,13 @@ const InterfacePro = (props: any) => {
   useEffect(() => {
     handleSearch();
   }, []);
-  const handleSearch = useCallback(() => {
+  const handleSearch = () => {
     dispatch({
       type: 'base/getPage',
       payload: { url: '/interface/findByPage', ...formValues },
     });
-  }, []);
-  const handleDelete = useCallback((sid: any) => {
+  };
+  const handleDelete = (sid: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/interface/delete', sid },
@@ -37,7 +36,7 @@ const InterfacePro = (props: any) => {
         handleSearch();
       },
     });
-  }, []);
+  };
   const searchItems = [
     {
       key: 'name',
@@ -161,7 +160,7 @@ const InterfacePro = (props: any) => {
       title: '延时',
       dataIndex: 'delay',
       width: '10%',
-      render: (text: any) => `${text  }s`,
+      render: (text: any) => `${text}s`,
     },
     {
       title: '操作',

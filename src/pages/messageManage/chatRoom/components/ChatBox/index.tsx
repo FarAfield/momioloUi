@@ -2,7 +2,6 @@ import React from 'react';
 import { Avatar } from 'antd';
 import styles from './index.less';
 
-
 const renderMessage = (messageList: any[]) => {
   return messageList.map((item: any, index: number) => {
     if (item.messageType === 'system') {
@@ -46,7 +45,9 @@ const ChatBox = (props: any) => {
   return (
     <div className={styles.root}>
       <div className={styles.header}>{roomTitle}</div>
-      <div className={styles.content} id={"chat-box"}>{renderMessage(messageList)}</div>
+      <div className={styles.content} id={'chat-box'}>
+        {renderMessage(messageList)}
+      </div>
     </div>
   );
 };

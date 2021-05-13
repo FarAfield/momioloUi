@@ -42,7 +42,7 @@ const FormatInterface = () => {
     // 额外需要附加的字段
     const extraFields = sourceFields.filter((i: any) => !Object.keys(sourceData[0]).includes(i));
     const result = sourceData.map((i: any) => {
-      const item = { ...i }
+      const item = { ...i };
       for (const k in item) {
         // 完成字段删除、映射、默认值赋予
         const index = sourceFields.findIndex((s: any) => s === k);

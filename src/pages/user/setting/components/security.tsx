@@ -40,7 +40,7 @@ const SecurityView = (props: any) => {
                 },
               ]}
             >
-              <Input placeholder={'请输入原始密码'} maxLength={12} allowClear type={'password'}/>
+              <Input placeholder={'请输入原始密码'} maxLength={12} allowClear type={'password'} />
             </FormItem>
             <FormItem
               name={'newPassword'}
@@ -53,7 +53,7 @@ const SecurityView = (props: any) => {
                 },
               ]}
             >
-              <Input placeholder={'请输入新密码'} maxLength={12} allowClear type={'password'}/>
+              <Input placeholder={'请输入新密码'} maxLength={12} allowClear type={'password'} />
             </FormItem>
             <FormItem
               name={'newCheckPassword'}
@@ -76,7 +76,7 @@ const SecurityView = (props: any) => {
                 }),
               ]}
             >
-              <Input placeholder={'请确认输入的密码'} allowClear maxLength={12} type={'password'}/>
+              <Input placeholder={'请确认输入的密码'} allowClear maxLength={12} type={'password'} />
             </FormItem>
             <FormItem>
               <Button type="primary" htmlType="submit" loading={loading}>

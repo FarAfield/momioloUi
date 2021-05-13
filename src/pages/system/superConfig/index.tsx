@@ -11,9 +11,9 @@ const SuperConfig = () => {
     <PageCard>
       <Card style={{ minHeight: 500 }}>
         <Row gutter={24}>
-          <Col span={12}/>
+          <Col span={12} />
           <Col span={12}>
-            <MenuConfig isSuperAdmin={isSuperAdmin}/>
+            <MenuConfig isSuperAdmin={isSuperAdmin} />
           </Col>
         </Row>
       </Card>

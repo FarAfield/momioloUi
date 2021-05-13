@@ -7,7 +7,6 @@ import { useUpdate, useUnmount } from 'ahooks';
 import { InboxOutlined } from '@ant-design/icons';
 import styles from './index.less';
 
-
 /**
  *  ① 文件预处理，对文件分片
  *  ② 文件预处理完成，文件预上传
@@ -24,17 +23,16 @@ const SliceUpload = (props: any) => {
   const { style, dispatch } = props;
   const [fileList, setFileList] = useState<any>([]);
   const { percent, fileResult, errorMessage }: any = useFileSlice(fileList[0], {
-    maxSize: 10*1024,
+    maxSize: 10 * 1024,
     chunkSize: 0.1 * 1024 * 1024,
   });
   const [uploading, setUploading] = useState(false); // 是否在上传中
-  const [uploadChunkSum,setUploadChunkSum] = useState(0); // 上传成功的片数
+  const [uploadChunkSum, setUploadChunkSum] = useState(0); // 上传成功的片数
   const [uploadPercent, setUploadPercent] = useState(0); // 上传进度（由片数计算出来）
-  const [fileInfo,setFileInfo] = useState<any>({}); //  fileStatus为done/error
+  const [fileInfo, setFileInfo] = useState<any>({}); //  fileStatus为done/error
   const breakRequest = useRef(false); // 是否中断上传
-  const timer = useRef<any>(null);  // 分片上传定时器
+  const timer = useRef<any>(null); // 分片上传定时器
   const update = useUpdate();
-
 
   /**
    * 文件预处理出错提示
@@ -49,12 +47,12 @@ const SliceUpload = (props: any) => {
    *  计算上传进度
    */
   useEffect(() => {
-    if(uploadChunkSum){
+    if (uploadChunkSum) {
       const { file } = fileResult;
       const { chunkSum = 0 } = file || {};
       setUploadPercent(Number(((uploadChunkSum / chunkSum) * 100).toFixed(2)));
       // 上传完成,开启文件合并
-      if(uploadChunkSum === chunkSum){
+      if (uploadChunkSum === chunkSum) {
         setUploading(false);
         mergeUploadFile();
       }
@@ -65,11 +63,11 @@ const SliceUpload = (props: any) => {
    *  终止分片上传定时器
    */
   useEffect(() => {
-    if(breakRequest.current && timer.current){
+    if (breakRequest.current && timer.current) {
       clearInterval(timer.current);
       timer.current = null;
     }
-  },[breakRequest.current]);
+  }, [breakRequest.current]);
 
   /**
    * ① 第一步，上传前处理，文件md5校验，断点续传校验
@@ -93,18 +91,18 @@ const SliceUpload = (props: any) => {
     };
     // 执行文件预处理
     dispatch({
-      type:'base/postData',
-      payload: { url:'/fileUpload/preUpload',...paramsResult},
+      type: 'base/postData',
+      payload: { url: '/fileUpload/preUpload', ...paramsResult },
       callback: () => {
-        console.info('文件预处理结果',paramsResult);
+        console.info('文件预处理结果', paramsResult);
         console.info('执行预上传');
         /**
          *  todo (断点续传后端实现)  setUploadChunkSum(0); partUpload(chunks);
          */
         // 前端模拟断点续传（设置已上传的分片数以及需要上传的分片）
-        setUploadChunkSum(v => v);
+        setUploadChunkSum((v) => v);
         partUpload(chunks.slice(uploadChunkSum));
-      }
+      },
     });
   };
 
@@ -119,17 +117,17 @@ const SliceUpload = (props: any) => {
     // 开始进行上传
     setUploading(true);
     timer.current = setInterval(() => {
-      if(batchDone >= batchCount){
+      if (batchDone >= batchCount) {
         clearInterval(timer.current);
         timer.current = null;
         return;
       }
-      batchAppend(uploadList,batchDone,batchSize);
-      batchDone+=1;
-    },3000);
+      batchAppend(uploadList, batchDone, batchSize);
+      batchDone += 1;
+    }, 3000);
   };
 
-  function batchAppend(uploadList: any,batchDone: any,batchSize: any) {
+  function batchAppend(uploadList: any, batchDone: any, batchSize: any) {
     const list = uploadList.slice(batchSize * batchDone, batchSize * (batchDone + 1));
     batchUpload(list);
   }
@@ -152,13 +150,13 @@ const SliceUpload = (props: any) => {
         type: 'base/upload',
         payload: { url: '/fileUpload/partUpload', file: formData },
         callback: (res: any) => {
-          if(res.statusCode === '0'){
+          if (res.statusCode === '0') {
             // 设置上传片数
             setUploadChunkSum((v) => v + 1);
           } else {
             // todo  重试一次
             // 某一个分片失败则终止上传
-            setFileInfo({ fileStatus:'error' });
+            setFileInfo({ fileStatus: 'error' });
             breakRequest.current = true;
           }
         },
@@ -172,15 +170,15 @@ const SliceUpload = (props: any) => {
   const mergeUploadFile = () => {
     dispatch({
       type: 'base/postData',
-      payload: { url:'/fileUpload/mergeFile', fileMd5: fileResult.file.fileMd5 },
+      payload: { url: '/fileUpload/mergeFile', fileMd5: fileResult.file.fileMd5 },
       callback: () => {
         console.info('文件上传成功！');
         // todo 将文件信息留存交给父组件
         setTimeout(() => {
-          setFileInfo({ fileStatus:'done'});
-        },2000)
-      }
-    })
+          setFileInfo({ fileStatus: 'done' });
+        }, 2000);
+      },
+    });
   };
   /**
    *  组件卸载，清除所有数据并中断请求
@@ -296,16 +294,19 @@ const SliceUpload = (props: any) => {
             )}
             {/**  文件上传失败（某一分片上传失败）（fileStatus  error）  */}
             {uploading && uploadPercent < 100 && fileInfo.fileStatus === 'error' && (
-                <>
-                  <Result status="error" title="文件上传失败" />
-                  <Button type={'primary'} onClick={() => {
+              <>
+                <Result status="error" title="文件上传失败" />
+                <Button
+                  type={'primary'}
+                  onClick={() => {
                     breakRequest.current = false;
                     setFileInfo({});
                     preUpload();
-                  }}>
-                    重试
-                  </Button>
-                </>
+                  }}
+                >
+                  重试
+                </Button>
+              </>
             )}
             {/**  文件分片上传成功，开始进行文件合并 */}
             {uploadPercent === 100 && !fileInfo.fileStatus && (

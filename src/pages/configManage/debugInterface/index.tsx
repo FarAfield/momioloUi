@@ -134,7 +134,7 @@ const DebugInterface = (props: any) => {
         <Descriptions.Item label="是否分页">
           {record.isPaging === 0 ? '分页' : '不分页'}
         </Descriptions.Item>
-        <Descriptions.Item label="延时">{`${record.delay  }s`}</Descriptions.Item>
+        <Descriptions.Item label="延时">{`${record.delay}s`}</Descriptions.Item>
         <Descriptions.Item label="接口描述">{record.description}</Descriptions.Item>
       </Descriptions>
       <Descriptions title="接口调试信息" />
@@ -150,7 +150,11 @@ const DebugInterface = (props: any) => {
         点此发送请求
       </Button>
       <Descriptions title="请求结果" style={{ marginTop: 12 }} />
-      <TextArea autoSize={{ minRows: 12, maxRows: 36 }}  style={{ color:'green'}} value={formatJson(result)} />
+      <TextArea
+        autoSize={{ minRows: 12, maxRows: 36 }}
+        style={{ color: 'green' }}
+        value={formatJson(result)}
+      />
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: 12 }}>
         <Button onClick={() => history.goBack()} style={{ width: 120 }}>
           返回

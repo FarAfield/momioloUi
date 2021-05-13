@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import React, { useEffect, useMemo, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { Form, Row, Col, Input, Button, Select, DatePicker, InputNumber } from 'antd';
 import { transferOption } from '@/utils/support';
 import styles from './index.less';
@@ -20,7 +20,7 @@ const formItemLayout = {
   },
 };
 const FormItem = Form.Item;
-const {RangePicker} = DatePicker;
+const { RangePicker } = DatePicker;
 const CommonSearchForm = (props: any) => {
   const {
     fetchParams: { type, url, extraArgs },
@@ -30,6 +30,8 @@ const CommonSearchForm = (props: any) => {
     handleFormReset,
     handleFieldsValue,
     dispatch,
+    mode, // 设置mode为auto则使用hook方式
+    run, // 设置mode为auto时需要提供的run方法
   } = props;
   const [form] = Form.useForm();
   const { setFieldsValue, resetFields } = form;
@@ -40,15 +42,20 @@ const CommonSearchForm = (props: any) => {
     }
   }, [initValue]);
 
-  const onReset = useCallback(() => {
+  const onReset = () => {
     resetFields();
     handleFormReset && handleFormReset();
-    dispatch({
-      type,
-      payload: { url, ...extraArgs },
-    });
-  }, []);
-  const onFinish = useCallback((fieldsValue) => {
+    if (mode === '') {
+      dispatch({
+        type,
+        payload: { url, ...extraArgs },
+      });
+    }
+    if (mode === 'auto') {
+      run();
+    }
+  };
+  const onFinish = (fieldsValue: any) => {
     // 自定义数据处理
     const values = handleFieldsValue ? handleFieldsValue(fieldsValue) : fieldsValue;
     if (!values || typeof values !== 'object') return;
@@ -60,12 +67,17 @@ const CommonSearchForm = (props: any) => {
     }
     // 保存搜索条件
     saveFormValues && saveFormValues(values);
-    dispatch({
-      type,
-      payload: { url, ...values, ...extraArgs },
-    });
-  }, []);
-  const searchAndReset = useMemo(() => {
+    if (mode === '') {
+      dispatch({
+        type,
+        payload: { url, ...values, ...extraArgs },
+      });
+    }
+    if (mode === 'auto') {
+      run(values);
+    }
+  };
+  const searchAndReset = () => {
     // 计算offset
     const offset = 16 - (searchItems.length % 3) * 8;
     return (
@@ -82,8 +94,8 @@ const CommonSearchForm = (props: any) => {
         </div>
       </Col>
     );
-  }, []);
-  const renderForm = useMemo(() => {
+  };
+  const renderForm = () => {
     const resultItems = searchItems.map((item: any) => {
       const { type } = item;
       switch (type) {
@@ -202,7 +214,7 @@ const CommonSearchForm = (props: any) => {
         // 调整样式，通常搭配rangePicker使用
         case 'blank': {
           const { key, span = 2, colStyle } = item;
-          return <Col key={key} span={span} style={colStyle}/>;
+          return <Col key={key} span={span} style={colStyle} />;
         }
         default: {
           return null;
@@ -211,7 +223,7 @@ const CommonSearchForm = (props: any) => {
     });
     resultItems.push(searchAndReset);
     return resultItems;
-  }, [searchItems]);
+  };
 
   return (
     <div>
@@ -222,10 +234,9 @@ const CommonSearchForm = (props: any) => {
   );
 };
 CommonSearchForm.defaultProps = {
-  fetchParams: {
-    fetchParams: {},
-  },
+  fetchParams: {},
   searchItems: [],
   initValue: {},
+  mode: '', //  设置mode为auto则使用hook方式,此时fetchParams不必传
 };
 export default connect()(CommonSearchForm);

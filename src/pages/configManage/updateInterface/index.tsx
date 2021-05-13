@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import React, { useState, useEffect, useCallback } from 'react';
-import { connect } from 'umi';
+import React, { useState, useEffect } from 'react';
+import { connect, history } from 'umi';
 import {
   message,
   Button,
@@ -16,13 +16,12 @@ import {
 } from 'antd';
 import { useUnmount } from 'ahooks';
 import PageCard from '../../../components/PageCard';
-import { history } from 'umi';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import { transferOption } from '@/utils/support';
 import MonacoEditor from '../../../components/MonacoEditor';
 
 const FormItem = Form.Item;
-const {TextArea} = Input;
+const { TextArea } = Input;
 
 const UpdateInterface = (props: any) => {
   const {
@@ -60,7 +59,7 @@ const UpdateInterface = (props: any) => {
     }
   }, []);
 
-  const findDetail = useCallback((sid: any) => {
+  const findDetail = (sid: any) => {
     dispatch({
       type: 'base/getData',
       payload: { url: '/interface/findDetail', sid },
@@ -69,7 +68,7 @@ const UpdateInterface = (props: any) => {
         form.setFieldsValue({ ...res.data });
       },
     });
-  }, []);
+  };
 
   useUnmount(() => {
     dispatch({

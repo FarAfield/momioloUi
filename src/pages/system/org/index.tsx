@@ -26,7 +26,7 @@ const Org = (props: any) => {
   useEffect(() => {
     handleSearch();
   }, []);
-  const handleSearch = useCallback(() => {
+  const handleSearch = () => {
     dispatch({
       type: 'base/getData',
       payload: { url: '/org/findOrgTree' },
@@ -34,8 +34,8 @@ const Org = (props: any) => {
         setTreeList([res.data]);
       },
     });
-  }, []);
-  const handleDelete = useCallback((sid) => {
+  };
+  const handleDelete = (sid: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/org/delete', sid },
@@ -45,8 +45,7 @@ const Org = (props: any) => {
         setRecord({});
       },
     });
-  }, []);
-
+  };
   const onSelect = (selectedKeys: any[]) => {
     if (selectedKeys.length === 1) {
       dispatch({

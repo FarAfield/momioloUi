@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Drawer, Radio, message, Descriptions } from 'antd';
 import { changeTheme } from '@/utils/utils';
 import { ThemeConfig, proSettings } from '@/utils/constant';
@@ -17,7 +17,7 @@ const ThemeSetting = (props: any) => {
     });
     changeTheme(primaryColor);
   }, []);
-  const onChange = useCallback((e) => {
+  const onChange = (e: any) => {
     setValue(e.target.value);
     message.loading('正在加载主题...');
     dispatch({
@@ -26,7 +26,7 @@ const ThemeSetting = (props: any) => {
     });
     localStorage.setItem('primaryColor', e.target.value);
     changeTheme(e.target.value);
-  }, []);
+  };
   const onSettingChange = (payload: any) => {
     if (payload.layout === 'side') {
       payload.contentWidth = 'Fluid';

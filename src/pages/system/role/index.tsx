@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { connect } from 'umi';
 import { message, Badge, Button } from 'antd';
 import CommonTable from '../../../components/Momiolo/CommonTable';
@@ -26,13 +26,13 @@ const Role = (props: any) => {
   useEffect(() => {
     handleSearch();
   }, []);
-  const handleSearch = useCallback(() => {
+  const handleSearch = () => {
     dispatch({
       type: 'base/getPage',
-      payload: { url: '/role/findByPage',...formValues },
+      payload: { url: '/role/findByPage', ...formValues },
     });
-  }, []);
-  const handleDelete = useCallback((sid) => {
+  };
+  const handleDelete = (sid: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/role/delete', sid },
@@ -41,7 +41,7 @@ const Role = (props: any) => {
         handleSearch();
       },
     });
-  }, []);
+  };
   const searchItems = [
     {
       key: 'roleName',
@@ -107,7 +107,7 @@ const Role = (props: any) => {
             onClick: () =>
               history.push({
                 pathname: '/system/updateRole',
-                query: { sid: record.sid, disabled: "true" },
+                query: { sid: record.sid, disabled: 'true' },
               }),
           },
           {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { connect } from 'umi';
 import { Tag, message, Popconfirm, Button } from 'antd';
 import CommonTable from '../../../components/Momiolo/CommonTable';
@@ -30,6 +30,7 @@ const getType = (record: any) => {
     if (!record?.children?.length && record?.buttonChildren?.length) {
       return TYPE.slice(2, 3);
     }
+    return [];
   } else if (record.resourceType === 2) {
     return TYPE.slice(2, 3);
   } else {
@@ -53,7 +54,7 @@ const Resource = (props: any) => {
   useEffect(() => {
     handleSearch();
   }, []);
-  const handleSearch = useCallback(() => {
+  const handleSearch = () => {
     dispatch({
       type: 'base/getData',
       payload: { url: '/resource/findMenuTree' },
@@ -61,8 +62,8 @@ const Resource = (props: any) => {
         setList(res.data);
       },
     });
-  }, []);
-  const handleDelete = useCallback((sid) => {
+  };
+  const handleDelete = (sid: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/resource/delete', sid },
@@ -71,8 +72,8 @@ const Resource = (props: any) => {
         handleSearch();
       },
     });
-  }, []);
-  const handleMove = useCallback((sid: number, type: 'up' | 'down') => {
+  };
+  const handleMove = (sid: number, type: 'up' | 'down') => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/resource/move', sid, type },
@@ -81,7 +82,7 @@ const Resource = (props: any) => {
         handleSearch();
       },
     });
-  }, []);
+  };
   const formItems = [
     {
       key: 'resourceParentSid',
@@ -126,9 +127,7 @@ const Resource = (props: any) => {
       key: 'resourceIcon',
       title: '资源图标',
       type: 'input',
-      rules: [
-        { max: 20, message: '最大字符长度20' },
-      ],
+      rules: [{ max: 20, message: '最大字符长度20' }],
       hide: resourceType === 3 || resourceType === 2,
       maxLength: 20,
     },
@@ -170,7 +169,8 @@ const Resource = (props: any) => {
               {item.resourceName}
             </Tag>
           ));
-        } if (record.buttonChildren && record.buttonChildren.length) {
+        }
+        if (record.buttonChildren && record.buttonChildren.length) {
           return record.buttonChildren.map((item: any) => (
             <Tag
               style={{ margin: 6 }}
@@ -187,9 +187,8 @@ const Resource = (props: any) => {
               {item.resourceName}
             </Tag>
           ));
-        } 
-          return null;
-        
+        }
+        return null;
       },
     },
     {

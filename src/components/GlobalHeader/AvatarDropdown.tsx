@@ -29,10 +29,10 @@ const AvatarDropdown = (props: any) => {
           dispatch({
             type: 'login/logout',
           });
-          break
+          break;
         }
-        default: break
-
+        default:
+          break;
       }
     },
     [],

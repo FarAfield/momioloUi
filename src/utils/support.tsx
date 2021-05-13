@@ -28,17 +28,17 @@ export const formatJson = (str: any) => {
   const stack = [];
   let tmpStr = '';
   const len = str.length;
-  for (let i = 0; i < len; i+=1) {
+  for (let i = 0; i < len; i += 1) {
     // 当遇到结构块起始结构
     if (str[i] === '{' || str[i] === '[') {
-      tmpStr += `${str[i]  }\n`;
+      tmpStr += `${str[i]}\n`;
       stack.push(str[i]);
       tmpStr += '\t'.repeat(stack.length);
     } else if (str[i] === ']' || str[i] === '}') {
       stack.pop();
-      tmpStr += `\n${  '\t'.repeat(stack.length)  }${str[i]}`;
+      tmpStr += `\n${'\t'.repeat(stack.length)}${str[i]}`;
     } else if (str[i] === ',') {
-      tmpStr += `${str[i]  }\n${  '\t'.repeat(stack.length)}`;
+      tmpStr += `${str[i]}\n${'\t'.repeat(stack.length)}`;
     } else {
       tmpStr += str[i];
     }
@@ -52,6 +52,6 @@ export const type = (o: any) => {
   return s.match(/\[object (.*?)\]/)[1].toLowerCase();
 };
 
-export const getRandom = (minNum:number,maxNum:number) => {
-  return Math.floor(Math.random() * (maxNum - minNum + 1) + minNum)
+export const getRandom = (minNum: number, maxNum: number) => {
+  return Math.floor(Math.random() * (maxNum - minNum + 1) + minNum);
 };

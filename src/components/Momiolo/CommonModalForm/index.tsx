@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-restricted-syntax */
-import React, { useEffect, useMemo, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { Form, Button, Modal, Input, Select, TreeSelect, message } from 'antd';
 import { transferOption } from '@/utils/support';
 import { connect } from 'umi';
@@ -21,7 +21,7 @@ const formItemLayout = {
   },
 };
 const FormItem = Form.Item;
-const {TextArea} = Input;
+const { TextArea } = Input;
 const CommonModalForm = (props: any) => {
   const {
     visible,
@@ -50,38 +50,35 @@ const CommonModalForm = (props: any) => {
       form.setFieldsValue({ ...fields });
     }
   }, [visible]);
-  const onFinish = useCallback(
-    (fieldsValue) => {
-      // 自定义数据处理
-      const values = handleFieldsValue ? handleFieldsValue(fieldsValue) : fieldsValue;
-      if (!values || typeof values !== 'object') return;
-      // 数据为空处理
-      for (const v in values) {
-        if (!values[v] || !values[v].toString().trim()) {
-          values[v] = undefined;
-        }
+  const onFinish = (fieldsValue: any) => {
+    // 自定义数据处理
+    const values = handleFieldsValue ? handleFieldsValue(fieldsValue) : fieldsValue;
+    if (!values || typeof values !== 'object') return;
+    // 数据为空处理
+    for (const v in values) {
+      if (!values[v] || !values[v].toString().trim()) {
+        values[v] = undefined;
       }
-      const resultData = { ...formData, ...values };
-      const url =
-        saveUrl.length === 1 ? saveUrl[0] : Object.keys(formData).length ? saveUrl[1] : saveUrl[0];
-      dispatch({
-        type: 'base/commonPostData',
-        payload: { url, ...resultData },
-        callback: () => {
-          message.success(Object.keys(formData).length ? messageInfo[1] : messageInfo[0]);
-          // 成功方法回调时支持入参判断属于什么操作
-          handleCallback && handleCallback(Object.keys(formData).length ? 'create' : 'update');
-          onCancel();
-        },
-      });
-    },
-    [visible],
-  );
-  const onCancel = useCallback(() => {
+    }
+    const resultData = { ...formData, ...values };
+    const url =
+      saveUrl.length === 1 ? saveUrl[0] : Object.keys(formData).length ? saveUrl[1] : saveUrl[0];
+    dispatch({
+      type: 'base/commonPostData',
+      payload: { url, ...resultData },
+      callback: () => {
+        message.success(Object.keys(formData).length ? messageInfo[1] : messageInfo[0]);
+        // 成功方法回调时支持入参判断属于什么操作
+        handleCallback && handleCallback(Object.keys(formData).length ? 'create' : 'update');
+        onCancel();
+      },
+    });
+  };
+  const onCancel = () => {
     handleCancel();
     form.resetFields();
-  }, []);
-  const saveAndCancel = useMemo(() => {
+  };
+  const saveAndCancel = () => {
     return (
       <div key={'saveAndCancel'} className={styles.saveAndCancel}>
         <Button onClick={onCancel}>
@@ -94,8 +91,8 @@ const CommonModalForm = (props: any) => {
         </Button>
       </div>
     );
-  }, [loading]);
-  const renderItem = useMemo(() => {
+  };
+  const renderItem = () => {
     const resultItems = formItems.map((item: any) => {
       const { type, readOnly = [false, false], hide } = item;
       const disabled = Object.keys(formData).length ? readOnly[1] : readOnly[0];
@@ -189,7 +186,7 @@ const CommonModalForm = (props: any) => {
     });
     resultItems.push(saveAndCancel);
     return resultItems;
-  }, [formItems, visible, loading]);
+  };
   return (
     <Modal
       visible={visible}

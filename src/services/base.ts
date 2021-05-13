@@ -2,7 +2,7 @@ import request from '@/utils/request';
 
 interface Payload {
   url: string;
-  signal: any;
+  signal?: any;
   params?: object;
   list?: any[];
   file?: any;
@@ -82,4 +82,24 @@ export async function remove({ url, signal, ...params }: Payload) {
  */
 export async function upload({ url, signal, file }: Payload) {
   return request.post(`${url}`, { signal, data: file });
+}
+
+/**
+ *  构造get请求
+ */
+export function createGet(url: string, signal?: any) {
+  return (params: object) =>
+    request.get(url, {
+      params,
+    });
+}
+
+/**
+ *  构造post请求
+ */
+export function createPost(url: string, signal?: any) {
+  return (params: object) =>
+    request.post(url, {
+      data: params,
+    });
 }

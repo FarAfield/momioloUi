@@ -37,7 +37,8 @@ const errorHandler = (error: { response: Response }): Response => {
     maxCountMessage.error('请求超时');
     // @ts-ignore
     return { status: 408, statusText: '请求超时' };
-  } if (response && response.status) {
+  }
+  if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
     console.error(`请求状态:${status}  请求路径${url}`);
@@ -77,10 +78,12 @@ request.interceptors.response.use(async (response: any) => {
         storageClear();
         history.push('/user/login');
         return {};
-      } if (res.statusCode === requestConfig.UNAUTHORIZED_ERROR) {
+      }
+      if (res.statusCode === requestConfig.UNAUTHORIZED_ERROR) {
         maxCountMessage.error('抱歉，您暂无此权限');
         return {};
-      } if (res.statusCode !== '0') {
+      }
+      if (res.statusCode !== '0') {
         console.warn(res.statusMessage);
       }
     }

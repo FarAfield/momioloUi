@@ -9,8 +9,8 @@ import { CloseOutlined, CheckOutlined, RollbackOutlined } from '@ant-design/icon
 import styles from './index.less';
 
 const FormItem = Form.Item;
-const {TextArea} = Input;
-const {TreeNode} = Tree;
+const { TextArea } = Input;
+const { TreeNode } = Tree;
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -145,9 +145,7 @@ const UpdateRole = (props: any) => {
             key={item.sid}
             title={
               <span>
-                <Tag color={TYPE[item.resourceType].color}>
-                  {TYPE[item.resourceType].value}
-                </Tag>
+                <Tag color={TYPE[item.resourceType].color}>{TYPE[item.resourceType].value}</Tag>
                 {item.resourceName}
               </span>
             }

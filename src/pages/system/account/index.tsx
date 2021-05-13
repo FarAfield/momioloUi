@@ -67,13 +67,13 @@ const Account = (props: any) => {
       },
     });
   }, []);
-  const handleSearch = useCallback(() => {
+  const handleSearch = () => {
     dispatch({
       type: 'base/getPage',
       payload: { url: '/account/findByPage', ...formValues },
     });
-  }, []);
-  const handleDelete = useCallback((sid) => {
+  };
+  const handleDelete = (sid: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/account/delete', sid },
@@ -82,8 +82,8 @@ const Account = (props: any) => {
         handleSearch();
       },
     });
-  }, []);
-  const handleLock = useCallback((sid) => {
+  };
+  const handleLock = (sid: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/account/lock', sid },
@@ -92,8 +92,8 @@ const Account = (props: any) => {
         handleSearch();
       },
     });
-  }, []);
-  const handleUnlock = useCallback((sid) => {
+  };
+  const handleUnlock = (sid: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/account/unlock', sid },
@@ -102,8 +102,8 @@ const Account = (props: any) => {
         handleSearch();
       },
     });
-  }, []);
-  const handleReset = useCallback((sid) => {
+  };
+  const handleReset = (sid: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/account/resetPassword', sid, accountPassword: md5('123456') },
@@ -112,7 +112,7 @@ const Account = (props: any) => {
         handleSearch();
       },
     });
-  }, []);
+  };
   const handleFieldsValue = (values: any) => {
     if (Object.keys(formData).length === 0) {
       values.accountPassword = md5(values.accountPassword);

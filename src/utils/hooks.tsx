@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { useState, useEffect } from 'react';
+import { isSuccess } from './utils';
 import dayjs from 'dayjs';
 
 // 获取当前时间
@@ -33,4 +34,58 @@ export const useSignal = () => {
     controller.abort();
   }
   return [value, cancel];
+};
+
+/**
+ *  基于table
+ */
+interface optionsProps {
+  transformParam?: Function;
+  transformResult?: Function;
+  extraParams?: object;
+}
+export const useTableFetch = (service: any, options: optionsProps = {}) => {
+  const { transformParam, transformResult, extraParams = {} } = options;
+  const [list, setList] = useState([]);
+  const [current, setCurrent] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [params, setParams] = useState(extraParams);
+  async function run(p: any = {}) {
+    const { current = 1, size = 10, ...rest } = p;
+    let finalParams = { current, size, ...rest, ...extraParams };
+    if (transformParam) {
+      finalParams = transformParam(finalParams);
+    }
+    setParams(finalParams);
+    setLoading(true);
+    let response: any = await service(finalParams);
+    setLoading(false);
+    if (transformResult) {
+      response = transformResult(response);
+    }
+    if (isSuccess(response)) {
+      const { records = [], total = 0, current = 1, size = 10 } = response.data;
+      setList(records);
+      setCurrent(current);
+      setPageSize(size);
+      setTotal(total);
+    }
+  }
+  function refresh() {
+    run(params);
+  }
+  return {
+    list,
+    pagination: {
+      current,
+      pageSize,
+      total,
+    },
+    loading,
+    run,
+    params,
+    refresh,
+  };
 };

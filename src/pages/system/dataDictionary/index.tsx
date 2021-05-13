@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { connect } from 'umi';
 import { message, Button } from 'antd';
 import CommonTable from '../../../components/Momiolo/CommonTable';
@@ -23,13 +23,13 @@ const DataDictionary = (props: any) => {
   useEffect(() => {
     handleSearch();
   }, []);
-  const handleSearch = useCallback(() => {
+  const handleSearch = () => {
     dispatch({
       type: 'base/getPage',
       payload: { url: '/dataDictionary/findByPage', ...formValues },
     });
-  }, []);
-  const handleDelete = useCallback((sid) => {
+  };
+  const handleDelete = (sid: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/dataDictionary/delete', sid },
@@ -38,7 +38,7 @@ const DataDictionary = (props: any) => {
         handleSearch();
       },
     });
-  }, []);
+  };
   const searchItems = [
     {
       key: 'rootName',

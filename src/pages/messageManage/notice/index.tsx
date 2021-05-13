@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { connect } from 'umi';
 import { message, Button } from 'antd';
 import CommonTable from '../../../components/Momiolo/CommonTable';
@@ -10,18 +10,18 @@ import PageCard from '../../../components/PageCard';
 import { getValueByKey } from '@/utils/support';
 import { PlusOutlined } from '@ant-design/icons';
 import GlobalContext from '../../../layouts/GlobalContext';
+import { createGet } from '@/services/base';
+import { useTableFetch } from '@/utils/hooks';
 
+const service = createGet('/notice/findByPage');
 const TYPE = [
   { value: '1', label: '即时通知' },
   { value: '2', label: '延时通知' },
   { value: '3', label: '定时通知' },
 ];
 const Notice = (props: any) => {
-  const {
-    dispatch,
-    loading,
-    pageData: { list, pagination },
-  } = props;
+  const { dispatch } = props;
+  const { list, pagination, loading, run } = useTableFetch(service);
   const [visible, setVisible] = useState(false);
   const [formData, setFormData] = useState({});
   const [formValues, setFormValues] = useState({});
@@ -29,13 +29,10 @@ const Notice = (props: any) => {
   useEffect(() => {
     handleSearch();
   }, []);
-  const handleSearch = useCallback(() => {
-    dispatch({
-      type: 'base/getPage',
-      payload: { url: '/notice/findByPage', ...formValues },
-    });
-  }, []);
-  const handleDelete = useCallback((sid) => {
+  const handleSearch = () => {
+    run(formValues);
+  };
+  const handleDelete = (sid: any) => {
     dispatch({
       type: 'base/postData',
       payload: { url: '/notice/delete', sid },
@@ -44,7 +41,7 @@ const Notice = (props: any) => {
         handleSearch();
       },
     });
-  }, []);
+  };
   const searchItems = [
     {
       key: 'title',
@@ -155,9 +152,10 @@ const Notice = (props: any) => {
     <PageCard>
       <CommonSearchForm
         searchItems={searchItems}
-        fetchParams={{ type: 'base/getPage', url: '/notice/findByPage' }}
         saveFormValues={(v: any) => setFormValues({ ...formValues, ...v })}
         handleFormReset={() => setFormValues({})}
+        mode={'auto'}
+        run={run}
       />
       <div style={{ display: 'flex', marginBottom: 12 }}>
         {permissions.includes('notice_create') && (
@@ -167,11 +165,7 @@ const Notice = (props: any) => {
           </Button>
         )}
       </div>
-      <CommonTable
-        fetchParams={{ type: 'base/getPage', url: '/notice/findByPage' }}
-        formValues={formValues}
-        tableProps={tableProps}
-      />
+      <CommonTable formValues={formValues} tableProps={tableProps} mode={'auto'} run={run} />
       <CommonModalForm
         visible={visible}
         saveUrl={['/notice/create', '/notice/update']}
@@ -186,7 +180,4 @@ const Notice = (props: any) => {
     </PageCard>
   );
 };
-export default connect(({ loading, base }: any) => ({
-  loading: loading.effects['base/getPage'] || loading.effects['base/postData'],
-  pageData: base.pageData,
-}))(Notice);
+export default connect()(Notice);
