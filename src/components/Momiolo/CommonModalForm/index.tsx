@@ -184,7 +184,7 @@ const CommonModalForm = (props: any) => {
           return null;
       }
     });
-    resultItems.push(saveAndCancel);
+    resultItems.push(saveAndCancel());
     return resultItems;
   };
   return (
@@ -197,7 +197,7 @@ const CommonModalForm = (props: any) => {
       {...rest}
     >
       <Form form={form} onFinish={onFinish} initialValues={initialValues} {...formItemLayout}>
-        {renderItem}
+        {renderItem()}
       </Form>
     </Modal>
   );

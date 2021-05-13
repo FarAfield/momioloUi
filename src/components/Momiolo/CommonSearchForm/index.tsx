@@ -221,14 +221,14 @@ const CommonSearchForm = (props: any) => {
         }
       }
     });
-    resultItems.push(searchAndReset);
+    resultItems.push(searchAndReset());
     return resultItems;
   };
 
   return (
     <div>
       <Form {...formItemLayout} form={form} onFinish={onFinish}>
-        <Row gutter={24}>{renderForm}</Row>
+        <Row gutter={24}>{renderForm()}</Row>
       </Form>
     </div>
   );
