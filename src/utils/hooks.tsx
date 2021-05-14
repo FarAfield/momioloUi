@@ -18,26 +18,39 @@ export const useCurrentTime = () => {
 /**
  *  获取一个请求信号
  *  与请求相关联，则可以使用cancel方法取消请求
+ *  要确保每次请求都是不同的signal
  *  例如：
- *  const [signal,cancel] = useSignal()
+ *  const { signal,cancel } = createSignal()
  *  dispatch({
  *    type:'base/getData',
  *    payload: { url:"xxx", signal }
  *  })
  *  使用cancel则可以取消掉这次请求
  */
-export const useSignal = () => {
+export const createSignal = () => {
   const controller = new AbortController(); // 创建一个控制器
   const { signal } = controller; // 返回一个 AbortSignal 对象实例，它可以用来 with/abort 一个 DOM 请求
-  const [value] = useState<any>(signal);
   function cancel() {
     controller.abort();
   }
-  return [value, cancel];
+  return { signal, cancel }
 };
 
 /**
  *  基于table
+ *  options: 均非必传
+ *     transformParam  入参转换函数
+ *     transformResult  出参转换函数
+ *     extraParams  额外附加的参数（run查询每次都会附加）
+ *
+ *  @return
+ *     list
+ *     pagination
+ *     loading
+ *     run 执行函数
+ *     params 执行函数此次执行时的参数
+ *     refresh 以原参数再次执行run
+ *     cancel  取消此次请求
  */
 interface optionsProps {
   transformParam?: Function;
@@ -51,7 +64,8 @@ export const useTableFetch = (service: any, options: optionsProps = {}) => {
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [params, setParams] = useState(extraParams);
+  const [params, setParams] = useState({});
+  const { signal, cancel } = createSignal();
   async function run(p: any = {}) {
     const { current = 1, size = 10, ...rest } = p;
     let finalParams = { current, size, ...rest, ...extraParams };
@@ -60,7 +74,7 @@ export const useTableFetch = (service: any, options: optionsProps = {}) => {
     }
     setParams(finalParams);
     setLoading(true);
-    let response: any = await service(finalParams);
+    let response: any = await service({ signal, ...finalParams });
     setLoading(false);
     if (transformResult) {
       response = transformResult(response);
@@ -87,5 +101,6 @@ export const useTableFetch = (service: any, options: optionsProps = {}) => {
     run,
     params,
     refresh,
+    cancel,
   };
 };

@@ -84,12 +84,17 @@ export async function upload({ url, signal, file }: Payload) {
   return request.post(`${url}`, { signal, data: file });
 }
 
+interface createProps {
+  signal?: any;
+  params?: any;
+}
 /**
  *  构造get请求
  */
-export function createGet(url: string, signal?: any) {
-  return (params: object) =>
+export function createGet(url: string) {
+  return ({ signal, ...params }: createProps) =>
     request.get(url, {
+      signal,
       params,
     });
 }
@@ -97,9 +102,10 @@ export function createGet(url: string, signal?: any) {
 /**
  *  构造post请求
  */
-export function createPost(url: string, signal?: any) {
-  return (params: object) =>
+export function createPost(url: string) {
+  return ({ signal, ...params }: createProps) =>
     request.post(url, {
+      signal,
       data: params,
     });
 }
