@@ -7,6 +7,7 @@ import ColorPicker from '../../../components/ColorPicker';
 import WaterMark from '../../../components/WaterMark';
 import MonacoEditor from '../../../components/MonacoEditor';
 import HighLightKeyword from '../../../components/HighLightKeyword';
+import CarouselDemo from '../../../components/Carousel/CarouselDemo';
 
 const defaultList = [
   { key: 'sliceUpload', value: '分片上传组件' },
@@ -14,6 +15,7 @@ const defaultList = [
   { key: 'waterMark', value: '水印组件' },
   { key: 'monacoEditor', value: '代码编辑器组件' },
   { key: 'highLightKeyword', value: '关键词高亮组件' },
+  { key: 'carousel', value: '走马灯组件' },
 ];
 
 const ComponentList = () => {
@@ -103,6 +105,10 @@ const ComponentList = () => {
         >
           天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为，所以动心忍性，曾益其所不能！
         </HighLightKeyword>
+      </Card>
+      <Card className={`${styles.card} ${isHidden('carousel') ? styles.hidden : ''}`}>
+        <Descriptions title="走马灯组件" />
+        <CarouselDemo/>
       </Card>
     </PageCard>
   );

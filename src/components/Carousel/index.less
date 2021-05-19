@@ -1,0 +1,59 @@
+.root {
+  background-color:transparent;
+  :global {
+    // 左边
+    .slick-prev {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      z-index: 10;
+      width: 40px;
+      height: 80px;
+      background-color: transparent;
+      cursor: pointer;
+      &::before {
+        display: flex;
+        justify-content: center;
+        font-size: 50px;
+        transform: translate(0, -8px) scale(1, 1.75);
+        content: '<';
+      }
+    }
+    // 右边
+    .slick-next {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      z-index: 10;
+      width: 40px;
+      height: 80px;
+      background-color: transparent;
+      cursor: pointer;
+      &::before {
+        display: flex;
+        justify-content: center;
+        font-size: 50px;
+        transform: translate(0, -8px) scale(1, 1.75);
+        content: '>';
+      }
+    }
+    // 点指示器
+    .slick-dots{
+      display: block;
+      position: absolute;
+      bottom: 10px;
+    }
+    .slick-dots li.slick-active button:before {
+      opacity: 0.75;
+      color: #1890ff;
+    }
+    .slick-dots li button:hover:before, .slick-dots li button:focus:before{
+      opacity: 1;
+      color: #1890ff;
+    }
+    // 中心模式
+    .slick-center {
+      transform: scale(1.2,1.2);
+    }
+  }
+}
