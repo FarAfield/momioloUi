@@ -156,7 +156,7 @@ const CommonSearchForm = (props: any) => {
             </Col>
           );
         }
-        case 'dataPicker': {
+        case 'datePicker': {
           const {
             type,
             key,

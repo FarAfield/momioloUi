@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import PageCard from '../../../components/PageCard';
+import PageCard from '@/components/PageCard';
 import { Card, Descriptions, Row, Col, Checkbox } from 'antd';
 import styles from './index.less';
-import SliceUpload from '../../../components/SliceUpload';
-import ColorPicker from '../../../components/ColorPicker';
-import WaterMark from '../../../components/WaterMark';
-import MonacoEditor from '../../../components/MonacoEditor';
-import HighLightKeyword from '../../../components/HighLightKeyword';
-import CarouselDemo from '../../../components/Carousel/CarouselDemo';
+import SliceUpload from '@/components/SliceUpload';
+import ColorPicker from '@/components/ColorPicker';
+import WaterMark from '@/components/WaterMark';
+import MonacoEditor from '@/components/MonacoEditor';
+import HighLightKeyword from '@/components/HighLightKeyword';
+import CarouselDemo from '@/components/Carousel/CarouselDemo';
+import EditableTableDemo from '@/components/EditableTable/EditableTableDemo';
 
 const defaultList = [
   { key: 'sliceUpload', value: '分片上传组件' },
@@ -16,6 +17,7 @@ const defaultList = [
   { key: 'monacoEditor', value: '代码编辑器组件' },
   { key: 'highLightKeyword', value: '关键词高亮组件' },
   { key: 'carousel', value: '走马灯组件' },
+  { key: 'editableTable', value: '可编辑Table' },
 ];
 
 const ComponentList = () => {
@@ -108,7 +110,11 @@ const ComponentList = () => {
       </Card>
       <Card className={`${styles.card} ${isHidden('carousel') ? styles.hidden : ''}`}>
         <Descriptions title="走马灯组件" />
-        <CarouselDemo/>
+        <CarouselDemo />
+      </Card>
+      <Card className={`${styles.card} ${isHidden('editableTable') ? styles.hidden : ''}`}>
+        <Descriptions title="可编辑Table" />
+        <EditableTableDemo />
       </Card>
     </PageCard>
   );
