@@ -1,10 +1,6 @@
 import React from 'react';
 import { Table } from 'antd';
-import EditableInput from './components/EditableInput';
-import EditableTextArea from './components/EditableTextArea';
-import EditableInputNumber from './components/EditableInputNumber';
-import EditableSelect from './components/EditableSelect';
-import EditableDatePicker from './components/EditableDatePicker';
+import EditableCell from './components/EditableCell';
 
 const EditableTable = (props: any) => {
   const { list, columns, updateList } = props;
@@ -21,7 +17,8 @@ const EditableTable = (props: any) => {
         return {
           ...item,
           render: (text: any, record: object, index: number) => (
-            <EditableInput
+            <EditableCell
+              type={'input'}
               value={text}
               onSave={(v: any) => update(index, item.dataIndex, v)}
               {...item.scopeProps}
@@ -33,7 +30,8 @@ const EditableTable = (props: any) => {
         return {
           ...item,
           render: (text: any, record: object, index: number) => (
-            <EditableTextArea
+            <EditableCell
+              type={'textArea'}
               value={text}
               onSave={(v: any) => update(index, item.dataIndex, v)}
               {...item.scopeProps}
@@ -45,7 +43,8 @@ const EditableTable = (props: any) => {
         return {
           ...item,
           render: (text: any, record: object, index: number) => (
-            <EditableInputNumber
+            <EditableCell
+              type={'inputNumber'}
               value={text}
               onSave={(v: any) => update(index, item.dataIndex, v)}
               {...item.scopeProps}
@@ -57,7 +56,8 @@ const EditableTable = (props: any) => {
         return {
           ...item,
           render: (text: any, record: object, index: number) => (
-            <EditableSelect
+            <EditableCell
+              type={'select'}
               value={text}
               onSave={(v: any) => update(index, item.dataIndex, v)}
               selectOptions={item.selectOptions}
@@ -71,7 +71,8 @@ const EditableTable = (props: any) => {
         return {
           ...item,
           render: (text: any, record: object, index: number) => (
-            <EditableDatePicker
+            <EditableCell
+              type={'datePicker'}
               value={text}
               onSave={(v: any) => update(index, item.dataIndex, v)}
               {...item.scopeProps}
@@ -96,7 +97,9 @@ const EditableTable = (props: any) => {
 export default EditableTable;
 
 /**
- *   columns
+ *  list  数据源
+ *
+ *  columns
  *       title
  *       dataIndex
  *       width ?
@@ -105,6 +108,9 @@ export default EditableTable;
  *       type ？    input/inputNumber/textArea/select/datePicker
  *       selectOptions ？（select专属）
  *       keyValue ？（select专属）
+ *       format ? （datePicker专属）
  *       scopeProps ？（透传给不同类型组件的属性）
+ *
+ *  updateList  更新数据源的方法 （index，key, value）=> {}
  *
  */
