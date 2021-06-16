@@ -2,7 +2,7 @@ import React from 'react';
 import { Table } from 'antd';
 import EditableCell from './components/EditableCell';
 
-const EditableTable = (props: any) => {
+const EditableTable = (props: EditableTableProps) => {
   const { list, columns, updateList } = props;
 
   function update(index: number, key: any, value: any) {
@@ -96,21 +96,19 @@ const EditableTable = (props: any) => {
 };
 export default EditableTable;
 
-/**
- *  list  数据源
- *
- *  columns
- *       title
- *       dataIndex
- *       width ?
- *       render ?  存在render时以下配置失效
- *
- *       type ？    input/inputNumber/textArea/select/datePicker
- *       selectOptions ？（select专属）
- *       keyValue ？（select专属）
- *       format ? （datePicker专属）
- *       scopeProps ？（透传给不同类型组件的属性）
- *
- *  updateList  更新数据源的方法 （index，key, value）=> {}
- *
- */
+interface EditableTableProps {
+  list: Array<any>; // 数据源
+  columns: Array<columnsProps>;
+  updateList: Function; // 更新数据源的方法（index，key, value）=> {}
+}
+interface columnsProps {
+  title: any;
+  dataIndex: any;
+  width?: any;
+  render?: Function;
+  type?: string; // (input/inputNumber/textArea/select/datePicker)
+  selectOptions?: Array<any>; // （select专属）
+  keyValue?: Array<any>; // （select专属）
+  format?: string; // （datePicker专属）
+  scopeProps?: object; // （透传给不同类型组件的属性）
+}
