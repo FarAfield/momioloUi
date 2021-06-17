@@ -70,14 +70,14 @@ const CommonFileUpload = (props: CommonFileUploadProps) => {
     if (status === 'done' && statusCode === '0' && data) {
       message.success(`${name} 上传成功`);
       // 对文件增加url以及thumbUrl属性（图片使用）
-      const cloneFileList = [...fileList];
-      const index = cloneFileList.findIndex((i: any) => i.uid === uid);
-      cloneFileList[index] = {
-        ...cloneFileList[index],
-        url: data?.fileUrl,
-        thumbUrl: data?.fileUrl,
-      };
       if(isImg){
+        const cloneFileList = [...fileList];
+        const index = cloneFileList.findIndex((i: any) => i.uid === uid);
+        cloneFileList[index] = {
+          ...cloneFileList[index],
+          url: data?.fileUrl,
+          thumbUrl: data?.fileUrl,
+        };
         setFileList(cloneFileList);
       }
       setFileResult(
