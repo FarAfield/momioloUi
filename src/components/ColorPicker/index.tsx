@@ -1,29 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { SketchPicker, BlockPicker } from 'react-color';
+import { useControlledProps } from '@/utils/hooks';
 
 const ColorPicker = (props: any) => {
   /**
    * type   =>    Sketch(默认)    Block
    */
-  const { type, width, presetColors, defaultValue, value, onChange } = props;
-  // 内部状态
-  const [color, setColor] = useState('#fff');
-  useEffect(() => {
-    if (defaultValue) {
-      setColor(defaultValue);
-    }
-  }, []);
+  const { type, width, presetColors, ...rest } = props;
+  const { value, onChange } = useControlledProps(rest);
   return (
     <>
       {type === 'Sketch' && (
         <SketchPicker
           width={width}
-          color={value || color}
+          color={value}
           onChangeComplete={(v: any) => {
             onChange(v.hex);
-            if (!value) {
-              setColor(v.hex);
-            }
           }}
           presetColors={presetColors}
         />
@@ -31,12 +23,9 @@ const ColorPicker = (props: any) => {
       {type === 'Block' && (
         <BlockPicker
           width={width}
-          color={value || color}
+          color={value}
           onChangeComplete={(v: any) => {
             onChange(v.hex);
-            if (!value) {
-              setColor(v.hex);
-            }
           }}
           presetColors={presetColors}
         />

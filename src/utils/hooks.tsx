@@ -33,7 +33,7 @@ export const createSignal = () => {
   function cancel() {
     controller.abort();
   }
-  return { signal, cancel }
+  return { signal, cancel };
 };
 
 /**
@@ -103,4 +103,16 @@ export const useTableFetch = (service: any, options: optionsProps = {}) => {
     refresh,
     cancel,
   };
+};
+
+export const useControlledProps = (props: any) => {
+  const { defaultValue, value, onChange = () => {} } = props;
+  const [stateValue, setStateValue] = useState(value === undefined ? defaultValue : value);
+  function onStateValueChange(v: any) {
+    onChange(v);
+    if (value === undefined) {
+      setStateValue(v);
+    }
+  }
+  return { value: value === undefined ? stateValue : value, onChange: onStateValueChange };
 };
