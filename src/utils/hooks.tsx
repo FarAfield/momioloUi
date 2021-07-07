@@ -116,3 +116,18 @@ export const useControlledProps = (props: any) => {
   }
   return { value: value === undefined ? stateValue : value, onChange: onStateValueChange };
 };
+
+/**
+ *  便捷的使用 async/await
+ *  1.使用createService创建请求   const service = createService('xxx/xxx')
+ *  2.封装查询方法 async function search(p) {}
+ *  3.方法体内部使用transformResult直接转换结果  const data = await transformResult(service(p)) || {}
+ *  4.拿到数据后自行处理（可指定数据获取失败的默认值）
+ */
+export const transformResult = (response: any) => {
+  const { statusCode, data }: any = response || {};
+  if (statusCode === '0') {
+    return data;
+  }
+  return null;
+};
