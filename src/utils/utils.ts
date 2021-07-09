@@ -74,7 +74,7 @@ function iteratorFn(delay: any) {
   });
 }
 // 使用异步并发，确保大量请求时线程池每次都只有2个promise在执行
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// @ts-ignore
 async function start() {
   const results = await asyncPool(2, array, iteratorFn);
   console.log(results, '结果');

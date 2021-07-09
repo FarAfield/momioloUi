@@ -9,6 +9,7 @@ import MonacoEditor from '@/components/MonacoEditor';
 import HighLightKeyword from '@/components/HighLightKeyword';
 import CarouselDemo from '@/components/Carousel/CarouselDemo';
 import EditableTableDemo from '@/components/EditableTable/EditableTableDemo';
+import ImageDemo from '@/components/ImageElement/ImageDemo';
 
 const defaultList = [
   { key: 'sliceUpload', value: '分片上传组件' },
@@ -18,6 +19,7 @@ const defaultList = [
   { key: 'highLightKeyword', value: '关键词高亮组件' },
   { key: 'carousel', value: '走马灯组件' },
   { key: 'editableTable', value: '可编辑Table' },
+  { key: 'image', value: '图片元素' },
 ];
 
 const ComponentList = () => {
@@ -115,6 +117,10 @@ const ComponentList = () => {
       <Card className={`${styles.card} ${isHidden('editableTable') ? styles.hidden : ''}`}>
         <Descriptions title="可编辑Table" />
         <EditableTableDemo />
+      </Card>
+      <Card className={`${styles.card} ${isHidden('image') ? styles.hidden : ''}`}>
+        <Descriptions title="图片元素" />
+        <ImageDemo />
       </Card>
     </PageCard>
   );
