@@ -55,3 +55,16 @@ export const type = (o: any) => {
 export const getRandom = (minNum: number, maxNum: number) => {
   return Math.floor(Math.random() * (maxNum - minNum + 1) + minNum);
 };
+
+export const mappingPropsToData = (sourceData = [], mapObj = {}) => {
+  return sourceData.map((i: object) => {
+    const item = { ...i };
+    for (const k of Object.keys(mapObj)) {
+      if (Object.keys(item).includes(k)) {
+        item[mapObj[k]] = item[k];
+        delete item[k];
+      }
+    }
+    return item;
+  });
+};
