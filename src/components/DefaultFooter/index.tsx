@@ -9,5 +9,19 @@ const links = copyRightConfig.map((i: any, index: number) => {
   return item;
 });
 export default () => (
-  <DefaultFooter copyright={`${new Date().getFullYear()} ${copyRight}`} links={links} />
+  <>
+    <DefaultFooter copyright={`${new Date().getFullYear()} ${copyRight}`} links={links} />
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: '-16px 0 8px',
+        cursor: 'pointer',
+      }}
+      onClick={() => window.open('https://beian.miit.gov.cn/')}
+    >
+      鄂ICP备20014456号-1
+    </div>
+  </>
 );
