@@ -14,12 +14,12 @@ export default () => (
     <div
       style={{
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
         alignItems: 'center',
         margin: '-16px 0 8px',
         cursor: 'pointer',
       }}
-      onClick={() => window.open('https://beian.miit.gov.cn/')}
+      onClick={() => window.open('https://beian.miit.gov.cn/#/Integrated/index')}
     >
       鄂ICP备20014456号-1
     </div>
