@@ -14,14 +14,15 @@ export default () => (
     <div
       style={{
         display: 'flex',
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         alignItems: 'center',
         margin: '-16px 0 8px',
         cursor: 'pointer',
+        color: 'rgba(100,100,100)'
       }}
       onClick={() => window.open('https://beian.miit.gov.cn/#/Integrated/index')}
     >
-      鄂ICP备20014456号-1
+      备案号：鄂ICP备20014456号-1
     </div>
   </>
 );

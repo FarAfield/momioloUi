@@ -79,3 +79,17 @@ async function start() {
   const results = await asyncPool(2, array, iteratorFn);
   console.log(results, '结果');
 }
+
+
+/** =======================   解析粘贴板的Excel内容   ============================= */
+function parseClipboardData(event:any){
+  // event里的clipboardData对象
+  const html = event.clipboardData.getData('text/html');
+  // 转换为dom结构
+  const $doc = new DOMParser().parseFromString(html,'text/html');
+  // 加载所有的行
+  const $trs = Array.from($doc.querySelectorAll('table tr'));
+  // 解析所有的行数据
+  const $data = $trs.map((item:any) => Array.from(item.cells).map((i:any) => i.innerText));
+  console.log($data);
+}
